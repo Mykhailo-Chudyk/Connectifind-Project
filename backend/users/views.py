@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from .models import User
 import json
 
@@ -12,8 +13,8 @@ def register_user(request):
     try:
         data = json.loads(request.body)
         user = User(
-            firstName=data['firstName'],
-            lastName=data['lastName'],
+            first_name=data['firstName'],
+            last_name=data['lastName'],
             email=data['email'],
             password=make_password(data['password']),
             description=data.get('description', ''),
@@ -30,3 +31,20 @@ def register_user(request):
         }, status=201)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def login_user(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
+    user = authenticate(email=email, password=password)
+    if user:
+        refresh = RefreshToken.for_user(user)
+        return JsonResponse({
+            'message': 'User logged in successfully!',
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+        }, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid credentials'}, status=401)

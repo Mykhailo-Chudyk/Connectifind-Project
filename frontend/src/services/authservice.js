@@ -38,4 +38,7 @@ const authHeader = () => {
 
 export default {
   register,
+  logout,
+  login,
+  authHeader,
 };
