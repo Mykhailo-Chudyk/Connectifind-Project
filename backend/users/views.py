@@ -3,7 +3,10 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 from .models import User
 import json
 
@@ -48,3 +51,13 @@ def login_user(request):
         }, status=200)
     else:
         return JsonResponse({'error': 'Invalid credentials'}, status=401)
+    
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_user(request):
+    try:
+        request.user.delete()
+        return Response({"message": "User deleted successfully!"}, status=204)
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)
