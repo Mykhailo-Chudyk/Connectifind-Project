@@ -4,7 +4,7 @@ from users.models import User
 from categories.models import Category
 
 class Event(models.Model):
-    eventId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     authorId = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author")
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)

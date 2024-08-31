@@ -4,7 +4,7 @@ from users.models import User
 from events.models import Event
 
 class EventParticipant(models.Model):
-    eventParticipantId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     userId = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
     eventId = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name="Event")
     firstName = models.CharField(max_length=50)

@@ -3,7 +3,7 @@ import uuid
 from users.models import User 
 
 class Chat(models.Model):
-    chatId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     authorId1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user1')
     authorId2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user2')
 
