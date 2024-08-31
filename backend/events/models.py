@@ -12,7 +12,6 @@ class Event(models.Model):
     location = models.CharField(max_length=255)
     time = models.DateTimeField()
     capacity = models.IntegerField(null=True, blank=True) 
-    topics = models.TextField(blank=True)
     visibility = models.CharField(max_length=7, choices=[('public', 'Public'), ('private', 'Private')])
     code = models.CharField(max_length=6, null=True, blank=True) 
     categories = models.ManyToManyField(Category, blank=True)
