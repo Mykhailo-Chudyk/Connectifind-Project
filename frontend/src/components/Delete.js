@@ -5,15 +5,15 @@ import axios from 'axios';
 function HelloWorld() {
     const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        axios.get('http://127.0.0.1:8000/user/hello/')
-            .then(response => {
-                setMessage(response.data.message);
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-    }, []); 
+    // useEffect(() => {
+    //     axios.get('http://127.0.0.1:8000/user/hello/')
+    //         .then(response => {
+    //             setMessage(response.data.message);
+    //         })
+    //         .catch(error => {
+    //             console.error('There was an error!', error);
+    //         });
+    // }, []); 
 
     return (
         <div>

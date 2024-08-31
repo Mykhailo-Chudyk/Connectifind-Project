@@ -44,7 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'user',
+    'users',
+    'chats',
+    'user_messages',
+    'events',
+    'feed_posts',
+    'event_participants',
+    'categories',
 ]
 
 MIDDLEWARE = [
