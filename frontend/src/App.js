@@ -1,5 +1,5 @@
 import './App.css';
-import HelloWorld from './components/Delete';
+import SignUp from './components/SignUp';
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function App() {
       <Routes> 
         <Route path="/" element={<>Home</>} />
         <Route path="/login" element={<>Login</>} />
-        <Route path="/signup" element={<>Sign Up</>} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/events" element={<>Events</>} />
         <Route path="/add-event" element={<>Add Event</>} />
         <Route path="/event/:eventId" element={<>Event</>} />
