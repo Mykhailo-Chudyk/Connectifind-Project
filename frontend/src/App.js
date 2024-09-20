@@ -1,6 +1,8 @@
 import './App.css';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import AddEvent from './components/AddEvent.js';
+import Events from './components/Events.js';
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -12,9 +14,9 @@ function App() {
         <Route path="/" element={<>Home</>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/events" element={<>Events</>} />
-        <Route path="/add-event" element={<>Add Event</>} />
-        <Route path="/event/:eventId" element={<>Event</>} />
+        <Route path="/add-event" element={<AddEvent />} />
+        <Route path="/events" element={<Events/>} />
+        <Route path="/events/:eventId" element={<>Event</>} />
         <Route path="/me/profile" element={<>Default profile</>} />
         <Route path="/me/settings" element={<>Settings</>} />
         <Route path="/event/:eventId/me" element={<>Event customized profile</>} />
