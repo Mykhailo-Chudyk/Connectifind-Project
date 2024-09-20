@@ -32,3 +32,14 @@ def list_events(request):
     )
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_event(request, uuid):
+    try:
+        event = Event.objects.get(pk=uuid)
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
+    except Event.DoesNotExist:
+        raise Http404("Event does not exist.")
