@@ -20,7 +20,18 @@ const listEvents = async () => {
   }
 };
 
+const getEventById = async (eventId) => {
+  try {
+    const response = await api.get(`events/${eventId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving event:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
+  getEventById,
 };
