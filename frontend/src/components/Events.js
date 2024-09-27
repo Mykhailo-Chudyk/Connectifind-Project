@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import eventservice from '../services/eventservice.js';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Events = () => {
   const [events, setEvents] = useState([]);

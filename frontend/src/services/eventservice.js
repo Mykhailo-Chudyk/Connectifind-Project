@@ -30,8 +30,19 @@ const getEventById = async (eventId) => {
   }
 };
 
+const joinEvent = async (eventId) => {
+  try {
+    const response = await api.post(`events/join/${eventId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error joining event:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
   getEventById,
+  joinEvent,
 };
