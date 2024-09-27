@@ -50,10 +50,32 @@ const leaveEvent = async (eventId) => {
   }
 };
 
+const listFeedPosts = async (eventId) => {
+  try {
+    const response = await api.get(`feedposts/list/${eventId}/`);  
+    return response.data;
+  } catch (error) {
+    console.error('Error listing feed posts:', error.response);
+    throw error.response.data;
+  }
+};
+
+const createFeedPost = async (eventId, postData) => {
+  try {
+    const response = await api.post(`feedposts/create/${eventId}/`, postData); 
+    return response.data;
+  } catch (error) {
+    console.error('Error creating feed post:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
   getEventById,
   joinEvent,
   leaveEvent,
+  listFeedPosts,
+  createFeedPost,
 };

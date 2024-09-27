@@ -40,7 +40,6 @@ const MyEvent = ({type = "me"}) => {
   return (
     <div>
       <EventComponent eventDetails={eventDetails} />
-      {eventDetails?.title}
     </div>
   );
 };

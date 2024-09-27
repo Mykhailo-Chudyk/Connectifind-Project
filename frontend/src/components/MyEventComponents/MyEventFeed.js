@@ -6,6 +6,7 @@ const MyEventFeed = ({ eventDetails }) => {
     const [newPostContent, setNewPostContent] = useState('');
 
     const fetchPosts = async () => {
+        console.log('Fetching posts for event:', eventDetails);
         try {
             const data = await eventservice.listFeedPosts(eventDetails.id); 
             setPosts(data);
@@ -17,7 +18,10 @@ const MyEventFeed = ({ eventDetails }) => {
     const addPost = async () => {
         if (!newPostContent.trim()) return;
         try {
-            const newPost = await eventservice.createFeedPost({ content: newPostContent }); 
+            const eventId = eventDetails.id;
+            console.log('Creating new feed post for event:', eventId);
+            console.log('Content:', newPostContent);
+            const newPost = await eventservice.createFeedPost(eventId, {content: newPostContent });
             setPosts([...posts, newPost]);
             setNewPostContent(''); 
         } catch (err) {
@@ -27,7 +31,7 @@ const MyEventFeed = ({ eventDetails }) => {
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [eventDetails]);
 
     return (
         <>
@@ -35,8 +39,8 @@ const MyEventFeed = ({ eventDetails }) => {
             {posts.map(post => (
                 <div key={post.id}>
                     <p>{post.content}</p>
-                    <p>Author: {post.author}</p>
-                    <p>Posted on: {new Date(post.createdAt).toLocaleString()}</p>
+                    <p>Author: {post.author.first_name + " " + post.author.last_name}</p>
+                    <p>Posted on: {new Date(post.time).toLocaleString()}</p>
                 </div>
             ))}
         
