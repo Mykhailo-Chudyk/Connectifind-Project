@@ -40,9 +40,20 @@ const joinEvent = async (eventId) => {
   }
 };
 
+const leaveEvent = async (eventId) => {
+  try {
+    const response = await api.post(`events/leave/${eventId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error leaving event:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
   getEventById,
   joinEvent,
+  leaveEvent,
 };
