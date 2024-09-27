@@ -5,6 +5,7 @@ import eventservice from '../services/eventservice.js';
 const Event = () => {
   const { eventId } = useParams();  
   const [eventDetails, setEventDetails] = useState(null);
+  const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -21,6 +22,13 @@ const Event = () => {
     }
   }, [eventId]);  
 
+  const joinEvent = async () => {
+    const response = await eventservice.joinEvent(eventId);
+    if (response) {
+      setIsJoined(true);
+    }
+  };
+
   return (
     <div>
       <h1>Event Details</h1>
@@ -33,7 +41,7 @@ const Event = () => {
           <p>Capacity: {eventDetails.capacity || 'Not specified'}</p>
           <p>Author: {eventDetails.author.first_name + " " + eventDetails.author.last_name}</p>
           <p>Visibility: {eventDetails.visibility}</p>
-          <button onClick={() => console.log('Join event clicked')}>Join</button>
+          {!eventDetails.is_creator ? <button onClick={joinEvent}>{isJoined? "Joined" : "Join"}</button> : <p>This is your event</p>}
         </div>
       ) : (
         <p>No event details to display. Please check if the event ID is correct.</p>

@@ -21,7 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from users.views import register_user, login_user, delete_user
-from events.views import create_event, list_events, get_event
+from events.views import create_event, list_events, get_event, join_event
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +33,5 @@ urlpatterns = [
     path('events/create/', create_event, name='create-event'),
     path('events/list/', list_events, name='list-event'),
     path('events/<uuid:uuid>/', get_event, name='get-event'),
+    path('events/join/<uuid:uuid>/', join_event, name='join-event'),
 ]
