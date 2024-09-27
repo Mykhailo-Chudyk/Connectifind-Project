@@ -50,5 +50,20 @@ def get_event(request, uuid):
 @permission_classes([IsAuthenticated])
 def join_event(request, uuid):
     event = get_object_or_404(Event, pk=uuid)
+
+    if event.authorId == request.user:
+        return Response({'error': 'You cannot join your own event.'}, status=status.HTTP_403_FORBIDDEN)
+    
     event.participants.add(request.user)
     return Response({'message': 'You have successfully joined the event!'})
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def leave_event(request, uuid):
+    event = get_object_or_404(Event, pk=uuid)
+
+    if event.authorId == request.user:
+        return Response({'error': 'You cannot leave your own event.'}, status=status.HTTP_403_FORBIDDEN)
+    
+    event.participants.remove(request.user)
+    return Response({'message': 'You have successfully leave the event!'})
