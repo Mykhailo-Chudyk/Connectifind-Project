@@ -39,7 +39,7 @@ const MyEvent = ({type = "me"}) => {
 
   return (
     <div>
-      <EventComponent eventId={eventId} />
+      <EventComponent eventDetails={eventDetails} />
       {eventDetails?.title}
     </div>
   );
