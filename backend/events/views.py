@@ -25,11 +25,11 @@ def create_event(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_events(request):
-    current_time = timezone.now()
+    # current_time = timezone.now() 
     events = Event.objects.filter(
         Q(visibility='public') |
-        Q(authorId=request.user),
-        time__gte=current_time
+        Q(authorId=request.user)
+        # time__gte=current_time: todo: uncomment this line to show only future events
     )
     serializer = EventSerializer(events, many=True, context={'request': request})
     return Response(serializer.data)

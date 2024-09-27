@@ -61,6 +61,8 @@ const Event = () => {
           <h3>Participants:</h3>
           {eventDetails.participants.map((participant) => <p>{participant.first_name} {participant.last_name}</p>)}
           {!eventDetails.is_creator ? <button onClick={joinLeaveEvent}>{isParticipant? "Leave" : "Join"}</button> : <p>This is your event</p>}
+          {(eventDetails.is_creator || isParticipant) && <button>Go to Event</button>}
+          
           
         </div>
       ) : (

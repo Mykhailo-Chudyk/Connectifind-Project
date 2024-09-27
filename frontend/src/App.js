@@ -16,7 +16,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/add-event" element={<AddEvent />} />
-        <Route path="/events" element={<Events/>} />
+        <Route path="/events/" element={<Events/>} />
+        {/* <Route path="/my-evetes" element={<Events }/>} /> */}
         <Route path="/events/:eventId" element={<Event/>} />
         <Route path="/me/profile" element={<>Default profile</>} />
         <Route path="/me/settings" element={<>Settings</>} />

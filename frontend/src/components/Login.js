@@ -11,6 +11,7 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const res = await authService.login(email, password);
+            navigate('/events');
         } catch (error) {
             console.error('Login failed:', error);
         }
