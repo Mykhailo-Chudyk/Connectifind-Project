@@ -1,11 +1,14 @@
 import React from "react";
 
 
-const MyEventPeople = ({ eventId }) => {
+const MyEventPeople = ({ eventDetails }) => {
+
+
 
     return (
         <>
-            people works!
+            <h3>Participants:</h3>
+            {eventDetails?.participants.map((participant) => <p>{participant.first_name} {participant.last_name}</p>)}
         </>
     );
 };
