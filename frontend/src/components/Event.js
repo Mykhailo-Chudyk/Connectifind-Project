@@ -31,6 +31,7 @@ const Event = () => {
           <p>Location: {eventDetails.location}</p>
           <p>Time: {new Date(eventDetails.time).toLocaleString()}</p>
           <p>Capacity: {eventDetails.capacity || 'Not specified'}</p>
+          <p>Author: {eventDetails.author.first_name + " " + eventDetails.author.last_name}</p>
           <p>Visibility: {eventDetails.visibility}</p>
           <button onClick={() => console.log('Join event clicked')}>Join</button>
         </div>
