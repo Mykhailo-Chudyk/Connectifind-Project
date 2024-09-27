@@ -8,6 +8,8 @@ class EventSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True, source='authorId')
     is_creator = SerializerMethodField()
     is_participant = serializers.SerializerMethodField()
+    participants = UserSerializer(many=True, read_only=True)
+    participant_count = serializers.SerializerMethodField()
     class Meta:
         model = Event
         fields = '__all__'
@@ -23,3 +25,6 @@ class EventSerializer(serializers.ModelSerializer):
         if request and request.user.is_authenticated:
             return obj.participants.filter(id=request.user.id).exists()
         return False
+
+    def get_participant_count(self, obj):
+        return obj.participants.count()

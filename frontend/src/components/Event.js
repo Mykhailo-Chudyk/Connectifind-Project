@@ -12,7 +12,7 @@ const Event = () => {
       try {
         const details = await eventservice.getEventById(eventId);
         setEventDetails(details);
-        setIsParticipant(details.is_joined);
+        setIsParticipant(details.is_participant);
       } catch (err) {
         console.error('Error retrieving event:', err);
       }
@@ -28,11 +28,19 @@ const Event = () => {
       const response = await eventservice.leaveEvent(eventId);
       if (response) {
         setIsParticipant(false);
+        setEventDetails((details) => ({
+          ...details,
+          participant_count: details.participant_count - 1
+        }));
       }
     } else {
       const response = await eventservice.joinEvent(eventId);
       if (response) {
         setIsParticipant(true);
+        setEventDetails((details) => ({
+          ...details,
+          participant_count: details.participant_count + 1
+        }));
       }
     }
   };
@@ -49,6 +57,7 @@ const Event = () => {
           <p>Capacity: {eventDetails.capacity || 'Not specified'}</p>
           <p>Author: {eventDetails.author.first_name + " " + eventDetails.author.last_name}</p>
           <p>Visibility: {eventDetails.visibility}</p>
+          <p>Number of participants: {eventDetails.participant_count}</p>
           {!eventDetails.is_creator ? <button onClick={joinLeaveEvent}>{isParticipant? "Leave" : "Join"}</button> : <p>This is your event</p>}
         </div>
       ) : (
