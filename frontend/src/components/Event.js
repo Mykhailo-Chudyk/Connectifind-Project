@@ -45,6 +45,10 @@ const Event = () => {
     }
   };
 
+  const goToEvent = () => {
+    window.location.href = `/event/${eventId}/about`;
+  }
+
   return (
     <div>
       <h1>Event Details</h1>
@@ -61,7 +65,7 @@ const Event = () => {
           <h3>Participants:</h3>
           {eventDetails.participants.map((participant) => <p>{participant.first_name} {participant.last_name}</p>)}
           {!eventDetails.is_creator ? <button onClick={joinLeaveEvent}>{isParticipant? "Leave" : "Join"}</button> : <p>This is your event</p>}
-          
+          {(eventDetails.is_creator || isParticipant) && <button onClick={goToEvent}>Go to Event</button>}
         </div>
       ) : (
         <p>No event details to display. Please check if the event ID is correct.</p>
