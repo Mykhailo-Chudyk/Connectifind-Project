@@ -6,7 +6,6 @@ const MyEventFeed = ({ eventDetails }) => {
     const [newPostContent, setNewPostContent] = useState('');
 
     const fetchPosts = async () => {
-        console.log('Fetching posts for event:', eventDetails);
         try {
             const data = await eventservice.listFeedPosts(eventDetails.id); 
             setPosts(data);
@@ -19,8 +18,6 @@ const MyEventFeed = ({ eventDetails }) => {
         if (!newPostContent.trim()) return;
         try {
             const eventId = eventDetails.id;
-            console.log('Creating new feed post for event:', eventId);
-            console.log('Content:', newPostContent);
             const newPost = await eventservice.createFeedPost(eventId, {content: newPostContent });
             setPosts([...posts, newPost]);
             setNewPostContent(''); 

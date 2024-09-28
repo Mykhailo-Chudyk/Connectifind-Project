@@ -45,7 +45,6 @@ const MyEventChat = ({ eventDetails }) => {
     return (
         <>
             <h1>Chat with {chatPartner?.first_name} {chatPartner?.last_name}</h1>
-            {console.log(messages)}
             {messages.map((msg, index) => (
                 <div key={index}>
                     <p>{msg.content}</p>
