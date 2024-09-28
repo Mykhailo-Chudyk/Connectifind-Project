@@ -19,15 +19,13 @@ const MyEventChat = ({ eventDetails }) => {
         if (!newMessage.trim()) return;
         try {
             const messageData = { content: newMessage };
-            const message = await eventservice.sendChatMessage(eventDetails.id, chatPartner.id, messageData);
+            const message = await eventservice.sendChatMessage(eventDetails?.id, chatPartner?.id, messageData);
             setMessages([...messages, message]);
             setNewMessage('');
         } catch (err) {
             console.error('Error sending chat message:', err);
         }
     };
-
-
 
     useEffect(() => {
         if (eventDetails?.participants?.length > 1) {
@@ -45,7 +43,6 @@ const MyEventChat = ({ eventDetails }) => {
     return (
         <>
             <h1>Chat with {chatPartner?.first_name} {chatPartner?.last_name}</h1>
-            {console.log(messages)}
             {messages.map((msg, index) => (
                 <div key={index}>
                     <p>{msg.content}</p>

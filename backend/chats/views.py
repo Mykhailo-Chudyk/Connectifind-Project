@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Chat, Event, User
 from .serializers import ChatMessageSerializer
+from users.serializers import UserSerializer
 from rest_framework import status
 from django.db import models
 from django.db.models import Q
@@ -64,3 +65,19 @@ def send_chat_message(request, eventId, recipientId):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_users_with_messages(request, eventId):
+    event = get_object_or_404(Event, pk=eventId)
+    current_user = request.user
+
+    chats = Chat.objects.filter(event=event, participants=current_user)
+    
+    users_with_messages = User.objects.filter(
+        chats__in=chats
+    ).exclude(id=current_user.id).distinct()
+
+    serializer = UserSerializer(users_with_messages, many=True)
+    
+    return Response(serializer.data)

@@ -17,7 +17,6 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       const data = await authService.register(formData);
-      console.log('User registered:', data);
     } catch (error) {
       console.error('Registration failed:', error);
     }

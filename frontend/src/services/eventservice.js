@@ -69,6 +69,7 @@ const createFeedPost = async (eventId, postData) => {
     throw error.response.data;
   }
 };
+
 const listChatMessages = async (eventId, senderId) => {
   try {
     const response = await api.get(`chats/messages/${eventId}/${senderId}/`);
@@ -89,6 +90,16 @@ const sendChatMessage = async (eventId, recipientId, messageData) => {
   }
 };
 
+const listAllChats = async (eventId) => {
+  try {
+    const response = await api.get(`events/${eventId}/users-with-messages/`); 
+    return response.data;
+  } catch (error) {
+    console.error('Error listing all chats:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
@@ -99,4 +110,5 @@ export default {
   createFeedPost,
   listChatMessages,
   sendChatMessage,
+  listAllChats,
 };
