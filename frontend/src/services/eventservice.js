@@ -69,6 +69,25 @@ const createFeedPost = async (eventId, postData) => {
     throw error.response.data;
   }
 };
+const listChatMessages = async (eventId, senderId) => {
+  try {
+    const response = await api.get(`chats/messages/${eventId}/${senderId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error listing chat messages:', error.response);
+    throw error.response.data;
+  }
+};
+
+const sendChatMessage = async (eventId, recipientId, messageData) => {
+  try {
+    const response = await api.post(`chats/send/${eventId}/${recipientId}/`, messageData);
+    return response.data;
+  } catch (error) {
+    console.error('Error sending chat message:', error.response);
+    throw error.response.data;
+  }
+};
 
 export default {
   addEvent,
@@ -78,4 +97,6 @@ export default {
   leaveEvent,
   listFeedPosts,
   createFeedPost,
+  listChatMessages,
+  sendChatMessage,
 };

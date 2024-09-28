@@ -5,9 +5,9 @@ from events.models import Event
 
 class Chat(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    authorId1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user1')
-    authorId2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user2')
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='chats', null=False)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='chats')
+    participants = models.ManyToManyField(User, related_name='chats')
 
     def __str__(self):
-        return f"Chat between {self.authorId1} and {self.authorId2} for Event {self.event.title}"
+        participants_str = ", ".join([user.username for user in self.participants.all()])
+        return f"Chat in {self.event.title} between {participants_str}"
