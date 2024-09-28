@@ -6,6 +6,8 @@ import MyEventFeed from './MyEventComponents/MyEventFeed.js';
 import MyEventPeople from './MyEventComponents/MyEventPeople.js';
 import MyEventChats from './MyEventComponents/MyEventChats.js';
 import MyEventAbout from './MyEventComponents/MyEventAbout.js';
+import MyEventPerson from './MyEventComponents/MyEventPerson.js';
+import MyEventChat from './MyEventComponents/MyEventChat.js';
 
 
 const componentMap = {
@@ -14,6 +16,8 @@ const componentMap = {
   people: MyEventPeople,
   chats: MyEventChats,
   about: MyEventAbout,
+  person: MyEventPerson,
+  chat: MyEventChat,
 };
 
 const MyEvent = ({type = "me"}) => {

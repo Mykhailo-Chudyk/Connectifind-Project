@@ -25,8 +25,9 @@ function App() {
         <Route path="/event/:eventId/me" element={<MyEvent type="me" />} />
         <Route path="/event/:eventId/feed" element={<MyEvent type="feed" />} />
         <Route path="/event/:eventId/people" element={<MyEvent type="people" />} />
-        <Route path="/event/:eventId/people/:userId" element={<MyEvent type="people" />} />
+        <Route path="/event/:eventId/people/:userId" element={<MyEvent type="person" />} />
         <Route path="/event/:eventId/chats" element={<MyEvent type="chats" />} />
+        <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
         <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
       </Routes>
     </Router>
