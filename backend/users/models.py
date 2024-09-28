@@ -35,6 +35,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.TextField(blank=True, null=True)
+    goal = models.TextField(blank=True, null=True)
     avatar = models.URLField(blank=True, null=True)
 
     USERNAME_FIELD = 'email'

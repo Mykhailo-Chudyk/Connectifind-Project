@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
 from users.views import register_user, login_user, delete_user
 from events.views import create_event, list_events, get_event, join_event, leave_event
 from feed_posts.views import list_feed_posts, create_feed_post
-from chats.views import list_chat_messages, send_chat_message
+from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('feedposts/create/<uuid:eventId>/', create_feed_post, name='create-feed-post'),
     path('chats/messages/<uuid:eventId>/<uuid:senderId>/', list_chat_messages, name='list-chat-messages'),
     path('chats/send/<uuid:eventId>/<uuid:recipientId>/', send_chat_message, name='send-chat-message'),
+    path('events/<uuid:eventId>/users-with-messages/', list_users_with_messages, name='users-with-messages'),
 ]
