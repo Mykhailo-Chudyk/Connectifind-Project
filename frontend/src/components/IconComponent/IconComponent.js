@@ -3,7 +3,6 @@ import "./styles.scss";
 
 const IconComponent = ({ icon = null, nameToShow = "NA", selected = false }) => {
 
-    console.log(icon);
     return (
         <div className={`icon-container ${selected ? "selected" : ""}`}>
             {icon && <img src={icon} alt="icon" />}

@@ -1,6 +1,6 @@
 import './App.css';
-import SignUp from './components/SignUp';
-import Login from './components/Login';
+import SignUp from './components/Authorization/SignUp.js';
+import Login from './components/Authorization/Login.js';
 import AddEvent from './components/AddEvent.js';
 import Events from './components/Events.js';
 import Event from './components/Event.js';
@@ -9,7 +9,7 @@ import AuthenticatedHome from './components/AuthenticatedHome';
 import UnauthenticatedHome from './components/UnauthenticatedHome';
 import Layout from './Layout.js';
 import React, {useContext} from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthContext';
 
 
@@ -19,8 +19,8 @@ function App() {
   return (
     <Router>
       <Routes> 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
+        <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
         <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
         <Route element={<Layout />}>
           <Route path="/add-event" element={<AddEvent />} />
@@ -37,6 +37,7 @@ function App() {
           <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
           <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

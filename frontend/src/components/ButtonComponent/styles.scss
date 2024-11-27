@@ -13,6 +13,11 @@
         cursor: pointer;
     }
 
+    .large {
+        padding: 12px 36px;
+        font-size: 1.5rem;
+    }
+
     .primary {
         color: $primary-color;
         background-color: $secondary-text-color;

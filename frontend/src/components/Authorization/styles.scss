@@ -1,0 +1,81 @@
+@import '../../global.scss';
+
+.authorization-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+    max-width: 400px; 
+    padding: 20px;
+    box-sizing: border-box;
+
+    .google-auth-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 56px; 
+        border: 1px solid #1A8A86;
+        border-radius: 10px; 
+        cursor: pointer;
+        background-color: #fff;
+        margin-bottom: -20px;
+
+        .google-icon {
+            margin-right: 10px;
+            color: #DB4437;
+            padding-left: 24px;
+        }
+
+        span {
+            flex: 1;
+            text-align: center;
+            color: $text-color;
+            padding-right: 40px;
+        }
+    }
+
+    .sign-in-title {
+        color: $primary-color;
+        margin-bottom: 20px;
+    }
+
+    .or-line {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0;
+
+        &::before, &::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+        }
+
+        span {
+            margin: 0 10px;
+            color: #888;
+            font-weight: bold;
+        }
+    }
+    
+    .input-wrapper {
+        width: 400px;
+        margin-bottom: 20px;
+    }
+
+    .help-links {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 4px; 
+
+        a {
+            color: $text-color;
+        }
+    }
+}
