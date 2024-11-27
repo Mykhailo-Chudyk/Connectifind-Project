@@ -2,22 +2,27 @@ import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthContext';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import { useNavigate } from 'react-router-dom';
 import "./styles.scss";
 
 const Header = ({ isAuthenticated }) => {
   const { logout } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   return (
     <header>
       <div className="header-container">
-        <p>ConnectiFind</p>
+        <h2>ConnectiFind</h2>
         {isAuthenticated ?
         <div>
 
         </div> :
         <div className="header-buttons"> 
-          <ButtonComponent text="Login" level="primary"/>
-          <ButtonComponent text="Sign Up" level="secondary"/>
+          <ButtonComponent text="Login" level="primary" onClick={() => {
+            navigate('/login');
+          }}/>
+          <ButtonComponent text="Sign Up" level="secondary" onClick={() => {
+            navigate('/signup');
+          }}/>
         </div>}
       </div>
       {/* {isAuthenticated ? (

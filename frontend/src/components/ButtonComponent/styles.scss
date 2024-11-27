@@ -1,5 +1,25 @@
+@import "../../global.scss";
+
 .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    button {
+        font-size: 1rem;
+        padding: 8px 16px;
+        border: 1px solid $primary-color;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .primary {
+        color: $primary-color;
+        background-color: $secondary-text-color;
+    }
+
+    .secondary {
+        color: $secondary-text-color;
+        background-color: $primary-color;
+    }
 }
