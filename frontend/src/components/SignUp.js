@@ -21,8 +21,8 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       const data = await authService.register(formData);
-      login(data.access); // Use the login function from context
-      navigate('/events'); // Redirect after successful registration
+      login(data.access); 
+      navigate('/'); 
     } catch (error) {
       console.error('Registration failed:', error);
     }

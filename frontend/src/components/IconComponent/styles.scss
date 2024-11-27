@@ -1,0 +1,22 @@
+@import "../../global.scss";
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: #F5F5F5;
+
+    .icon-name {
+        color: $text-color;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    &.selected {
+        border: 1px solid $primary-color;
+    }
+}
+

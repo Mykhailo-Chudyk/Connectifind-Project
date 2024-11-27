@@ -14,7 +14,7 @@ const LoginForm = () => {
     try {
       const res = await authService.login(email, password);
       login(res.access);
-      navigate('/events'); 
+      navigate('/'); 
     } catch (error) {
       console.error('Login failed:', error);
     }
