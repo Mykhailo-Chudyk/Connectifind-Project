@@ -7,10 +7,7 @@ import "./styles.scss";
 
 const Header = ({ isAuthenticated }) => {
   const { logout } = useContext(AuthContext);
-
   const navigate = useNavigate();
-
-  console.log(isAuthenticated);
 
   return (
     <header>
@@ -24,6 +21,7 @@ const Header = ({ isAuthenticated }) => {
           <ButtonComponent text="Create" level="secondary" onClick={() => {
             navigate('/add-event');
           }}/>
+
         </div>:
         <div className="header-buttons"> 
           <ButtonComponent text="Login" level="primary" onClick={() => {
