@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import authService from '../services/authservice.js';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ const RegisterForm = () => {
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,6 +21,8 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       const data = await authService.register(formData);
+      login(data.access); // Use the login function from context
+      navigate('/events'); // Redirect after successful registration
     } catch (error) {
       console.error('Registration failed:', error);
     }

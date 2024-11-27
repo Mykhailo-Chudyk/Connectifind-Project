@@ -1,0 +1,11 @@
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+}
