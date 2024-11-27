@@ -1,0 +1,34 @@
+.sidebar {
+    top: 83px;
+    left: 0;
+    height: calc(100vh - 83px - 30px);
+    width: 70px;
+    background-color: #D5F3F2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-right: 0.5px solid #18807E;
+    gap: 10px;
+    padding: 15px 0;
+
+    .sidebar-icon {
+        color: #ffffff;
+        font-size: 24px;
+        margin: 20px 0;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+      
+    .sidebar-icon:hover {
+        color: #D8FFFE;
+    }
+
+    .divider {
+        width: 80%;
+        height: 1px;
+        background-color: #18807E;
+        margin: 20px 0;
+    }
+}
+

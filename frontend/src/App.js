@@ -21,11 +21,10 @@ function App() {
       <Routes> 
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
         <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
-        <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
         <Route element={<Layout />}>
+          <Route path="/" element={<AuthenticatedHome />} />
           <Route path="/add-event" element={<AddEvent />} />
           <Route path="/events/" element={<Events/>} />
-          {/* <Route path="/my-events" element={<Events }/>} /> */}
           <Route path="/events/:eventId" element={<Event/>} />
           <Route path="/me/profile" element={<>Default profile</>} />
           <Route path="/me/settings" element={<>Settings</>} />
@@ -37,6 +36,7 @@ function App() {
           <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
           <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
         </Route>
+        <Route path="/" element={<UnauthenticatedHome />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
