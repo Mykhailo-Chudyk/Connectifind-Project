@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
       usersService.getUserInfo().then(user => {
         dispatch(setUser(user));
       }).catch(error => {
+        logout();
         console.error('Error fetching user info:', error);
       });
     }
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
     usersService.getUserInfo().then(user => {
       dispatch(setUser(user));
     }).catch(error => {
+      logout();
       console.error('Error fetching user info:', error);
     });
   };
