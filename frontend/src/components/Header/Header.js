@@ -12,7 +12,7 @@ const Header = ({ isAuthenticated }) => {
 
   return (
     <header>
-      <div className={`header-container ${isAuthenticated ? "authenticated" : "unauthenticated"}`}>
+      <div className={`header-container`}>
         <h2 onClick={() => navigate('/')} style={{cursor: "pointer"}}>ConnectiFind</h2>
         {isAuthenticated ?
         <div className="header-buttons"> 
