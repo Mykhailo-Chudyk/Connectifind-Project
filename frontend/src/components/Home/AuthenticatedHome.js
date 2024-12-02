@@ -19,6 +19,18 @@ const AuthenticatedHome = () => {
       <div className='home-row'>
         <ButtonComponent text="Create Event" size="large" onClick={() => {}} width="350px"/>
       </div>
+      <div className='home-row space-top'>
+        <h1>Your Events</h1>
+      </div>
+      <div className='home-row'>
+        Actual Events will be displayed here...
+      </div>
+      <div className='home-row space-top'>
+        <h1>Explore public events nearby and join them</h1>
+      </div>
+      <div className='home-row'>
+        Other Events will be displayed here...
+      </div>
 
     </div>
   );

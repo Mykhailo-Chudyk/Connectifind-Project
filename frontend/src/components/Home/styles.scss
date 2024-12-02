@@ -4,8 +4,9 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    width: 100%;
     flex: 1;
+    margin-top: 86px;
+    margin-left: 65px;
 
     .home-header {
         display: flex;
@@ -20,5 +21,9 @@
         align-items: center;
         padding: 30px;
         gap: 100px;
+    }
+
+    .space-top {
+        margin-top: 100px;
     }
 }
