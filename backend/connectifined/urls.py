@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from users.views import register_user, login_user, delete_user
+from users.views import register_user, login_user, delete_user, get_user_info
 from events.views import create_event, list_events, get_event, join_event, leave_event
 from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
@@ -16,6 +16,7 @@ urlpatterns = [
     path('register/', register_user, name='register_user'),
     path('login/', login_user, name='login_user'),
     path('users/delete/', delete_user, name='delete_user'),
+    path('users/get_user_info/', get_user_info, name='get_user_info'),
     path('events/create/', create_event, name='create-event'),
     path('events/list/', list_events, name='list-event'),
     path('events/<uuid:uuid>/', get_event, name='get-event'),

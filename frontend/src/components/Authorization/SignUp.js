@@ -20,10 +20,6 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -50,16 +46,16 @@ const RegisterForm = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="First Name" />
+          <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="firstName" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} placeholder="First Name" />
         </div>
         <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Last Name" />
+          <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="lastName" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} placeholder="Last Name" />
         </div>
         <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faEnvelope} />} type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+          <InputComponent icon={<FontAwesomeIcon icon={faEnvelope} />} type="email" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Email" />
         </div>
         <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faLock} />} type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
+          <InputComponent icon={<FontAwesomeIcon icon={faLock} />} type="password" name="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Password" />
         </div>
         <div className="help-links">
           <a href="/login">Already have an account?</a>

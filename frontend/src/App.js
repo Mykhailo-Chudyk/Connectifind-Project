@@ -22,7 +22,7 @@ function App() {
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
         <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<AuthenticatedHome />} />
+          <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
           <Route path="/add-event" element={<AddEvent />} />
           <Route path="/events/" element={<Events/>} />
           <Route path="/events/:eventId" element={<Event/>} />

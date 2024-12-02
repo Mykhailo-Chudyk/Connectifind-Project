@@ -1,4 +1,4 @@
-import api from './apiService';
+import api from './apiservice';
 
 const deleteUser = async () => {
   try {
@@ -10,6 +10,12 @@ const deleteUser = async () => {
   }
 };
 
+const getUserInfo = async () => {
+  const response = await api.get('users/get_user_info/');
+  return response.data;
+};
+
 export default {
   deleteUser,
+  getUserInfo,
 };

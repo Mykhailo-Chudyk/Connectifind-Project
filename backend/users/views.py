@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import User
+from .serializers import UserSerializer
 import json
 
 @csrf_exempt
@@ -61,3 +62,11 @@ def delete_user(request):
         return Response({"message": "User deleted successfully!"}, status=204)
     except Exception as e:
         return Response({"error": str(e)}, status=400)
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_info(request):
+    user = request.user
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
