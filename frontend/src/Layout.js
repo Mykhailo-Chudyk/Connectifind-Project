@@ -15,7 +15,7 @@ const Layout = () => {
       <Header isAuthenticated={isAuthenticated} />
       <div style={{ display: 'flex' }}>
         {user && <Sidebar onLogout={logout} />}
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ width: '100%', height: '100%', marginLeft: user ? '75px' : '0px', marginTop: '86px' }}>
           <Outlet />
         </div>
       </div>

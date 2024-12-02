@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import usersService from './services/userservice';
-import { setUser, clearUser } from './redux/slices/userSlice';
+import { setUser, clearUser } from './redux/actions/userActions';
 import { useDispatch } from 'react-redux'; 
 
 

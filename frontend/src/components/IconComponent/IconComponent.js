@@ -1,7 +1,7 @@
 import React from 'react';
 import "./styles.scss";
 
-const IconComponent = ({ icon = null, isFaComponent = false, nameToShow = "NA", selected = false, onClick = () => {} }) => {
+const IconComponent = ({ icon = null, isFaComponent = false, nameToShow, selected = false, onClick = () => {} }) => {
 
     return (
         <div className={`icon-container ${selected ? "selected" : ""}`} onClick={onClick}>
@@ -9,7 +9,7 @@ const IconComponent = ({ icon = null, isFaComponent = false, nameToShow = "NA", 
             {icon && !isFaComponent && <img src={icon} alt="icon" /> }
             {!icon && 
                 <div className="icon-name">
-                    {nameToShow}
+                    {nameToShow || "NA"}
                 </div>
             }
         </div>

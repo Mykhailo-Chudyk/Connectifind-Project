@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faUser, faCog, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import IconComponent from '../IconComponent/IconComponent';
 import './styles.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserEvents } from '../../redux/actions/eventActions';
 
 const Sidebar = ({ onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const userEvents = useSelector((state) => state.events.events);
+  console.log("userEvents: ", userEvents);
+
+  useEffect(() => {
+    dispatch(fetchUserEvents());
+  }, [dispatch]);
 
   // Determine which icon should be selected based on the current path
   const getSelectedIcon = () => {
@@ -46,21 +55,17 @@ const Sidebar = ({ onLogout }) => {
         onClick={() => {onLogout(); navigate('/')}}
       />
       <div className="divider" />
-      {/* Hardcoded event icons */}
-      <IconComponent
-        icon={null}
-        isFaComponent={false}
-        nameToShow="E1"
-        selected={selectedIcon === 'event'}
-        onClick={() => navigate('/event/1')}
-      />
-      <IconComponent
-        icon={null}
-        isFaComponent={false}
-        nameToShow="E2"
-        selected={selectedIcon === 'event'}
-        onClick={() => navigate('/event/2')}
-      />
+      {/* Render user events */}
+      {userEvents.map((event) => (
+        <IconComponent
+          key={event.id}
+          icon={event.icon}
+          isFaComponent={false}
+          nameToShow={event?.title[0]}
+          selected={selectedIcon === 'event'}
+          onClick={() => navigate(`/event/${event.id}`)}
+        />
+      ))}
       <IconComponent
         icon={<FontAwesomeIcon icon={faPlus} />}
         isFaComponent={true}

@@ -67,3 +67,11 @@ def leave_event(request, uuid):
     
     event.participants.remove(request.user)
     return Response({'message': 'You have successfully leave the event!'})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_user_events(request):
+    events = Event.objects.filter(authorId=request.user)
+    serializer = EventSerializer(events, many=True, context={'request': request})
+    return Response(serializer.data)

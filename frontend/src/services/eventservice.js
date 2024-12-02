@@ -100,6 +100,16 @@ const listAllChats = async (eventId) => {
   }
 };
 
+const listUserEvents = async () => {
+  try {
+    const response = await api.get('events/user/');
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving user events:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
@@ -111,4 +121,5 @@ export default {
   listChatMessages,
   sendChatMessage,
   listAllChats,
+  listUserEvents,
 };

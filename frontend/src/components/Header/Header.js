@@ -4,11 +4,13 @@ import { AuthContext } from '../../AuthContext';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import IconComponent from '../IconComponent/IconComponent.js';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import "./styles.scss";
 
 const Header = ({ isAuthenticated }) => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
 
   return (
     <header>
@@ -22,7 +24,7 @@ const Header = ({ isAuthenticated }) => {
           <ButtonComponent text="Create" level="secondary" onClick={() => {
             navigate('/add-event');
           }}/>
-          <IconComponent icon={null} nameToShow={"MC"} selected={true} /> 
+          <IconComponent icon={null} nameToShow={user?.first_name[0] + user?.last_name[0]} selected={true} /> 
           {/* todo: pass parameter with user information */}
         </div>:
         <div className="header-buttons"> 
