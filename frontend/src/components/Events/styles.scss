@@ -1,0 +1,89 @@
+@import '../../global.scss';
+
+.events-container {
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+
+    .events-return-button {
+        margin: 50px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .events-list{
+        padding: 40px 0px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+
+
+        .event-item {
+            background-color: white;
+            border: 1px solid $primary-color;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 320px;
+            height: 500px;
+            cursor: pointer;
+
+            .event-item-image {
+                min-height: 200px;
+                max-height: 200px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 120px;
+                background-color: #D5f3f2;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                border-bottom: 1px solid $primary-color;
+            }
+
+            .event-item-body {
+                padding: 0px 20px 20px 20px;
+                display: flex;
+                flex-direction: column;
+
+                .event-author {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    margin-bottom: 6px;
+                }
+
+                .event-title {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    margin: 0px;
+                    margin-bottom: 6px;
+                    color: $primary-color;
+                }
+
+                .event-description {
+                    font-size: 1rem;
+                    margin-bottom: 24px;
+                }
+
+                .event-time-location {
+                    font-size: 1rem;
+                    margin: 0px;
+                    margin-bottom: 6px;
+                }
+
+                    
+            }
+
+            .event-item-actions {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: auto;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
