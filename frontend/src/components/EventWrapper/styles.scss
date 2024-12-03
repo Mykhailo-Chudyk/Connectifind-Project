@@ -1,0 +1,70 @@
+@import '../../global.scss';
+
+.event-wrapper {
+    width: min(90%, 800px);
+    height: 130px;
+    background-color: white;
+    border: 2px solid $primary-color;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+
+
+    .event-icon{
+        aspect-ratio: 1/1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 6rem;
+        border-right: 2px solid $primary-color;
+    }
+
+    .event-body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+
+        p{
+            margin: 0;
+        }
+
+
+        .event-title{
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .event-time, .event-location{
+            font-size: 1rem;
+            margin-bottom: 3px;
+            color: $primary-color;
+            font-weight: 600;
+        }
+
+        .event-time-divider{
+            height: 1rem;
+            padding: 0 1px;
+            margin: 0 10px;
+            background-color: $primary-color;
+        }
+
+    }
+
+    .event-actions {
+        margin-left: auto;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 50px;
+
+        .event-actions-text{
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+    }
+}

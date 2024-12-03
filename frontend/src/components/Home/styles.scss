@@ -20,6 +20,7 @@
         align-items: center;
         padding: 30px;
         gap: 50px;
+        width: 100%;
 
         @media (max-width: 1200px) {
             flex-direction: column;
@@ -27,6 +28,12 @@
     }
 
     .space-top {
-        margin-top: 100px;
+        margin-top: 50px;
+    }
+
+    .vertical-scroll {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
     }
 }

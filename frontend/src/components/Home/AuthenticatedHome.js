@@ -2,9 +2,11 @@ import React from 'react';
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import EventWrapper from '../EventWrapper/EventWrapper';
 
 const AuthenticatedHome = () => {
   const user = useSelector((state) => state.user.user);
+  const userEvents = useSelector((state) => state.events.events);
 
   return (
     <div className='home-container'>
@@ -19,8 +21,10 @@ const AuthenticatedHome = () => {
       <div className='home-row space-top'>
         <h1>Your Events</h1>
       </div>
-      <div className='home-row'>
-        Actual Events will be displayed here...
+      <div className='home-row vertical-scroll'>
+        {userEvents.map((event) => (
+          <EventWrapper key={event.id} event={event} />
+        ))}
       </div>
       <div className='home-row space-top'>
         <h1>Explore public events nearby and join them</h1>
