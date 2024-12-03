@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Event
 from .serializers import EventSerializer
@@ -23,25 +23,32 @@ def create_event(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def list_events(request):
-    # current_time = timezone.now() 
-    events = Event.objects.filter(
-        Q(visibility='public') |
-        Q(authorId=request.user)
-        # time__gte=current_time: todo: uncomment this line to show only future events
-    )
+    if request.user.is_authenticated:
+        events = Event.objects.filter(
+            Q(visibility='public') |
+            Q(authorId=request.user)
+        )
+    else:
+        events = Event.objects.filter(visibility='public')
+
+    # TODO: add pagination && show only future events!
+    
     serializer = EventSerializer(events, many=True, context={'request': request})
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def get_event(request, uuid):
     try:
         event = Event.objects.get(pk=uuid)
-        serializer = EventSerializer(event, context={'request': request})
-        return Response(serializer.data)
+        if event.visibility == 'public' or (request.user.is_authenticated and event.authorId == request.user):
+            serializer = EventSerializer(event, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'You do not have permission to view this event.'}, status=status.HTTP_403_FORBIDDEN)
     except Event.DoesNotExist:
         raise Http404("Event does not exist.")
     

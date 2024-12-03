@@ -32,6 +32,7 @@ const AuthenticatedHome = () => {
     <div className='home-container'>
       <div className='home-header'>
         <h1>Hello, {user?.first_name}!</h1>
+        <h3>Time to find your next event!</h3>
       </div>
       <div className='home-row'>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>

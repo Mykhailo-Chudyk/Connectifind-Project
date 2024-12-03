@@ -1,3 +1,5 @@
+@import '../../global.scss';
+
 .home-container {
     display: flex;
     flex-direction: column;
@@ -10,9 +12,15 @@
 
     .home-header {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 60px;
+        height: 300px;
+
+        h3{
+            color: $primary-color;
+        }
     }
 
     .home-row {
@@ -26,6 +34,15 @@
         @media (max-width: 1200px) {
             flex-direction: column;
         }
+
+        h3{
+            display: flex;
+            align-items: center;
+            padding: 50px 150px;
+            text-align: center;
+            line-height: 2rem;
+            font-weight: 600;
+        }
     }
 
     .space-top {
@@ -38,4 +55,23 @@
         flex-direction: column;
         gap: 20px;
     }
+
+    .home-phrase-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .home-phrase {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: $primary-color;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite;
+            min-width: 300px;   
+        }
+    }
 }
+
