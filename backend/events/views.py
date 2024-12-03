@@ -9,12 +9,21 @@ from .serializers import EventSerializer
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from categories.models import Category
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_event(request):
     data = JSONParser().parse(request)
-    data['authorId'] = request.user.id  
+    data['authorId'] = request.user.id
+
+    # Convert category names to Category instances
+    category_names = data.get('categories', [])
+    categories = Category.objects.filter(name__in=category_names)
+    if len(categories) != len(category_names):
+        return JsonResponse({'error': 'One or more categories are invalid.'}, status=400)
+
+    data['categories'] = categories
     serializer = EventSerializer(data=data, context={'request': request})
     if serializer.is_valid():
         serializer.save()

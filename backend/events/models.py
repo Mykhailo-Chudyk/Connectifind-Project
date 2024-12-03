@@ -16,7 +16,8 @@ class Event(models.Model):
     code = models.CharField(max_length=6, null=True, blank=True) 
     categories = models.ManyToManyField(Category, blank=True)
     participants = models.ManyToManyField(User, related_name='joined_events', blank=True)
-
+    image = models.ImageField(upload_to='event_images/', blank=True, null=True)
+    duration = models.IntegerField(default=120)
 
     def __str__(self):
         return f"{self.title} - {self.location} on {self.time}"
