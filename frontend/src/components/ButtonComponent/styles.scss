@@ -21,10 +21,18 @@
     .primary {
         color: $primary-color;
         background-color: $secondary-text-color;
+
+        &:hover {
+            background-color: #c4f0ee;
+        }
     }
 
     .secondary {
         color: $secondary-text-color;
         background-color: $primary-color;
+
+        &:hover {
+            background-color: #1ea29e;
+        }
     }
 }

@@ -29,5 +29,9 @@ export const calculateTimeUntilEvent = (eventTime, duration) => {
   const days = differenceInDays(eventStart, now);
   const hours = differenceInHours(eventStart, now) % 24;
 
-  return `in ${days} days ${hours} hours`;
+  if (days > 0) {
+    return `in ${days} days`;
+  }
+
+  return `in ${hours} hours`;
 }; 

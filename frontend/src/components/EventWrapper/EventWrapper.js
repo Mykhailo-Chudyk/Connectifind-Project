@@ -3,8 +3,10 @@ import './styles.scss';
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { formatEventDateTime, calculateTimeUntilEvent } from "../../utils/dateTimeUtils";
 import { FaCalendarAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; 
 
 const EventWrapper = ({ event }) => {
+  const navigate = useNavigate();
   return (
     <div className='event-wrapper'>
         <div className="event-icon">
@@ -24,7 +26,7 @@ const EventWrapper = ({ event }) => {
         </div>
         <div className="event-actions">
             <p className="event-actions-text">{calculateTimeUntilEvent(event.time, 120)}</p>
-            <ButtonComponent text="Details" level="secondary" onClick={() => {}} />
+            <ButtonComponent text="Details" level="secondary" onClick={() => {navigate(`/events/${event.id}`)}} />
         </div>
     </div>
   );

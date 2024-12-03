@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('userToken');
     setIsAuthenticated(false);
     dispatch(clearUser());
+    window.location.reload();
   };
 
   return (
