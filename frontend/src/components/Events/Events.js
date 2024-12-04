@@ -24,6 +24,7 @@ const Events = () => {
     fetchEvents();
   }, []);
 
+
   return (
     <div className='events-container'>
       <h1>All Events</h1>

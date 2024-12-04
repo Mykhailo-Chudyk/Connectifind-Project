@@ -29,10 +29,18 @@ const AddEvent = () => {
     const handleChange = (e) => {
         const { name, value, type, files, options } = e.target;
         if (type === 'file') {
-            setEventData({
-                ...eventData,
-                [name]: files[0]
-            });
+            const file = files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                setEventData({
+                    ...eventData,
+                    [name]: reader.result 
+                });
+            };
+            reader.onerror = (error) => {
+                console.error('Error reading file:', error);
+            };
         } else if (name === 'categories') {
             const selectedCategories = Array.from(options)
                 .filter(option => option.selected)
@@ -70,7 +78,7 @@ const AddEvent = () => {
 
     return (
         <div className='add-event-container'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <h1>Create a new event</h1>
 
                 <span className="add-event-label">Image</span>
@@ -140,24 +148,25 @@ const AddEvent = () => {
                     ]}
                 />
                     
-                <select name="categories" multiple value={eventData.categories} onChange={handleChange}>
+                {/* TODO: Add categories */}
+                {/* <select name="categories" multiple value={eventData.categories} onChange={handleChange}>
                     {categories.map((category, index) => (
                         <option key={index} value={category}>{category}</option>
                     ))}
-                </select>
-                
+                </select> */}
+
                 
                 <div className="add-event-buttons">
                     <ButtonComponent
                         text="Cancel"
                         onClick={() => navigate('/events')}
                         level='primary'
-                        width='300px'
+                        width='250px'
                     />
                     <ButtonComponent
                         text="Create Event"
                         onClick={handleSubmit}
-                        width='300px'
+                        width='250px'
                     />
                 </div>
             </form>

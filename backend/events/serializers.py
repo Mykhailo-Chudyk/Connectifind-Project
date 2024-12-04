@@ -13,6 +13,7 @@ class EventSerializer(serializers.ModelSerializer):
     participants = UserSerializer(many=True, read_only=True)
     participant_count = serializers.SerializerMethodField()
     categories = CategorySerializer(many=True, read_only=True)
+    image = serializers.CharField(allow_blank=True, required=False)
     
     class Meta:
         model = Event

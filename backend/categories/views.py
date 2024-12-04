@@ -10,6 +10,5 @@ from .serializers import CategorySerializer
 @permission_classes([AllowAny])
 def list_categories(request):
     categories = Category.objects.all()
-    print(categories)
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)

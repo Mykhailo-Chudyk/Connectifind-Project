@@ -10,8 +10,7 @@ const EventWrapper = ({ event }) => {
   return (
     <div className='event-wrapper'>
         <div className="event-icon">
-            {event.icon && <img src={event.icon} alt="event icon" />}
-            {/* if not icon, then show default icon */}
+            {event.image && <img src={event.image} alt="event icon" />}
             {!event.icon && <FaCalendarAlt />}
         </div>
         <div className="event-body">

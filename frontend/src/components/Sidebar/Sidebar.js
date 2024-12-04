@@ -12,7 +12,6 @@ const Sidebar = ({ onLogout }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const userEvents = useSelector((state) => state.events.events);
-  console.log("userEvents: ", userEvents);
 
   useEffect(() => {
     dispatch(fetchUserEvents());
