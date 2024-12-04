@@ -8,13 +8,25 @@ import MyEvent from './components/MyEvent.js';
 import AuthenticatedHome from './components/Home/AuthenticatedHome';
 import UnauthenticatedHome from './components/Home/UnauthenticatedHome';
 import Layout from './Layout.js';
-import React, {useContext} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthContext';
 
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      setLoading(false);
+    };
+    checkAuth();
+  }, []);
+
+  if (loading) {
+    return <div></div>;
+  }
 
   return (
     <Router>

@@ -62,8 +62,8 @@ const Sidebar = ({ onLogout }) => {
           icon={event.icon}
           isFaComponent={false}
           nameToShow={event?.title[0]}
-          selected={selectedIcon === 'event'}
-          onClick={() => navigate(`/event/${event.id}`)}
+          selected={selectedIcon === 'event' && location.pathname.startsWith(`/event/${event.id}`)}
+          onClick={() => navigate(`/event/${event.id}/about`)}
         />
       ))}
       <IconComponent
