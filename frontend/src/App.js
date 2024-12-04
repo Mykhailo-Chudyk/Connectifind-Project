@@ -3,7 +3,7 @@ import SignUp from './components/Authorization/SignUp.js';
 import Login from './components/Authorization/Login.js';
 import AddEvent from './components/AddEvent/AddEvent.js';
 import Events from './components/Events/Events.js';
-import Event from './components/Event.js';
+import Event from './components/Event/Event.js';
 import MyEvent from './components/MyEvent.js';
 import AuthenticatedHome from './components/Home/AuthenticatedHome';
 import UnauthenticatedHome from './components/Home/UnauthenticatedHome';

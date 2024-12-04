@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import eventservice from '../services/eventservice.js';
+import eventservice from '../../services/eventservice.js';
+import './styles.scss';
 
 const Event = () => {
   const { eventId } = useParams();  
@@ -50,8 +51,7 @@ const Event = () => {
   }
 
   return (
-    <div>
-      <h1>Event Details</h1>
+    <div className="event-container">
       {eventDetails ? (
         <div>
           <h2>{eventDetails.title}</h2>
