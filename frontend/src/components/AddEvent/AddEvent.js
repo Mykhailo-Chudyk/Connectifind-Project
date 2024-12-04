@@ -100,6 +100,7 @@ const AddEvent = () => {
                     value={eventData.description} 
                     onChange={handleChange} 
                     placeholder="Description" 
+                    multiline={true}
                 />
                 
                 <InputField 

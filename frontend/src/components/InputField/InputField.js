@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.scss';
 
-const InputField = ({ label, type, name, value, onChange, placeholder, options }) => {
+const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline }) => {
     const allowedTypes = ['text', 'number', 'email', 'password', 'date', 'time', 'url', 'datetime-local'];
 
     const inputType = allowedTypes.includes(type) ? type : 'text';
@@ -22,7 +22,14 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options }
                         </option>
                     ))}
                 </select>
-            ) : (
+            ) : multiline ? (
+                <textarea
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    className="textarea-field"
+                />) : (
                 <input 
                     type={inputType} 
                     name={name} 
