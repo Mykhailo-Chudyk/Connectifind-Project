@@ -110,6 +110,16 @@ const listUserEvents = async () => {
   }
 };
 
+const getCategories = async () => {
+  try {
+    const response = await api.get('/api/categories/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
@@ -122,4 +132,5 @@ export default {
   sendChatMessage,
   listAllChats,
   listUserEvents,
+  getCategories,
 };

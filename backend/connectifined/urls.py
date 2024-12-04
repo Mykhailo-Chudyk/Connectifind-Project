@@ -8,6 +8,7 @@ from users.views import register_user, login_user, delete_user, get_user_info
 from events.views import create_event, list_events, get_event, join_event, leave_event, list_user_events
 from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
+from categories.views import list_categories
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,5 @@ urlpatterns = [
     path('chats/send/<uuid:eventId>/<uuid:recipientId>/', send_chat_message, name='send-chat-message'),
     path('events/<uuid:eventId>/users-with-messages/', list_users_with_messages, name='users-with-messages'),
     path('events/user/', list_user_events, name='list-user-events'),
+    path('api/categories/', list_categories, name='list-categories'),
 ]
