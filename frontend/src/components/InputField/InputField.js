@@ -12,7 +12,7 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options }
             {options ? (
                 <select 
                     name={name} 
-                    className="input-field" 
+                    className="select-field" 
                     value={value} 
                     onChange={onChange}
                 >
