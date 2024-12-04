@@ -1,7 +1,7 @@
 import './App.css';
 import SignUp from './components/Authorization/SignUp.js';
 import Login from './components/Authorization/Login.js';
-import AddEvent from './components/AddEvent.js';
+import AddEvent from './components/AddEvent/AddEvent.js';
 import Events from './components/Events/Events.js';
 import Event from './components/Event.js';
 import MyEvent from './components/MyEvent.js';
@@ -23,18 +23,22 @@ function App() {
         <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
         <Route element={<Layout />}>
           <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
-          <Route path="/add-event" element={<AddEvent />} />
           <Route path="/events/" element={<Events/>} />
           <Route path="/events/:eventId" element={<Event/>} />
-          <Route path="/me/profile" element={<>Default profile</>} />
-          <Route path="/me/settings" element={<>Settings</>} />
-          <Route path="/event/:eventId/me" element={<MyEvent type="me" />} />
-          <Route path="/event/:eventId/feed" element={<MyEvent type="feed" />} />
-          <Route path="/event/:eventId/people" element={<MyEvent type="people" />} />
-          <Route path="/event/:eventId/people/:userId" element={<MyEvent type="person" />} />
-          <Route path="/event/:eventId/chats" element={<MyEvent type="chats" />} />
-          <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
-          <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
+          {isAuthenticated && (
+            <>
+              <Route path="/add-event" element={<AddEvent />} />
+              <Route path="/me/profile" element={<>Default profile</>} />
+              <Route path="/me/settings" element={<>Settings</>} />
+              <Route path="/event/:eventId/me" element={<MyEvent type="me" />} />
+              <Route path="/event/:eventId/feed" element={<MyEvent type="feed" />} />
+              <Route path="/event/:eventId/people" element={<MyEvent type="people" />} />
+              <Route path="/event/:eventId/people/:userId" element={<MyEvent type="person" />} />
+              <Route path="/event/:eventId/chats" element={<MyEvent type="chats" />} />
+              <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
+              <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
+            </>
+          )}
         </Route>
         <Route path="/" element={<UnauthenticatedHome />} />
         <Route path="*" element={<Navigate to="/" />} />

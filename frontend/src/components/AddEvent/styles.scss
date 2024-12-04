@@ -1,0 +1,22 @@
+.add-event-container {
+    padding: 60px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .add-event-label {
+        font-weight: 600;
+    }
+
+    .add-event-buttons {
+        margin-right: auto;
+        display: flex;
+        gap: 20px;
+    }
+}
