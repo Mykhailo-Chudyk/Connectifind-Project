@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import eventservice from '../../services/eventservice.js';
 import './styles.scss';
+import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import EventDetails from '../EventDetails/EventDetails.js';
 
 const Event = () => {
   const { eventId } = useParams();  
   const [eventDetails, setEventDetails] = useState(null);
   const [isParticipant, setIsParticipant] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -14,6 +17,7 @@ const Event = () => {
         const details = await eventservice.getEventById(eventId);
         setEventDetails(details);
         setIsParticipant(details.is_participant);
+        setIsLoading(false);
       } catch (err) {
         console.error('Error retrieving event:', err);
       }
@@ -50,26 +54,26 @@ const Event = () => {
     window.location.href = `/event/${eventId}/about`;
   }
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!eventDetails) {
+    return <p>No event details to display. Please check if the event ID is correct.</p>;
+  }
+
   return (
     <div className="event-container">
-      {eventDetails ? (
-        <div>
-          <h2>{eventDetails.title}</h2>
-          <p>{eventDetails.description}</p>
-          <p>Location: {eventDetails.location}</p>
-          <p>Time: {new Date(eventDetails.time).toLocaleString()}</p>
-          <p>Capacity: {eventDetails.capacity || 'Not specified'}</p>
-          <p>Author: {eventDetails.author.first_name + " " + eventDetails.author.last_name}</p>
-          <p>Visibility: {eventDetails.visibility}</p>
-          <p>Number of participants: {eventDetails.participant_count}</p>
-          <h3>Participants:</h3>
-          {eventDetails.participants.map((participant) => <p>{participant.first_name} {participant.last_name}</p>)}
-          {!eventDetails.is_creator ? <button onClick={joinLeaveEvent}>{isParticipant? "Leave" : "Join"}</button> : <p>This is your event</p>}
-          {(eventDetails.is_creator || isParticipant) && <button onClick={goToEvent}>Go to Event</button>}
+      <h2>{eventDetails.title}</h2>
+      <EventDetails eventDetails={eventDetails}/>
+      <div className="event-details-footer">
+        <p className="event-details-spots">Spots left: {eventDetails.capacity - eventDetails.participant_count}</p>
+        <div className="event-details-buttons">
+          <ButtonComponent text={"Return"} onClick={() => window.history.back()} width='200px' level='primary'/>
+          {!eventDetails.is_creator && <ButtonComponent text={isParticipant? "Leave" : "Join"} onClick={joinLeaveEvent} width='200px' />}
+          {(eventDetails.is_creator || isParticipant) && <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>}
         </div>
-      ) : (
-        <p>No event details to display. Please check if the event ID is correct.</p>
-      )}
+      </div>
     </div>
   );
 };

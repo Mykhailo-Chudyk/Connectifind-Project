@@ -2,6 +2,22 @@
     display: flex;
     flex-direction: column;
     padding: 60px;
+    gap: 24px;
+
+    .event-details-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .event-details-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .event-details-spots {
+            margin-left: 24px;
+            font-weight: 500;
+        }
+    }
 
 
 }
