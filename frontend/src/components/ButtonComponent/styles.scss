@@ -35,4 +35,12 @@
             background-color: #1ea29e;
         }
     }
+
+    .dangerous {
+        background-color: red;
+
+        &:hover {
+            background-color: #bb0101;
+        }
+    }
 }

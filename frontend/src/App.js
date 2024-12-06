@@ -12,7 +12,7 @@ import Layout from './Layout.js';
 import React, {useContext, useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthContext';
-
+import Settings from './components/Settings/Settings.js';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -42,7 +42,7 @@ function App() {
             <>
               <Route path="/add-event" element={<AddEvent />} />
               <Route path="/me" element={<DefaultProfile />} />
-              <Route path="/settings" element={<>Settings</>} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/event/:eventId/me" element={<MyEvent type="me" />} />
               <Route path="/event/:eventId/feed" element={<MyEvent type="feed" />} />
               <Route path="/event/:eventId/people" element={<MyEvent type="people" />} />

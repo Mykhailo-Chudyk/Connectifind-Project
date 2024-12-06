@@ -1,0 +1,21 @@
+@import '../../global.scss';
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px;
+
+    p {
+        font-size: 1.2rem;
+        color: $primary-color;
+        font-weight: 500;
+    }
+
+    
+    .button-container {
+        margin-top: 20px;
+        margin-bottom: 40px;
+        margin-right: auto;
+    }
+}
