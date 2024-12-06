@@ -25,8 +25,33 @@ const updateUserProfile = async (profileData) => {
   }
 };
 
+const changePassword = async (currentPassword, newPassword) => {
+  try {
+    const response = await api.post('users/change_password/', {
+      currentPassword,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error changing password:', error.response);
+    throw error.response.data;
+  }
+};
+
+const deleteAccount = async () => {
+  try {
+    const response = await api.delete('users/delete_account/');
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting account:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   deleteUser, 
   getUserInfo,
   updateUserProfile,
+  changePassword,
+  deleteAccount,
 };

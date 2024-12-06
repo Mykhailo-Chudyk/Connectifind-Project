@@ -8,6 +8,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import User
+from events.models import Event
+from feed_posts.models import FeedPost
+from chats.models import Chat
+from event_participants.models import EventParticipant
+from user_messages.models import Message
 from .serializers import UserSerializer
 import json
 
@@ -54,16 +59,6 @@ def login_user(request):
         return JsonResponse({'error': 'Invalid credentials'}, status=401)
     
 
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def delete_user(request):
-    try:
-        request.user.delete()
-        return Response({"message": "User deleted successfully!"}, status=204)
-    except Exception as e:
-        return Response({"error": str(e)}, status=400)
-    
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_info(request):
@@ -85,5 +80,49 @@ def update_user_profile(request):
         user.save()
 
         return Response({"message": "User profile updated successfully!"}, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    try:
+        data = json.loads(request.body)
+        user = request.user
+
+        current_password = data.get('currentPassword')
+        new_password = data.get('newPassword')
+
+        if not user.check_password(current_password):
+            return Response({"error": "Current password is incorrect"}, status=400)
+
+        user.set_password(new_password)
+        user.save()
+
+        return Response({"message": "Password changed successfully!"}, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_account(request):
+    try:
+        user = request.user
+
+        Event.objects.filter(authorId=user).delete()
+
+        user.joined_events.clear()
+
+        EventParticipant.objects.filter(userId=user).delete()
+
+        FeedPost.objects.filter(authorId=user).delete()
+
+        Message.objects.filter(author=user).delete()
+
+        Chat.objects.filter(participants=user).delete()
+
+        user.delete()
+
+        return Response({"message": "User account and all associated data deleted successfully!"}, status=204)
     except Exception as e:
         return Response({"error": str(e)}, status=400)

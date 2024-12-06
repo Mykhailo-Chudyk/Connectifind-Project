@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from users.views import register_user, login_user, delete_user, get_user_info, update_user_profile
+from users.views import register_user, login_user, get_user_info, update_user_profile, change_password, delete_account
 from events.views import create_event, list_events, get_event, join_event, leave_event, list_user_events
 from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
@@ -16,7 +16,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', register_user, name='register_user'),
     path('login/', login_user, name='login_user'),
-    path('users/delete/', delete_user, name='delete_user'),
     path('users/get_user_info/', get_user_info, name='get_user_info'),
     path('events/create/', create_event, name='create-event'),
     path('events/list/', list_events, name='list-event'),
@@ -31,4 +30,6 @@ urlpatterns = [
     path('events/user/', list_user_events, name='list-user-events'),
     path('api/categories/', list_categories, name='list-categories'),
     path('users/update_profile/', update_user_profile, name='update_user_profile'),
+    path('users/change_password/', change_password, name='change_password'),
+    path('users/delete_account/', delete_account, name='delete_account'),
 ]
