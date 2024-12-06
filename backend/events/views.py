@@ -82,6 +82,9 @@ def leave_event(request, uuid):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_user_events(request):
-    events = Event.objects.filter(authorId=request.user)
+    events = Event.objects.filter(
+        Q(authorId=request.user) | 
+        Q(participants=request.user)
+    )
     serializer = EventSerializer(events, many=True, context={'request': request})
     return Response(serializer.data)
