@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import eventservice from '../../services/eventservice.js'; 
-
+import './styles.scss';
+import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import InputField from '../InputField/InputField.js';
 const MyEventFeed = ({ eventDetails }) => {
     const [posts, setPosts] = useState([]);
     const [newPostContent, setNewPostContent] = useState('');
@@ -31,24 +33,37 @@ const MyEventFeed = ({ eventDetails }) => {
     }, [eventDetails]);
 
     return (
-        <>
-            <h1>Event Feed</h1>
+        <div className="feed-container">
+            <h1>Feed</h1>
             {posts.map(post => (
-                <div key={post.id}>
-                    <p>{post.content}</p>
-                    <p>Author: {post.author.first_name + " " + post.author.last_name}</p>
-                    <p>Posted on: {new Date(post.time).toLocaleString()}</p>
+                <div key={post.id} className="event-details-container">
+                    <div className="event-details-header">
+                        <div className="event-details-date">
+                            <p>{post.author.first_name + " " + post.author.last_name}</p>
+                        </div>
+                        <div className="event-details-location">
+                            <p>{new Date(post.time).toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <div className="event-details-body">
+                        <p>{post.content}</p>
+                    </div>
                 </div>
             ))}
-        
-            <input
-                type="text"
-                value={newPostContent}
-                onChange={(e) => setNewPostContent(e.target.value)}
-                placeholder="Write something..."
-            />
-            <button onClick={addPost}>Submit</button>
-        </>
+            <div className="feed-post-bottom">
+                <div className="feed-post-input">
+                    <InputField 
+                        value={newPostContent}
+                        onChange={(e) => setNewPostContent(e.target.value)}
+                        placeholder="Write something..."
+                        multiline={true}
+                    />  
+                </div>
+                <div className="feed-post-button">  
+                    <ButtonComponent text="Submit" onClick={addPost} width="300px"/>
+                </div>
+            </div>
+        </div>
     );
 };
 

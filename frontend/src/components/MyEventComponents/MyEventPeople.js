@@ -9,7 +9,7 @@ const MyEventPeople = ({ eventDetails }) => {
 
     return (
         <>
-            <h3>Participants:</h3>
+            <h3>Attendees:</h3>
             {eventDetails?.participants.map((participant) => 
             <div onClick={() => navigate('/event/' + eventDetails.id + '/people/' + participant.id)}>
                 {participant.first_name} {participant.last_name}

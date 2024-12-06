@@ -13,6 +13,7 @@ const Sidebar = ({ onLogout }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const userEvents = useSelector((state) => state.events.events);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(fetchUserEvents());
@@ -35,6 +36,7 @@ const Sidebar = ({ onLogout }) => {
       try {
         const details = await eventservice.getEventById(eventId);
         setEventDetails(details);
+        setLoading(false);
       } catch (err) {
         console.error('Error retrieving event:', err);
       }
@@ -51,7 +53,7 @@ const Sidebar = ({ onLogout }) => {
     <>
       <IconComponent
         key={eventDetails.id}
-        icon={eventDetails.icon}
+        icon={eventDetails?.icon}
         isFaComponent={false}
         nameToShow={eventDetails?.title[0]}
         selected={location.pathname.endsWith(`/about`)}
@@ -89,6 +91,10 @@ const Sidebar = ({ onLogout }) => {
       />
     </>
   );
+
+  if (loading && location.pathname.startsWith('/event/')) {
+    return <div></div>;
+  }
 
   return (
     <div className="sidebar">

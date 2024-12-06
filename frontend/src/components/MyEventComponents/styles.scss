@@ -1,0 +1,30 @@
+.feed-container {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    gap: 20px;
+
+    .feed-post {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .feed-post-bottom {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+
+        .feed-post-input {
+            width: 100%;
+            margin-right: auto;
+            height: 100px;
+        }
+
+        .feed-post-button {
+            width: 100px;
+            margin-left: auto;
+            align-self: flex-end;
+        }
+    }
+}

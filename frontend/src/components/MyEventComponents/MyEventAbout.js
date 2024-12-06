@@ -1,25 +1,26 @@
 import React from "react";
+import EventDetails from "../EventDetails/EventDetails";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
-
-const MyEventAbout = ({ eventDetails }) => {
+const MyEventAbout = ({eventDetails}) => {
 
     if (!eventDetails) {
         return null;
     }
 
     return (
-        <>
-          <h2>{eventDetails.title}</h2>
-          <p>{eventDetails.description}</p>
-          <p>Location: {eventDetails.location}</p>
-          <p>Time: {new Date(eventDetails.time).toLocaleString()}</p>
-          <p>Capacity: {eventDetails.capacity || 'Not specified'}</p>
-          <p>Author: {eventDetails.author.first_name + " " + eventDetails.author.last_name}</p>
-          <p>Visibility: {eventDetails.visibility}</p>
-          <p>Number of participants: {eventDetails.participant_count}</p>
-          <h3>Participants:</h3>
-          {eventDetails.participants.map((participant) => <p>{participant.first_name} {participant.last_name}</p>)}
-        </>
+        <div className="event-container">
+            <h2>{eventDetails.title}</h2>
+            <EventDetails eventDetails={eventDetails}/>
+            <div className="event-details-footer">
+            {/* <p className="event-details-spots">Spots left: {eventDetails.capacity - eventDetails.participant_count}</p>
+            <div className="event-details-buttons">
+                <ButtonComponent text={"Return"} onClick={() => window.history.back()} width='200px' level='primary'/>
+                {!eventDetails.is_creator && <ButtonComponent text={isParticipant? "Leave" : "Join"} onClick={joinLeaveEvent} width='200px' />}
+                {(eventDetails.is_creator && !isParticipant) && <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>}
+            </div> */}
+            </div>
+        </div>
     );
 };
 

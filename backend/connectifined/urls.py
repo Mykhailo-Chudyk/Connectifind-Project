@@ -9,6 +9,7 @@ from events.views import create_event, list_events, get_event, join_event, leave
 from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
 from categories.views import list_categories
+from event_participants.views import update_goal
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('users/update_profile/', update_user_profile, name='update_user_profile'),
     path('users/change_password/', change_password, name='change_password'),
     path('users/delete_account/', delete_account, name='delete_account'),
+    path('events/<uuid:event_id>/update-goal/', update_goal, name='update-goal'),
 ]

@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import base64
 from django.core.files.base import ContentFile
+from event_participants.models import EventParticipant
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -32,9 +33,9 @@ def list_events(request):
         events = Event.objects.filter(
             Q(visibility='public') |
             Q(authorId=request.user)
-        )
+        ).prefetch_related('participants')
     else:
-        events = Event.objects.filter(visibility='public')
+        events = Event.objects.filter(visibility='public').prefetch_related('participants')
 
     # TODO: add pagination && show only future events!
     
@@ -63,9 +64,25 @@ def join_event(request, uuid):
 
     if event.authorId == request.user:
         return Response({'error': 'You cannot join your own event.'}, status=status.HTTP_403_FORBIDDEN)
-    
-    event.participants.add(request.user)
-    return Response({'message': 'You have successfully joined the event!'})
+
+    # Check if the user is already a participant
+    participant, created = EventParticipant.objects.get_or_create(
+        eventId=event,
+        userId=request.user,
+        defaults={
+            'firstName': request.user.first_name,
+            'lastName': request.user.last_name,
+            'description': '',
+            'goal': '',
+            'avatar': request.user.profile.avatar if hasattr(request.user, 'profile') else ''
+        }
+    )
+
+    if created:
+        event.participants.add(request.user)
+        return Response({'message': 'You have successfully joined the event!'}, status=status.HTTP_201_CREATED)
+    else:
+        return Response({'message': 'You are already a participant of this event.'}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

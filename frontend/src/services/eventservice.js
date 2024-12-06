@@ -120,6 +120,17 @@ const getCategories = async () => {
   }
 };
 
+const updateGoal = async (eventId, goal) => {
+  try {
+    console.log(goal);
+    const response = await api.patch(`events/${eventId}/update-goal/`, { goal });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating goal:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
@@ -133,4 +144,5 @@ export default {
   listAllChats,
   listUserEvents,
   getCategories,
+  updateGoal,
 };
