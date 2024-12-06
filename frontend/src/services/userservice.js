@@ -15,7 +15,18 @@ const getUserInfo = async () => {
   return response.data;
 };
 
+const updateUserProfile = async (profileData) => {
+  try {
+    const response = await api.post('users/update_profile/', profileData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating user profile:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
-  deleteUser,
+  deleteUser, 
   getUserInfo,
+  updateUserProfile,
 };

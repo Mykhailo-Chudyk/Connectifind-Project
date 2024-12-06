@@ -23,6 +23,10 @@
         color: $text-color;
         border: 0.5px solid #1A8A86;
 
+        &:disabled {
+            background-color: #59d3cf;
+        }
+
         &:placeholder {
             color: #18807D;
         }

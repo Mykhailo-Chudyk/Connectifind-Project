@@ -71,7 +71,7 @@ const Event = () => {
         <div className="event-details-buttons">
           <ButtonComponent text={"Return"} onClick={() => window.history.back()} width='200px' level='primary'/>
           {!eventDetails.is_creator && <ButtonComponent text={isParticipant? "Leave" : "Join"} onClick={joinLeaveEvent} width='200px' />}
-          {(eventDetails.is_creator || isParticipant) && <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>}
+          {(eventDetails.is_creator && !isParticipant) && <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>}
         </div>
       </div>
     </div>

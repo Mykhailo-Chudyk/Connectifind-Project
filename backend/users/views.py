@@ -70,3 +70,20 @@ def get_user_info(request):
     user = request.user
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_user_profile(request):
+    try:
+        data = json.loads(request.body)
+        user = request.user
+
+        user.first_name = data.get('firstName', user.first_name)
+        user.last_name = data.get('lastName', user.last_name)
+        user.description = data.get('description', user.description)
+        user.avatar = data.get('avatar', user.avatar)
+        user.save()
+
+        return Response({"message": "User profile updated successfully!"}, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)

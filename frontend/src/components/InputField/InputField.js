@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.scss';
 
-const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline }) => {
+const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline, disabled }) => {
     const allowedTypes = ['text', 'number', 'email', 'password', 'date', 'time', 'url', 'datetime-local'];
 
     const inputType = allowedTypes.includes(type) ? type : 'text';
@@ -37,6 +37,7 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options, 
                     placeholder={placeholder} 
                     value={value} 
                     onChange={onChange}
+                    disabled={disabled}
                 />
             )}
         </div>

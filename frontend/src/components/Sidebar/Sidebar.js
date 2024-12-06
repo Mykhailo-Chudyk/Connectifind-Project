@@ -19,8 +19,8 @@ const Sidebar = ({ onLogout }) => {
 
   // Determine which icon should be selected based on the current path
   const getSelectedIcon = () => {
-    if (location.pathname.startsWith('/me/profile')) return 'profile';
-    if (location.pathname.startsWith('/me/settings')) return 'settings';
+    if (location.pathname.startsWith('/me')) return 'profile';
+    if (location.pathname.startsWith('/settings')) return 'settings';
     if (location.pathname.startsWith('/event/')) return 'event';
     if (location.pathname.startsWith('/add-event')) return 'add-event';
     return 'home';
@@ -39,13 +39,13 @@ const Sidebar = ({ onLogout }) => {
       <IconComponent
         icon={<FontAwesomeIcon icon={faUser} />}
         selected={selectedIcon === 'profile'}
-        onClick={() => navigate('/me/profile')}
+        onClick={() => navigate('/me')}
         isFaComponent={true}
       />
       <IconComponent
         icon={<FontAwesomeIcon icon={faCog} />}
         selected={selectedIcon === 'settings'}
-        onClick={() => navigate('/me/settings')}
+        onClick={() => navigate('/settings')}
         isFaComponent={true}
       />
       <IconComponent
