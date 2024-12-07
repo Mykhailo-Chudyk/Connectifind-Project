@@ -57,7 +57,7 @@ const AuthenticatedHome = () => {
       <div className='home-row'>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>
         {/* TODO: add functionality */}
-        <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {}} width="345px"/>
+        {/* <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {}} width="345px"/> */}
         <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="345px"/>
       </div>
       <div className='home-row space-top'>

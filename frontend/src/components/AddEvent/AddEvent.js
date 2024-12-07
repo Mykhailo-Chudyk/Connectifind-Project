@@ -72,14 +72,16 @@ const AddEvent = () => {
             navigate('/events');
         } catch (error) {
             console.error('Failed to create event:', error);
-            alert('Failed to create event.');
         }
     };
 
     return (
         <div className='add-event-container'>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <h1>Create a new event</h1>
+                <div className='add-event-header'>
+                    <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
+                    <h1>Create a new event</h1>
+                </div>
 
                 <span className="add-event-label">Image</span>
                 <input type="file" name="image" onChange={handleChange} />
@@ -160,7 +162,7 @@ const AddEvent = () => {
                 <div className="add-event-buttons">
                     <ButtonComponent
                         text="Cancel"
-                        onClick={() => navigate('/events')}
+                        onClick={() => window.history.back()}
                         level='primary'
                         width='250px'
                     />

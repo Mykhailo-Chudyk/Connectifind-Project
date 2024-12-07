@@ -34,13 +34,13 @@ const Settings = () => {
     return (
         <div className="settings-container">
             <h1>Settings</h1>
-            <p>Update your password</p>
+            <p className="settings-label">Update your password</p>
             <InputField label="Current Password" type="password" placeholder='Enter your current password' value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
             <InputField label="New Password" type="password" placeholder='Enter your new password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
             <InputField label="Confirm New Password" type="password" placeholder='Confirm your new password' value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
             <ButtonComponent text="Update Password" onClick={handleChangePassword} width='200px' />
-            <h1>Delete Account</h1>
-            <p>This action cannot be undone.</p>
+            <h1 className='settings-delete'>Delete Account</h1>
+            <p className="settings-label">This action cannot be undone.</p>
             <ButtonComponent text="Delete Account" onClick={handleDeleteAccount} width='200px' isDangerous={true} />
         </div>
     );

@@ -29,7 +29,7 @@ const Events = () => {
     <div className='events-container'>
       <div className='events-header'>
         <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
-        <h1>All Events</h1>
+        <h1>All events</h1>
       </div>
       {error && <p>{error}</p>}
       <div className='events-list'>

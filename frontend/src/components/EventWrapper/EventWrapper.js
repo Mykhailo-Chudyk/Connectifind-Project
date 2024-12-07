@@ -11,7 +11,7 @@ const EventWrapper = ({ event }) => {
     <div className='event-wrapper'>
         <div className="event-icon">
             {event.image && <img src={event.image} alt="event icon" />}
-            {!event.icon && <FaCalendarAlt />}
+            {!event.image && <FaCalendarAlt />}
         </div>
         <div className="event-body">
             <p className="event-title">{event.title}</p>

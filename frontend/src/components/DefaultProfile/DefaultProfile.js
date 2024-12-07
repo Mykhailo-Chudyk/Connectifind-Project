@@ -7,10 +7,11 @@ import { useState } from 'react';
 import InputField from '../InputField/InputField.js';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import userService from '../../services/userservice';
-
+import { useNavigate } from 'react-router-dom';
 
 const DefaultProfile = () => {
     const user = useSelector(state => state.user);
+    const navigate = useNavigate();
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
     const [userDescription, setUserDescription] = useState('');
@@ -41,10 +42,14 @@ const DefaultProfile = () => {
 
     return (
         <div className="default-profile-container">
-            <h1>Your Profile</h1>
-            <p className="default-profile-description">
-                This is the default profile that will be displayed in all the events. Your goal joining for the event is customized and can be modified on the main page of the event. This can be also your organizational name if you are the onc who creates an event.
-            </p>
+            <div className='default-profile-header'>
+                <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
+                <h1>Your Profile</h1>
+            </div>
+            {/* It looks better with this description */}
+            {/* <p className="default-profile-description">
+                This is the default profile that will be displayed at all events. Your goal for joining the event is customizable and can be modified on the event's main page. This can also represent your organizational name if you are the one creating the event.
+            </p> */}
             <div className="default-profile-avatar">
                 {/* TODO: Add avatar upload && make sure that it's properly displayed */}
                 {user.user?.avatar ? <img src={user.user?.avatar} alt="Default profile avatar" /> : <FontAwesomeIcon icon={faUserCircle} />}
@@ -53,6 +58,14 @@ const DefaultProfile = () => {
                 <div className="default-profile-name-input">
                     <InputField label="First Name" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} />
                 </div>
+                {/* <div className="default-profile-name-input">
+                    <InputField label="Last Name" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} />
+                </div> */}
+            </div>
+            <div className="default-profile-name">
+                {/* <div className="default-profile-name-input">
+                    <InputField label="First Name" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} />
+                </div> */}
                 <div className="default-profile-name-input">
                     <InputField label="Last Name" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} />
                 </div>

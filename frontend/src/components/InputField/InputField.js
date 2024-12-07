@@ -29,7 +29,8 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options, 
                     onChange={onChange}
                     placeholder={placeholder}
                     className="textarea-field"
-                />) : (
+                />
+            ) : (
                 <input 
                     type={inputType} 
                     name={name} 
