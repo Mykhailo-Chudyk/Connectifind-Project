@@ -46,6 +46,7 @@ const DefaultProfile = () => {
                 <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
                 <h1>Your Profile</h1>
             </div>
+            <p className="default-profile-label">Modify your profile information</p>
             {/* It looks better with this description */}
             {/* <p className="default-profile-description">
                 This is the default profile that will be displayed at all events. Your goal for joining the event is customizable and can be modified on the event's main page. This can also represent your organizational name if you are the one creating the event.
