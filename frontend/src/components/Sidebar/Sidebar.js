@@ -130,10 +130,10 @@ const Sidebar = ({ onLogout }) => {
           {userEvents.map((event) => (
             <IconComponent
               key={event.id}
-              icon={event.icon}
+              icon={event.image}
               isFaComponent={false}
               nameToShow={event?.title[0]}
-              selected={selectedIcon === 'event' && location.pathname.startsWith(`/event/${event.id}`)}
+              selected={true}
               onClick={() => navigate(`/event/${event.id}/about`)}
             />
           ))}
