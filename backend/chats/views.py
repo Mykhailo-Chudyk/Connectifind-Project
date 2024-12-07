@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Chat, Event, User
+from user_messages.models import Message
 from .serializers import ChatMessageSerializer
 from users.serializers import UserSerializer
 from rest_framework import status
@@ -14,50 +15,41 @@ from django.db.models import Q
 def list_chat_messages(request, eventId, senderId):
     event = get_object_or_404(Event, pk=eventId)
     sender = get_object_or_404(User, pk=senderId)
-    chat = Chat.objects.filter(event=event, participants__in=[sender, request.user]).distinct()
-    if chat.exists():
-        messages = chat.first().messages.all()
+    
+    # Retrieve the chat where both the current user and sender are participants
+    chat = Chat.objects.filter(
+        event=event,
+        participants=request.user
+    ).filter(
+        participants=sender
+    ).distinct().first()
+
+    if chat:
+        # Retrieve all messages in the specific chat, ordered by time
+        messages = Message.objects.filter(chat=chat).order_by('time')
         serializer = ChatMessageSerializer(messages, many=True)
         return Response(serializer.data)
     else:
         return Response({"error": "No chat found between these users for this event"}, status=404)
     
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def list_chat_messages(request, eventId, senderId):
-    event = get_object_or_404(Event, pk=eventId)
-    sender = get_object_or_404(User, pk=senderId)
-    
-    chats = Chat.objects.filter(event=event, participants=sender).filter(participants=request.user)
-
-    if chats.exists():
-        chat = chats.first()
-        messages = chat.message_set.all() 
-        serializer = ChatMessageSerializer(messages, many=True)
-        return Response(serializer.data)
-    else:
-        new_chat = Chat.objects.create(event=event)
-        new_chat.participants.add(request.user, sender)
-        new_chat.save()
-        return Response({"message": "New chat created, no messages yet"}, status=status.HTTP_201_CREATED)
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def send_chat_message(request, eventId, recipientId):
     event = get_object_or_404(Event, pk=eventId)
     recipient = get_object_or_404(User, pk=recipientId)
 
-    chat, created = Chat.objects.get_or_create(
+    # Retrieve or create a chat with both participants and the event
+    chat = Chat.objects.filter(
         event=event,
-        defaults={'event': event}
-    )
-    chat.participants.add(request.user, recipient)
+        participants=request.user
+    ).filter(
+        participants=recipient
+    ).distinct().first()
 
-    if chat.participants.count() > 2:
+    if not chat:
+        # Create a new chat if none exists
         chat = Chat.objects.create(event=event)
-        chat.participants.set([request.user, recipient])
+        chat.participants.add(request.user, recipient)
 
     serializer = ChatMessageSerializer(data=request.data)
     if serializer.is_valid():
@@ -73,7 +65,7 @@ def list_users_with_messages(request, eventId):
     current_user = request.user
 
     chats = Chat.objects.filter(event=event, participants=current_user)
-    
+
     users_with_messages = User.objects.filter(
         chats__in=chats
     ).exclude(id=current_user.id).distinct()
