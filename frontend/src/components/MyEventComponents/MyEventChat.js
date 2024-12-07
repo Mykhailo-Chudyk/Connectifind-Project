@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import eventservice from '../../services/eventservice.js'; 
+import './styles.scss';
+import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import InputField from '../InputField/InputField.js';
 
 const MyEventChat = ({ eventDetails }) => {
     const location = useLocation();
@@ -36,8 +39,6 @@ const MyEventChat = ({ eventDetails }) => {
             const foundUser = eventDetails.participants.find(p => p.id === chatPartnerId);
             setChatPartner(foundUser);
         }
-
-        console.log(chatPartnerId);
     }, [eventDetails, chatPartnerId]);
 
     useEffect(() => {
@@ -47,23 +48,37 @@ const MyEventChat = ({ eventDetails }) => {
     }, [chatPartner]);
 
     return (
-        <>
+        <div className="feed-container">
             <h1>Chat with {chatPartner?.first_name} {chatPartner?.last_name}</h1>
             {messages.map((msg, index) => (
-                <div key={index}>
-                    <p>{msg.content}</p>
-                    <p>From: {msg.author.first_name} {msg.author.last_name}</p>
-                    <p>Sent: {new Date(msg.time).toLocaleString()}</p>
+                <div key={index} className="event-details-container">
+                    <div className="event-details-header">
+                        <div className="event-details-date">
+                            <p>{msg.author.first_name} {msg.author.last_name}</p>
+                        </div>
+                        <div className="event-details-location">
+                            <p>{new Date(msg.time).toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <div className="event-details-body">
+                        <p>{msg.content}</p>
+                    </div>
                 </div>
             ))}
-            <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message..."
-            />
-            <button onClick={sendMessage}>Send</button>
-        </>
+            <div className="feed-post-bottom">
+                <div className="feed-post-input">
+                    <InputField 
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        placeholder="Type your message..."
+                        multiline={true}
+                    />  
+                </div>
+                <div className="feed-post-button">  
+                    <ButtonComponent text="Send" onClick={sendMessage} width="300px"/>
+                </div>
+            </div>
+        </div>
     );
 };
 
