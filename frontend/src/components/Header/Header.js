@@ -15,7 +15,7 @@ const Header = ({ isAuthenticated }) => {
   return (
     <header>
       <div className={`header-container`}>
-        <h2 onClick={() => navigate('/')} style={{cursor: "pointer"}}>ConnectiFind</h2>
+        <h3 onClick={() => navigate('/')} style={{cursor: "pointer"}}>ConnectiFind</h3>
         {isAuthenticated ?
         <div className="header-buttons"> 
           <ButtonComponent text="Browse Events" level="primary" onClick={() => {

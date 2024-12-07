@@ -32,10 +32,12 @@ const RegisterForm = () => {
   };
 
   return (
+    <div className="authorization-container-wrapper">
     <div className="authorization-container">
       <h1>ConnectiFind</h1>
       <h2 className="sign-in-title">Sign Up</h2>
-      <div className="input-wrapper">
+      {/* TODO: add google auth */}
+      {/* <div className="input-wrapper">
         <div className="google-auth-container">
           <FaGoogle className="google-icon" />
           <span>Continue with Google</span>
@@ -43,25 +45,24 @@ const RegisterForm = () => {
       </div>
       <div className="or-line">
         <span>OR</span>
+      </div> */}
+      <div className="input-wrapper">
+        <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="firstName" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} placeholder="First Name" />
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="firstName" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} placeholder="First Name" />
-        </div>
-        <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="lastName" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} placeholder="Last Name" />
-        </div>
-        <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faEnvelope} />} type="email" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Email" />
-        </div>
-        <div className="input-wrapper">
-          <InputComponent icon={<FontAwesomeIcon icon={faLock} />} type="password" name="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Password" />
-        </div>
-        <div className="help-links">
-          <a href="/login">Already have an account?</a>
-        </div>
-        <ButtonComponent text="Sign Up" level="secondary" size="large" />
-      </form>
+      <div className="input-wrapper">
+        <InputComponent icon={<FontAwesomeIcon icon={faUser} />} type="text" name="lastName" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} placeholder="Last Name" />
+      </div>
+      <div className="input-wrapper">
+        <InputComponent icon={<FontAwesomeIcon icon={faEnvelope} />} type="email" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Email" />
+      </div>
+      <div className="input-wrapper">
+        <InputComponent icon={<FontAwesomeIcon icon={faLock} />} type="password" name="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Password" />
+      </div>
+      <div className="help-links">
+        <a href="/login">Already have an account?</a>
+      </div>
+      <ButtonComponent text="Sign Up" level="secondary" size="large" onClick={handleSubmit} />
+    </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import EventWrapper from '../EventWrapper/EventWrapper';
 import eventservice from '../../services/eventservice';
 import { useNavigate } from 'react-router-dom';
+import peopleVideo from '../../assets/people-video.mp4';
 
 const UnauthenticatedHome = () => {
   const [publicEvents, setPublicEvents] = useState([]);
@@ -28,14 +29,19 @@ const UnauthenticatedHome = () => {
   return (
     <div className='home-container'>
       <div className='home-header'>
-        <h1>Building a bridge between event attendees</h1>
-        {/* TODO:  replace with changing texts */}
-        <h3>Find the ones with shared interests</h3>
+        <div className='home-header-text'>
+          <h1>Building a bridge between event attendees</h1>
+          {/* TODO:  replace with changing texts */}
+          <h3>Find the ones with shared interests</h3>
+        </div>
+        <div className='home-video-container'>
+          <video src={peopleVideo} autoPlay loop muted />
+        </div>
       </div>
-      <div className='home-row'>
+      <div className='home-row space-top'>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>
         {/* TODO: add functionality */}
-        <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {}} width="345px"/>
+        {/* <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {}} width="345px"/> */}
         <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/login')}} width="345px"/>
       </div>
       <div className='home-row space-top'>

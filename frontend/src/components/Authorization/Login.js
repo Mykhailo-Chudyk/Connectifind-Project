@@ -28,10 +28,12 @@ const LoginForm = () => {
   };
 
   return (
+    <div className="authorization-container-wrapper">
     <div className="authorization-container">
       <h1>ConnectiFind</h1>
       <h2 className="sign-in-title">Sign in</h2>
-      <div className="input-wrapper">
+      {/* TODO: add google auth */}
+      {/* <div className="input-wrapper">
         <div className="google-auth-container">
           <FaGoogle className="google-icon" />
           <span>Continue with Google</span>
@@ -39,7 +41,7 @@ const LoginForm = () => {
       </div>
       <div className="or-line">
         <span>OR</span>
-      </div>
+      </div> */}
       <div className="input-wrapper">
         <InputComponent icon={<FontAwesomeIcon icon={faEnvelope} />} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
       </div>
@@ -47,10 +49,12 @@ const LoginForm = () => {
         <InputComponent icon={<FontAwesomeIcon icon={faLock} />} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
       </div>
       <div className="help-links">
-        <a href="#">Forgot your password?</a>  {/* todo: add links */}
+        {/* TODO: add links */}
+        {/* <a href="#">Forgot your password?</a>  */}
         <a href="/signup">Don't have an account yet?</a>
       </div>
       <ButtonComponent text="Sign in" level="secondary" size="large" onClick={handleLogin} />
+    </div>
     </div>
   );
 };

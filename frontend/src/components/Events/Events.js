@@ -27,7 +27,10 @@ const Events = () => {
 
   return (
     <div className='events-container'>
-      <h1>All Events</h1>
+      <div className='events-header'>
+        <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
+        <h1>All Events</h1>
+      </div>
       {error && <p>{error}</p>}
       <div className='events-list'>
         {events.map((event) => (
@@ -40,18 +43,18 @@ const Events = () => {
               <p className='event-author'>{event.author.first_name} {event.author.last_name}</p>
               <p className='event-title'>{event.title}</p>
               <p className='event-description'>{event.description}</p>
-              <p className='event-time-location'>{event.location}</p>
-              <p className='event-time-location'>{new Date(event.time).toLocaleString()}</p>
             </div>
             <div className='event-item-actions'>
+              <p className='event-time-location'>{event.location}</p>
+              <p className='event-time-location'>{new Date(event.time).toLocaleString()}</p>
               <ButtonComponent text="Details" level="secondary" onClick={() => {navigate(`${event.id}`)}} />
             </div>
           </div>
         ))}
       </div>
-      <div className='events-return-button'>
+      {/* <div className='events-return-button'>
         <ButtonComponent text="Return" size="large" level="primary" onClick={() => {navigate(-1)}} width="300px"/>
-      </div>
+      </div> */}
     </div>
   );
 };

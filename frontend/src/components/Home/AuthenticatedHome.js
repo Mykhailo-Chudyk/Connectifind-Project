@@ -5,6 +5,7 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import EventWrapper from '../EventWrapper/EventWrapper';
 import eventservice from '../../services/eventservice';
 import { useNavigate } from 'react-router-dom';
+import { ReactTyped } from 'react-typed';
 
 const AuthenticatedHome = () => {
   const user = useSelector((state) => state.user.user);
@@ -27,12 +28,31 @@ const AuthenticatedHome = () => {
     fetchEvents();
   }, []);
 
+  const phrases = [
+    'Time to find your next event!',
+    'Discover amazing events around you!',
+    'Join the fun at local events!',
+    'Explore new experiences!',
+    'Find your next adventure!',
+    'Connect with your community!'
+  ];
 
   return (
     <div className='home-container'>
       <div className='home-header'>
-        <h1>Hello, {user?.first_name}!</h1>
-        <h3>Time to find your next event!</h3>
+        <div className='home-header-text'>  
+          <h1>Hello, {user?.first_name}!</h1>
+          <h3>
+            <ReactTyped
+              strings={phrases}
+              typeSpeed={50}
+              backSpeed={25}
+              backDelay={3000}
+              loop
+              cursorChar="|"
+            />
+          </h3>
+        </div>
       </div>
       <div className='home-row'>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>
