@@ -1,8 +1,9 @@
 .event-container {
     display: flex;
     flex-direction: column;
-    padding: 40px;
-    gap: 24px;
+    padding: 60px 100px;
+    gap: 40px;
+
 
     .event-details-footer {
         display: flex;
@@ -14,10 +15,14 @@
         }
 
         .event-details-spots {
+            align-self: center;
             margin-left: 24px;
             font-weight: 500;
         }
     }
 
+    p {
+        font-size: 1rem;
+    }
 
 }

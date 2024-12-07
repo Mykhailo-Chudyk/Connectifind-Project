@@ -35,3 +35,10 @@ export const calculateTimeUntilEvent = (eventTime, duration) => {
 
   return `in ${hours} hours`;
 }; 
+
+
+export const formatEventDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true };
+  return new Intl.DateTimeFormat('en-US', options).format(date).replace(',', ',');
+};
