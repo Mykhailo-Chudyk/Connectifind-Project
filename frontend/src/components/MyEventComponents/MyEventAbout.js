@@ -10,7 +10,7 @@ const MyEventAbout = ({eventDetails}) => {
 
     return (
         <div className="event-container">
-            <h2>{eventDetails.title}</h2>
+            <h1>{eventDetails.title}</h1>
             <p className="event-details-title">Event Details</p>
             <EventDetails eventDetails={eventDetails}/>
             <div className="event-details-footer">

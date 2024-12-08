@@ -36,9 +36,7 @@ const MyEventChats = ({ eventDetails }) => {
                     </div>
                     <div className="chat-details">
                         <p className='chat-name'>{chat.user.first_name} {chat.user.last_name}</p>
-                        {/* TODO: Add last message */}
                         <p className='chat-last-message'>{chat.last_message_content}</p>
-                        {/* TODO: Add time of last message */}
                         <p className="chat-time">{formatEventDate(chat.last_message_time)}</p>
                     </div>
                     <div className="chat-button">

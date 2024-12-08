@@ -15,11 +15,10 @@ const EventWrapper = ({ event }) => {
         </div>
         <div className="event-body">
             <p className="event-title">{event.title}</p>
-            {/* TODO: make this dynamic */}
             <p className="event-time">
-                {formatEventDateTime(event.time, 120).formattedDate}
+                {formatEventDateTime(event.time, event.duration).formattedDate}
                 <span className="event-time-divider"></span>
-                {formatEventDateTime(event.time, 120).formattedTime}
+                {formatEventDateTime(event.time, event.duration).formattedTime}
             </p>
             <p className="event-location">{event.location}</p>
         </div>

@@ -31,7 +31,6 @@ const UnauthenticatedHome = () => {
       <div className='home-header'>
         <div className='home-header-text'>
           <h1>Building a bridge between event attendees</h1>
-          {/* TODO:  replace with changing texts */}
           <h3>Find the ones with shared interests</h3>
         </div>
         <div className='home-video-container'>
