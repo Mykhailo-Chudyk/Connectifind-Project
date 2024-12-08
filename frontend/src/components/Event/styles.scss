@@ -1,8 +1,17 @@
+@import '../../global.scss';
+
 .event-container {
     display: flex;
     flex-direction: column;
     padding: 60px 100px;
     gap: 40px;
+
+    .event-details-title {
+        font-size: 1.2rem;
+        color: $primary-color;
+        font-weight: 500;
+        margin-top: -20px;
+    }
 
 
     .event-details-footer {

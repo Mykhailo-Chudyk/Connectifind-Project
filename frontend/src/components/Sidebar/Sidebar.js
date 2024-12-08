@@ -53,7 +53,7 @@ const Sidebar = ({ onLogout }) => {
     <>
       <IconComponent
         key={eventDetails.id}
-        icon={eventDetails?.icon}
+        icon={eventDetails?.image}
         isFaComponent={false}
         nameToShow={eventDetails?.title[0]}
         selected={location.pathname.endsWith(`/about`)}

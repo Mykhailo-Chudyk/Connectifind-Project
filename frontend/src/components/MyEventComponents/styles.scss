@@ -3,8 +3,27 @@
 .feed-container {
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 60px 100px;
     gap: 20px;
+
+    .feed-header {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+
+        .back-arrow {
+            font-size: 2rem;
+            cursor: pointer;
+            color: $primary-color;
+        }
+    }
+
+    .feed-label {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $primary-color;
+    }
 
     .feed-post {
         border: 1px solid #ccc;
@@ -16,6 +35,7 @@
         display: flex;
         justify-content: flex-end;
         gap: 20px;
+        margin-top: 60px;
 
         .feed-post-input {
             width: 100%;
@@ -27,22 +47,57 @@
             width: 100px;
             margin-left: auto;
             align-self: flex-end;
+            margin-right: 200px;
         }
+    }
+
+    .feed-details-container {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 40px;
+        background-color: white;
+        border-radius: 20px;
+        border: 1px solid #E0E0E0;
+        gap: 12px;
+        max-width: 800px;
+
+        p {
+            font-size: 1rem;
+        }
+    
+    
+        .feed-details-header {
+            display: flex;
+            justify-content: space-between;
+            color: $primary-color;
+            font-weight: 600;
+        }
+    
+        .feed-details-body {
+            font-weight: 500;
+            font-size: 6rem;
+        }
+    
     }
 }
 
 .people-container {
     display: flex;
     flex-direction: column;
-    padding: 40px;
-    gap: 20px;
+    padding: 60px 100px;
+
+    .people-label {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $primary-color;
+        margin-bottom: 40px;
+        margin-top: 10px;
+    }
 
     .people-list{
-        padding: 40px 0px;
         display: flex;
         flex-wrap: wrap;
         gap: 30px;
-
 
         .people-item {
             background-color: white;
@@ -78,7 +133,7 @@
             }
 
             .people-item-body {
-                padding: 0px 20px 20px 20px;
+                padding: 10px 20px 20px 20px;
                 display: flex;
                 flex-direction: column;
 
@@ -86,28 +141,31 @@
                     font-size: 1.2rem;
                     font-weight: bold;
                     margin-bottom: 6px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 .people-title {
-                    font-size: 1.2rem;
+                    font-size: 1rem;
                     font-weight: bold;
                     margin: 0px;
-                    margin-bottom: 6px;
+                    margin-bottom: 15px;
                     color: $primary-color;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 .people-description {
                     font-size: 1rem;
                     margin-bottom: 24px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
-
-                .people-time-location {
-                    font-size: 1rem;
-                    margin: 0px;
-                    margin-bottom: 6px;
-                }
-
-                    
             }
 
             .people-item-actions {
@@ -116,6 +174,18 @@
                 justify-content: center;
                 margin-top: auto;
                 margin-bottom: 20px;
+                flex-direction: column;
+                gap: 15px;
+
+                .people-time-location {
+                    font-size: 1rem;
+                    margin-right: auto;
+                    padding-left: 20px;
+                    margin-top: -10px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
     }
@@ -124,7 +194,7 @@
 .person-container {
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 60px 100px;
 
     .person-header {
         display: flex;
@@ -134,27 +204,45 @@
         .person-header-left {
             display: flex;
             flex-direction: column;
+
+
+            .person-header-left-arrow {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+
+                .back-arrow {
+                    font-size: 2rem;
+                    cursor: pointer;
+                    color: $primary-color;
+                }
+            }
         }
 
         .person-header-right {
             display: flex;
             flex-direction: column;
             font-size: 200px;
-            margin-left: auto;
-            margin-right: 60px;
+            align-self: center;
+            margin-left: 200px;
+
         }
     }
 
     .person-description {
-        padding: 20px;
+        padding: 20px 0px;
+        
+        p{
+            font-size: 1rem;
+        }
     }
 
     .person-actions {
         display: flex;
         flex-direction: row;
         gap: 20px;
-        padding: 20px;
-        margin-left: auto;
+        margin-top: 20px;
     }
 }
 
@@ -164,7 +252,15 @@
 .chats-container {
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 60px 100px;
+
+    .chats-label {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $primary-color;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
 
     .single-chat-container {
         display: flex;
@@ -177,14 +273,21 @@
         cursor: pointer;
         height: 100px;
         background-color: white;
+        max-width: 800px;
 
         .chat-avatar {
-            font-size: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            width: 100px;
         }
 
         .chat-details {
             display: flex;
             flex-direction: column;
+            gap: 4px;
+            padding-top: 10px;
 
             .chat-name {
                 font-size: 1.2rem;
@@ -193,6 +296,7 @@
 
             .chat-last-message {
                 font-size: 1rem;
+                font-weight: 500;
             }
 
             .chat-time {
@@ -204,7 +308,7 @@
             display: flex;
             align-items: center;
             margin-left: auto;
-            margin-right: 20px;
+            margin-right: 40px;
         }
 
     }

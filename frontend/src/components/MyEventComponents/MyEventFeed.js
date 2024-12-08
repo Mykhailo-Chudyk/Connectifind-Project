@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import eventservice from '../../services/eventservice.js'; 
+import { formatEventDate } from '../../utils/dateTimeUtils';
 import './styles.scss';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import InputField from '../InputField/InputField.js';
@@ -35,17 +36,18 @@ const MyEventFeed = ({ eventDetails }) => {
     return (
         <div className="feed-container">
             <h1>Feed</h1>
+            <p className="feed-label">Share your thoughts and ideas with the community</p>
             {posts.map(post => (
-                <div key={post.id} className="event-details-container">
-                    <div className="event-details-header">
-                        <div className="event-details-date">
+                <div key={post.id} className="feed-details-container">
+                    <div className="feed-details-header">
+                        <div className="feed-details-date">
                             <p>{post.author.first_name + " " + post.author.last_name}</p>
                         </div>
-                        <div className="event-details-location">
-                            <p>{new Date(post.time).toLocaleString()}</p>
+                        <div className="feed-details-date">
+                            <p>{formatEventDate(post.time)}</p>
                         </div>
                     </div>
-                    <div className="event-details-body">
+                    <div className="feed-details-body">
                         <p>{post.content}</p>
                     </div>
                 </div>

@@ -49,7 +49,7 @@ def get_event(request, uuid):
     try:
         event = Event.objects.get(pk=uuid)
         if event.visibility == 'public' or (request.user.is_authenticated and event.authorId == request.user):
-            serializer = EventSerializer(event, context={'request': request})
+            serializer = EventSerializer(event, context={'request': request, 'event_id': event.id})
             return Response(serializer.data)
         else:
             return Response({'error': 'You do not have permission to view this event.'}, status=status.HTTP_403_FORBIDDEN)

@@ -52,9 +52,6 @@ const Events = () => {
           </div>
         ))}
       </div>
-      {/* <div className='events-return-button'>
-        <ButtonComponent text="Return" size="large" level="primary" onClick={() => {navigate(-1)}} width="300px"/>
-      </div> */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import eventservice from '../../services/eventservice.js';
 import { FaUserCircle } from 'react-icons/fa';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import { useNavigate } from 'react-router-dom';
+import { formatEventDate } from '../../utils/dateTimeUtils';
 import './styles.scss';
 
 const MyEventChats = ({ eventDetails }) => {
@@ -26,6 +27,7 @@ const MyEventChats = ({ eventDetails }) => {
     return (
         <div className='chats-container'>
             <h1>Chats</h1>
+            <p className='chats-label'>Chat with other participants</p>
             {chats.map((chat, index) => (
                 <div key={chat?.id} className='single-chat-container'>
                     <div className="chat-avatar">
@@ -33,14 +35,14 @@ const MyEventChats = ({ eventDetails }) => {
                         {!chat.avatar && <FaUserCircle />}
                     </div>
                     <div className="chat-details">
-                        <p className='chat-name'>{chat.first_name} {chat.last_name}</p>
+                        <p className='chat-name'>{chat.user.first_name} {chat.user.last_name}</p>
                         {/* TODO: Add last message */}
-                        <p className='chat-last-message'></p>
+                        <p className='chat-last-message'>{chat.last_message_content}</p>
                         {/* TODO: Add time of last message */}
-                        {/* <p className="chat-time"></p> */}
+                        <p className="chat-time">{formatEventDate(chat.last_message_time)}</p>
                     </div>
                     <div className="chat-button">
-                        <ButtonComponent text="Chat" onClick={() => navigate(`/event/${eventDetails?.id}/chats/${chat?.id}`)}></ButtonComponent>
+                        <ButtonComponent text="Chat" onClick={() => navigate(`/event/${eventDetails?.id}/chats/${chat?.user?.id}`)}></ButtonComponent>
                     </div>
                 </div>
             ))}

@@ -7,7 +7,6 @@ const EventDetails = ({ eventDetails }) => {
     <div className="event-details-container">
         <div className="event-details-header">
             <div className="event-details-date">
-                {console.log(eventDetails.time)}
                 <p>{formatEventDate(eventDetails.time)}</p>
             </div>
             <div className="event-details-location">

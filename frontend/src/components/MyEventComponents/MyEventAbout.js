@@ -11,6 +11,7 @@ const MyEventAbout = ({eventDetails}) => {
     return (
         <div className="event-container">
             <h2>{eventDetails.title}</h2>
+            <p className="event-details-title">Event Details</p>
             <EventDetails eventDetails={eventDetails}/>
             <div className="event-details-footer">
             {/* <p className="event-details-spots">Spots left: {eventDetails.capacity - eventDetails.participant_count}</p>

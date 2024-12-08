@@ -18,7 +18,7 @@ class EventSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     image = serializers.CharField(allow_blank=True, required=False)
     participant_details = SerializerMethodField()
-    
+        
     class Meta:
         model = Event
         fields = '__all__'

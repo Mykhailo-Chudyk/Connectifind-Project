@@ -70,6 +70,16 @@ def list_users_with_messages(request, eventId):
         chats__in=chats
     ).exclude(id=current_user.id).distinct()
 
-    serializer = UserSerializer(users_with_messages, many=True)
-    
-    return Response(serializer.data)
+    response_data = []
+    for user in users_with_messages:
+        chat = chats.filter(participants=user).first()
+        
+        last_message = Message.objects.filter(chat=chat).order_by('-time').first()
+        
+        response_data.append({
+            'user': UserSerializer(user).data,
+            'last_message_content': last_message.content if last_message else None,
+            'last_message_time': last_message.time if last_message else None
+        })
+
+    return Response(response_data)
