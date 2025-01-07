@@ -15,6 +15,9 @@ from event_participants.models import EventParticipant
 from user_messages.models import Message
 from .serializers import UserSerializer
 import json
+from rest_framework import status
+from django.core.files.base import ContentFile
+import base64
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -68,20 +71,40 @@ def get_user_info(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def update_user_profile(request):
+def update_profile(request):
+    user = request.user
+    
+    # Update basic info
+    user.first_name = request.data.get('firstName', user.first_name)
+    user.last_name = request.data.get('lastName', user.last_name)
+    user.description = request.data.get('description', user.description)
+    
+    # Handle avatar
+    avatar = request.data.get('avatar')
+    if avatar is not None:  # Check if avatar field was included in request
+        # Convert FormData string 'null' to Python None
+        if avatar == 'null' or avatar == '':
+            user.avatar = None
+        else:
+            user.avatar = avatar
+    
     try:
-        data = json.loads(request.body)
-        user = request.user
-
-        user.first_name = data.get('firstName', user.first_name)
-        user.last_name = data.get('lastName', user.last_name)
-        user.description = data.get('description', user.description)
-        user.avatar = data.get('avatar', user.avatar)
         user.save()
-
-        return Response({"message": "User profile updated successfully!"}, status=200)
+        return Response({
+            'message': 'Profile updated successfully',
+            'user': {
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'description': user.description,
+                'avatar': user.avatar or ''  # Ensure we don't send None
+            }
+        })
     except Exception as e:
-        return Response({"error": str(e)}, status=400)
+        return Response({
+            'error': str(e)
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

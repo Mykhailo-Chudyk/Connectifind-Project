@@ -40,7 +40,7 @@ const MyEventPerson = ({ eventDetails }) => {
                         </div>
                         <div className="person-header-right">
                             <div className="person-header-avatar">
-                                {user.user?.avatar ? <img src={user.user?.avatar} alt="Default profile avatar" /> : <FontAwesomeIcon icon={faUserCircle} />}
+                                {user?.avatar ? <img src={user?.avatar} alt="Default profile avatar" /> : <FontAwesomeIcon icon={faUserCircle} />}
                             </div>
                         </div>
                     </div>

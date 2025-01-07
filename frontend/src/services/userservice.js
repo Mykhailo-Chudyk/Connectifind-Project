@@ -17,7 +17,21 @@ const getUserInfo = async () => {
 
 const updateUserProfile = async (profileData) => {
   try {
-    const response = await api.post('users/update_profile/', profileData);
+    const formData = new FormData();
+    
+    formData.append('firstName', profileData.firstName);
+    formData.append('lastName', profileData.lastName);
+    formData.append('description', profileData.description);
+    
+    if (profileData.avatar !== undefined) {
+      formData.append('avatar', profileData.avatar);
+    }
+
+    const response = await api.post('users/update_profile/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   } catch (error) {
     console.error('Error updating user profile:', error.response);

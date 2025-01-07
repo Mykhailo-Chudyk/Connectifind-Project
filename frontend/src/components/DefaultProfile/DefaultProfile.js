@@ -1,21 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './styles.scss';
-import { useSelector } from 'react-redux';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { faUserCircle, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import InputField from '../InputField/InputField.js';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import userService from '../../services/userservice';
 import { useNavigate } from 'react-router-dom';
+import { fetchUser } from '../../redux/actions/userActions';
 
 const DefaultProfile = () => {
     const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [userAvatar, setUserAvatar] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         if (user.user) {
@@ -26,7 +30,30 @@ const DefaultProfile = () => {
         }
     }, [user]);
 
+    const handleRemoveAvatar = (e) => {
+        e.stopPropagation();
+        setUserAvatar('');
+    };
+
+    const handleAvatarClick = () => {
+        if (!userAvatar) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setUserAvatar(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSave = async () => {
+        setIsLoading(true);
         try {
             const profileData = {
                 firstName: userFirstName,
@@ -34,9 +61,15 @@ const DefaultProfile = () => {
                 description: userDescription,
                 avatar: userAvatar,
             };
-            const response = await userService.updateUserProfile(profileData);
+            await userService.updateUserProfile(profileData);
+            // Refresh user data after update
+            dispatch(fetchUser());
+            navigate(-1);
         } catch (error) {
             console.error('Error updating profile:', error);
+            alert('Failed to update profile');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -47,9 +80,28 @@ const DefaultProfile = () => {
                 <h1>Your Profile</h1>
             </div>
             <p className="default-profile-label">Modify your profile information</p>
-            <div className="default-profile-avatar">
-                {/* TODO: Add avatar upload && make sure that it's properly displayed */}
-                {user.user?.avatar ? <img src={user.user?.avatar} alt="Default profile avatar" /> : <FontAwesomeIcon icon={faUserCircle} />}
+            <div className="default-profile-avatar" onClick={handleAvatarClick}>
+                <div className="avatar-overlay">
+                    {userAvatar ? (
+                        <img src={userAvatar} alt="Profile avatar" />
+                    ) : (
+                        <FontAwesomeIcon icon={faUserCircle} />
+                    )}
+                    <div className="avatar-upload-overlay">
+                        {userAvatar ? (
+                            <FontAwesomeIcon icon={faTrash} onClick={handleRemoveAvatar} />
+                        ) : (
+                            <FontAwesomeIcon icon={faPlus} />
+                        )}
+                    </div>
+                </div>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                />
             </div>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
@@ -73,7 +125,7 @@ const DefaultProfile = () => {
             </div>
             <div className="default-profile-buttons">
                 <ButtonComponent text="Cancel" onClick={() => {window.history.back()}} level="primary" width="200px"/>
-                <ButtonComponent text="Save" onClick={() => {handleSave()}} width="200px"/>
+                <ButtonComponent text="Save" onClick={handleSave} width="200px"/>
             </div>
         </div>
     );

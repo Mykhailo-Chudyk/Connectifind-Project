@@ -41,15 +41,53 @@
 
     .default-profile-avatar {
         display: flex;
-        // justify-content: center;
         margin-left: 250px;
         align-items: center;
-        width: 100%;
+        width: 200px;
         height: 200px;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-        font-size: 10rem;
+        cursor: pointer;
         
+        .avatar-overlay {
+            position: relative;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10rem;
+            background-color: #f0f0f0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .avatar-upload-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                
+                svg {
+                    color: white;
+                    font-size: 3rem;
+                }
+            }
+
+            &:hover .avatar-upload-overlay {
+                opacity: 1;
+            }
+        }
     }
 
     .default-profile-name {

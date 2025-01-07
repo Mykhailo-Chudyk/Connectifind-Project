@@ -29,10 +29,10 @@ const MyEventChats = ({ eventDetails }) => {
             <h1>Chats</h1>
             <p className='chats-label'>Chat with other participants</p>
             {chats.map((chat, index) => (
-                <div key={chat?.id} className='single-chat-container'>
+                <div key={chat?.id} className='single-chat-container' onClick={() => navigate(`/event/${eventDetails?.id}/chats/${chat?.user?.id}`)}>
                     <div className="chat-avatar">
-                        {chat.avatar && <img src={chat.avatar} alt="avatar" />}
-                        {!chat.avatar && <FaUserCircle />}
+                        {chat.user.avatar && <img src={chat.user.avatar} alt="avatar" />}
+                        {!chat.user.avatar && <FaUserCircle />}
                     </div>
                     <div className="chat-details">
                         <p className='chat-name'>{chat.user.first_name} {chat.user.last_name}</p>
@@ -40,7 +40,7 @@ const MyEventChats = ({ eventDetails }) => {
                         <p className="chat-time">{formatEventDate(chat.last_message_time)}</p>
                     </div>
                     <div className="chat-button">
-                        <ButtonComponent text="Chat" onClick={() => navigate(`/event/${eventDetails?.id}/chats/${chat?.user?.id}`)}></ButtonComponent>
+                        <ButtonComponent text="Chat" ></ButtonComponent>
                     </div>
                 </div>
             ))}
