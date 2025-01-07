@@ -47,7 +47,7 @@ const MyEventMe = ({ eventDetails }) => {
             <p className="default-profile-label">Goal will be displayed to other participants</p>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
-                    <InputField label="Goal" value={userGoal} onChange={(e) => setUserGoal(e.target.value)} multiline={true} />
+                    <InputField label="Goal" value={userGoal} placeholder="Enter your goal for this event" onChange={(e) => setUserGoal(e.target.value)} multiline={true} />
                 </div>
             </div>
             <div className="default-profile-buttons">

@@ -128,12 +128,12 @@ const DefaultProfile = () => {
             </div>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
-                    <InputField label="First Name" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} />
+                    <InputField label="First Name" value={userFirstName} placeholder="Enter your first name" onChange={(e) => setUserFirstName(e.target.value)} />
                 </div>
             </div>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
-                    <InputField label="Last Name" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} />
+                    <InputField label="Last Name" value={userLastName} placeholder="Enter your last name" onChange={(e) => setUserLastName(e.target.value)} />
                 </div>
             </div>
             <div className="default-profile-name">
@@ -143,7 +143,7 @@ const DefaultProfile = () => {
             </div>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
-                    <InputField label="Description" value={userDescription} onChange={(e) => setUserDescription(e.target.value)} multiline={true} />
+                    <InputField label="Description" value={userDescription} placeholder="Enter your description" onChange={(e) => setUserDescription(e.target.value)} multiline={true} />
                 </div>
             </div>
             <div className="default-profile-buttons">
