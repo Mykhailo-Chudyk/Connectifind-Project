@@ -89,6 +89,10 @@ const AddEvent = () => {
         }
     };
 
+    const hasChanges = () => {
+        return eventData.title !== '' && eventData.description !== '' && eventData.location !== '' && eventData.time !== ''&& eventData.capacity !== '';
+    };
+
     return (
         <div className='add-event-container'>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -181,6 +185,7 @@ const AddEvent = () => {
                         width='250px'
                     />
                     <ButtonComponent
+                        disabled={!hasChanges()}
                         text="Create Event"
                         onClick={handleSubmit}
                         width='250px'

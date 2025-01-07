@@ -49,6 +49,10 @@ const Settings = () => {
         }
     };
 
+    const hasChanges = () => {
+        return currentPassword !== '' && newPassword !== '' && confirmNewPassword !== '';
+    };
+
     return (
         <div className="settings-container">
             <div className='settings-header'>
@@ -77,7 +81,7 @@ const Settings = () => {
                 value={confirmNewPassword} 
                 onChange={(e) => setConfirmNewPassword(e.target.value)} 
             />
-            <ButtonComponent text="Update Password" onClick={handleChangePassword} width='200px' />
+            <ButtonComponent text="Update Password" disabled={!hasChanges()} onClick={handleChangePassword} width='200px' />
             
             <h2 className='settings-delete'>Delete Account</h2>
             <p className="settings-label">This action cannot be undone.</p>
