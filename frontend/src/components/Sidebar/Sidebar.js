@@ -51,50 +51,6 @@ const Sidebar = ({ onLogout }) => {
 
   const selectedIcon = getSelectedIcon();
 
-  const renderEventIcons = () => (
-    <>
-      <IconComponent
-        key={eventDetails.id}
-        icon={eventDetails?.image}
-        isFaComponent={false}
-        nameToShow={eventDetails?.title[0]}
-        selected={location.pathname.endsWith(`/about`)}
-        onClick={() => navigate(`/event/${eventDetails.id}/about`)}
-      />
-      <IconComponent
-        icon={<FontAwesomeIcon icon={faUser} />}
-        selected={location.pathname.endsWith(`/me`)}
-        onClick={() => navigate(`/event/${eventDetails.id}/me`)}
-        isFaComponent={true}
-      />
-      <IconComponent
-        icon={<FontAwesomeIcon icon={faList} />}
-        selected={location.pathname.endsWith(`/feed`)}
-        onClick={() => navigate(`/event/${eventDetails.id}/feed`)}
-        isFaComponent={true}
-      />
-      <IconComponent
-        icon={<FontAwesomeIcon icon={faComments} />}
-        selected={location.pathname.endsWith(`/chats`)}
-        onClick={() => navigate(`/event/${eventDetails.id}/chats`)}
-        isFaComponent={true}
-        
-      />
-      <IconComponent
-        icon={<FontAwesomeIcon icon={faUsers} />}
-        selected={location.pathname.endsWith(`/people`)}
-        onClick={() => navigate(`/event/${eventDetails.id}/people`)}
-        isFaComponent={true}
-      />
-      <div className="divider" />
-      <IconComponent
-        icon={<FontAwesomeIcon icon={faArrowLeft} />}
-        isFaComponent={true}
-        onClick={() => navigate('/')}
-      />
-    </>
-  );
-
   const handleLogout = () => {
     setShowLogoutModal(true);
   };
@@ -112,10 +68,8 @@ const Sidebar = ({ onLogout }) => {
   return (
     <>
       <div className="sidebar">
-        {location.pathname.startsWith('/event/') ? (
-          renderEventIcons()
-        ) : (
-          <>
+        <div className={`sidebar-content ${location.pathname.startsWith('/event/') ? 'event-mode' : 'default-mode'}`}>
+          <div className="sidebar-icons default">
             <IconComponent
               icon={<FontAwesomeIcon icon={faHome} />}
               selected={selectedIcon === 'home'}
@@ -156,8 +110,52 @@ const Sidebar = ({ onLogout }) => {
               selected={selectedIcon === 'add-event'}
               onClick={() => navigate('/add-event')}
             />
-          </>
-        )}
+          </div>
+          <div className="sidebar-icons event">
+            {eventDetails && (
+              <>
+                <IconComponent
+                  key={eventDetails.id}
+                  icon={eventDetails?.image}
+                  isFaComponent={false}
+                  nameToShow={eventDetails?.title[0]}
+                  selected={location.pathname.endsWith(`/about`)}
+                  onClick={() => navigate(`/event/${eventDetails.id}/about`)}
+                />
+                <IconComponent
+                  icon={<FontAwesomeIcon icon={faUser} />}
+                  selected={location.pathname.endsWith(`/me`)}
+                  onClick={() => navigate(`/event/${eventDetails.id}/me`)}
+                  isFaComponent={true}
+                />
+                <IconComponent
+                  icon={<FontAwesomeIcon icon={faList} />}
+                  selected={location.pathname.endsWith(`/feed`)}
+                  onClick={() => navigate(`/event/${eventDetails.id}/feed`)}
+                  isFaComponent={true}
+                />
+                <IconComponent
+                  icon={<FontAwesomeIcon icon={faComments} />}
+                  selected={location.pathname.endsWith(`/chats`)}
+                  onClick={() => navigate(`/event/${eventDetails.id}/chats`)}
+                  isFaComponent={true}
+                />
+                <IconComponent
+                  icon={<FontAwesomeIcon icon={faUsers} />}
+                  selected={location.pathname.endsWith(`/people`)}
+                  onClick={() => navigate(`/event/${eventDetails.id}/people`)}
+                  isFaComponent={true}
+                />
+                <div className="divider" />
+                <IconComponent
+                  icon={<FontAwesomeIcon icon={faArrowLeft} />}
+                  isFaComponent={true}
+                  onClick={() => navigate('/')}
+                />
+              </>
+            )}
+          </div>
+        </div>
       </div>
       {showLogoutModal && (
         <AlertModal
