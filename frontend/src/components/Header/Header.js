@@ -24,7 +24,7 @@ const Header = ({ isAuthenticated }) => {
           <ButtonComponent text="Create" level="secondary" onClick={() => {
             navigate('/add-event');
           }}/>
-          <IconComponent icon={null} nameToShow={user?.first_name[0] + user?.last_name[0]} selected={true} /> 
+          <IconComponent icon={user?.avatar} nameToShow={user?.first_name[0] + user?.last_name[0]} selected={true} /> 
           {/* todo: pass parameter with user information */}
         </div>:
         <div className="header-buttons"> 
