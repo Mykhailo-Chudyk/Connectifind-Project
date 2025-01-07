@@ -4,6 +4,7 @@ import eventservice from '../../services/eventservice.js';
 import './styles.scss';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import EventDetails from '../EventDetails/EventDetails.js';
+import AlertModal from '../AlertModal/AlertModal.js';
 import { useSelector } from 'react-redux';
 
 const Event = () => {
@@ -12,6 +13,8 @@ const Event = () => {
   const [eventDetails, setEventDetails] = useState(null);
   const [isParticipant, setIsParticipant] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -31,25 +34,52 @@ const Event = () => {
     }
   }, [eventId]);  
 
-  const joinLeaveEvent = async () => {
+  const handleJoinLeave = async () => {
     if (isParticipant) {
-      const response = await eventservice.leaveEvent(eventId);
-      if (response) {
-        setIsParticipant(false);
-        setEventDetails((details) => ({
-          ...details,
-          participant_count: details.participant_count - 1
-        }));
-      }
+      setShowLeaveModal(true);
     } else {
+      await joinEvent();
+    }
+  };
+
+  const joinEvent = async () => {
+    setIsProcessing(true);
+    try {
       const response = await eventservice.joinEvent(eventId);
       if (response) {
         setIsParticipant(true);
         setEventDetails((details) => ({
           ...details,
-          participant_count: details.participant_count + 1
+          participant_count: details.participant_count + 1,
+          is_participant: true
         }));
       }
+    } catch (error) {
+      console.error('Error joining event:', error);
+      alert('Failed to join event');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const leaveEvent = async () => {
+    setIsProcessing(true);
+    try {
+      const response = await eventservice.leaveEvent(eventId);
+      if (response) {
+        setIsParticipant(false);
+        setEventDetails((details) => ({
+          ...details,
+          participant_count: details.participant_count - 1,
+          is_participant: false
+        }));
+        setShowLeaveModal(false);
+      }
+    } catch (error) {
+      console.error('Error leaving event:', error);
+      alert('Failed to leave event');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -74,10 +104,31 @@ const Event = () => {
         <div className="event-details-buttons">
           <ButtonComponent text={"Return"} onClick={() => window.history.back()} width='200px' level='primary'/>
           {!user && <ButtonComponent text={"Login to Join"} onClick={() => navigate('/login')} width='200px' />}
-          {user && !eventDetails.is_creator && <ButtonComponent text={isParticipant? "Leave" : "Join"} onClick={joinLeaveEvent} width='200px' />}
-          {user && (eventDetails.is_creator && !isParticipant) && <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>}
+          {user && !eventDetails.is_creator && 
+            <ButtonComponent 
+              text={isProcessing ? "Processing..." : (isParticipant ? "Leave Event" : "Join Event")}
+              onClick={handleJoinLeave}
+              isDangerous={isParticipant}
+              disabled={isProcessing}
+              width='200px'
+            />
+          }
+          {user && (eventDetails.is_creator && !isParticipant) && 
+            <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>
+          }
         </div>
       </div>
+
+      {showLeaveModal && (
+        <AlertModal
+          title="Leave Event"
+          message="Are you sure you want to leave this event? You will lose all your event data including your goal and messages."
+          onContinue={leaveEvent}
+          onCancel={() => setShowLeaveModal(false)}
+          continueText="Yes, Leave Event"
+          cancelText="Cancel"
+        />
+      )}
     </div>
   );
 };

@@ -2,29 +2,42 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import InputField from "../InputField/InputField";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import AlertModal from "../AlertModal/AlertModal";
 import eventservice from '../../services/eventservice'; 
+import './styles.scss';
 
 const MyEventMe = ({ eventDetails }) => {
     const userId = useSelector((state) => state.user?.user?.id);
     const [userGoal, setUserGoal] = useState('');
-    const [isSaving, setIsSaving] = useState(false); 
-
+    const [initialGoal, setInitialGoal] = useState('');
+    const [showCancelModal, setShowCancelModal] = useState(false);
     useEffect(() => {
         if (eventDetails && eventDetails.participant_details) {
-            setUserGoal(eventDetails.participant_details.goal || '');
+            const currentGoal = eventDetails.participant_details.goal || '';
+            setUserGoal(currentGoal);
+            setInitialGoal(currentGoal);
         }
     }, [eventDetails, userId]);
 
+    const hasChanges = () => {
+        return userGoal !== initialGoal;
+    };
+
     const handleSave = async () => {
-        setIsSaving(true);
         try {
             await eventservice.updateGoal(eventDetails.id, userGoal);
             window.location.reload();
         } catch (error) {
             console.error('Error updating goal:', error);
             alert('Failed to update goal.');
-        } finally {
-            setIsSaving(false);
+        } 
+    };
+
+    const handleCancel = () => {
+        if (hasChanges()) {
+            setShowCancelModal(true);
+        } else {
+            window.history.back();
         }
     };
 
@@ -38,9 +51,23 @@ const MyEventMe = ({ eventDetails }) => {
                 </div>
             </div>
             <div className="default-profile-buttons">
-                <ButtonComponent text="Cancel" onClick={() => {window.history.back()}} level="primary" width="200px"/>
-                <ButtonComponent text={isSaving ? "Saving..." : "Save"} onClick={handleSave} width="200px" disabled={isSaving}/>
+                <ButtonComponent text="Cancel" onClick={handleCancel} level="primary" width="200px"/>
+                <ButtonComponent text="Save" onClick={handleSave} width="200px" disabled={!hasChanges()}/>
             </div>
+
+            {showCancelModal && (
+                <AlertModal
+                    title="Cancel Changes"
+                    message="Are you sure you want to cancel? Your goal changes will be lost."
+                    onContinue={() => {
+                        setShowCancelModal(false);
+                        window.history.back();
+                    }}
+                    onCancel={() => setShowCancelModal(false)}
+                    continueText="Yes, Cancel"
+                    cancelText="Continue Editing"
+                />
+            )}
         </div>
     );
 };
