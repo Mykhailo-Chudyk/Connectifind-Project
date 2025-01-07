@@ -46,4 +46,15 @@
             background-color: #bb0101;
         }
     }
+
+    .disabled {
+        background-color: #ccc;
+        color: $primary-color;
+        cursor: default;
+
+        &:hover {
+            background-color: #ccc;
+            color: $primary-color;
+        }
+    }
 }

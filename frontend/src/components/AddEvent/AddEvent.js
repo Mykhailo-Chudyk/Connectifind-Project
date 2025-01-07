@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import './styles.scss';
 import InputField from '../InputField/InputField';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import AlertModal from '../AlertModal/AlertModal';
 
 const AddEvent = () => {
+    const [showCancelModal, setShowCancelModal] = useState(false);
     const [eventData, setEventData] = useState({
         title: '',
         description: '',
@@ -57,6 +59,18 @@ const AddEvent = () => {
         }
     };
 
+    const handleCancel = () => {
+        const hasChanges = Object.values(eventData).some(value => 
+            value && value.length > 0 && value !== 'public' && !Array.isArray(value)
+        );
+
+        if (hasChanges) {
+            setShowCancelModal(true);
+        } else {
+            navigate(-1);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -79,7 +93,7 @@ const AddEvent = () => {
         <div className='add-event-container'>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className='add-event-header'>
-                    <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
+                    <span className='back-arrow' onClick={handleCancel}>←</span>
                     <h1>Create a new event</h1>
                 </div>
 
@@ -162,7 +176,7 @@ const AddEvent = () => {
                 <div className="add-event-buttons">
                     <ButtonComponent
                         text="Cancel"
-                        onClick={() => window.history.back()}
+                        onClick={handleCancel}
                         level='primary'
                         width='250px'
                     />
@@ -173,6 +187,20 @@ const AddEvent = () => {
                     />
                 </div>
             </form>
+
+            {showCancelModal && (
+                <AlertModal
+                    title="Cancel Event Creation"
+                    message="Are you sure you want to cancel? All your progress will be lost."
+                    onContinue={() => {
+                        setShowCancelModal(false);
+                        navigate(-1);
+                    }}
+                    onCancel={() => setShowCancelModal(false)}
+                    continueText="Yes, Cancel"
+                    cancelText="Continue Editing"
+                />
+            )}
         </div>
     );
 };
