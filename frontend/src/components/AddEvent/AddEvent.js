@@ -111,6 +111,7 @@ const AddEvent = () => {
                     value={eventData.title} 
                     onChange={handleChange} 
                     placeholder="Name" 
+                    required={true}
                 />
                 
                 <InputField 
@@ -121,6 +122,7 @@ const AddEvent = () => {
                     onChange={handleChange} 
                     placeholder="Description" 
                     multiline={true}
+                    required={true}
                 />
                 
                 <InputField 
@@ -130,6 +132,7 @@ const AddEvent = () => {
                     value={eventData.location} 
                     onChange={handleChange} 
                     placeholder="Location" 
+                    required={true}
                 />
                 
                 <InputField 
@@ -138,6 +141,7 @@ const AddEvent = () => {
                     name="time" 
                     value={eventData.time} 
                     onChange={handleChange} 
+                    required={true}
                 />
 
                 <InputField 
@@ -147,6 +151,7 @@ const AddEvent = () => {
                     value={eventData.duration} 
                     onChange={handleChange} 
                     placeholder="Duration" 
+                    required={true}
                 />
                 
                 <InputField 
@@ -156,6 +161,7 @@ const AddEvent = () => {
                     value={eventData.capacity} 
                     onChange={handleChange} 
                     placeholder="Capacity" 
+                    required={true}
                 />
 
                 <InputField 
@@ -167,6 +173,7 @@ const AddEvent = () => {
                         { value: 'public', label: 'Public' },
                         { value: 'private', label: 'Private' }
                     ]}
+                    required={true}
                 />
                     
                 {/* TODO: Add categories */}

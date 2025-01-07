@@ -1,14 +1,14 @@
 import React from 'react';
 import './styles.scss';
 
-const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline, disabled }) => {
+const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline, disabled, required = false }) => {
     const allowedTypes = ['text', 'number', 'email', 'password', 'date', 'time', 'url', 'datetime-local'];
 
     const inputType = allowedTypes.includes(type) ? type : 'text';
 
     return (
         <div className="input-field-container">
-            {label && <span className="input-label">{label}</span>}
+            {label && <span className="input-label">{label} {required && <span className="required-label">*</span>}</span>}
             {options ? (
                 <select 
                     name={name} 

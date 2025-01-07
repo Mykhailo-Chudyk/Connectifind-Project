@@ -66,6 +66,7 @@ const Settings = () => {
                 placeholder='Enter your current password' 
                 value={currentPassword} 
                 onChange={(e) => setCurrentPassword(e.target.value)} 
+                required={true}
             />
             <InputField 
                 label="New Password" 
@@ -73,6 +74,7 @@ const Settings = () => {
                 placeholder='Enter your new password' 
                 value={newPassword} 
                 onChange={(e) => setNewPassword(e.target.value)} 
+                required={true}
             />
             <InputField 
                 label="Confirm New Password" 
@@ -80,6 +82,7 @@ const Settings = () => {
                 placeholder='Confirm your new password' 
                 value={confirmNewPassword} 
                 onChange={(e) => setConfirmNewPassword(e.target.value)} 
+                required={true}
             />
             <ButtonComponent text="Update Password" disabled={!hasChanges()} onClick={handleChangePassword} width='200px' />
             

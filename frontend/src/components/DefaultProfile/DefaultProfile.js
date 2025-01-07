@@ -128,12 +128,12 @@ const DefaultProfile = () => {
             </div>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
-                    <InputField label="First Name" value={userFirstName} placeholder="Enter your first name" onChange={(e) => setUserFirstName(e.target.value)} />
+                    <InputField label="First Name" value={userFirstName} required={true} placeholder="Enter your first name" onChange={(e) => setUserFirstName(e.target.value)} />
                 </div>
             </div>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
-                    <InputField label="Last Name" value={userLastName} placeholder="Enter your last name" onChange={(e) => setUserLastName(e.target.value)} />
+                    <InputField label="Last Name" value={userLastName} required={true} placeholder="Enter your last name" onChange={(e) => setUserLastName(e.target.value)} />
                 </div>
             </div>
             <div className="default-profile-name">
