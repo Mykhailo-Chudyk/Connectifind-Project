@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from users.views import register_user, login_user, get_user_info, update_profile, change_password, delete_account
-from events.views import create_event, list_events, get_event, join_event, leave_event, list_user_events
+from events.views import create_event, list_events, get_event, join_event, join_event_with_code, leave_event, list_user_events
 from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
 from categories.views import list_categories
@@ -22,6 +22,7 @@ urlpatterns = [
     path('events/list/', list_events, name='list-event'),
     path('events/<uuid:uuid>/', get_event, name='get-event'),
     path('events/join/<uuid:uuid>/', join_event, name='join-event'),
+    path('events/join-with-code/', join_event_with_code, name='join-event-with-code'),
     path('events/leave/<uuid:uuid>/', leave_event, name='leave-event'),
     path('feedposts/list/<uuid:eventId>/', list_feed_posts, name='list-feed-posts'),
     path('feedposts/create/<uuid:eventId>/', create_feed_post, name='create-feed-post'),

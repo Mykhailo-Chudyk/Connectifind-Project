@@ -78,3 +78,52 @@
         }
     }
 }
+
+.event-code-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 4px;
+  
+  .event-code-label {
+    color: $text-color;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .event-code {
+    font-family: monospace;
+    font-size: 1rem;
+    color: $primary-color;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    
+    &:not(.visible) {
+      color: transparent;
+      text-shadow: 0 0 8px rgba(26, 138, 134, 0.5);
+    }
+    
+    &.visible {
+      color: $primary-color;
+      text-shadow: none;
+    }
+  }
+
+  .event-code-hint {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  &:hover {
+    .event-code:not(.visible) {
+      text-shadow: 0 0 6px rgba(26, 138, 134, 0.7);
+    }
+  }
+}

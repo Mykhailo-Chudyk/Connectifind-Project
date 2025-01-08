@@ -12,12 +12,18 @@ from django.shortcuts import get_object_or_404
 import base64
 from django.core.files.base import ContentFile
 from event_participants.models import EventParticipant
+import random
+import string
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_event(request):
     data = JSONParser().parse(request)
     data['authorId'] = request.user.id  
+
+    # Generate random 6-digit code for private events
+    if data.get('visibility') == 'private':
+        data['code'] = ''.join(random.choices(string.digits, k=6))
 
     serializer = EventSerializer(data=data, context={'request': request})
     if serializer.is_valid():
@@ -48,11 +54,22 @@ def list_events(request):
 def get_event(request, uuid):
     try:
         event = Event.objects.get(pk=uuid)
-        if event.visibility == 'public' or (request.user.is_authenticated and event.authorId == request.user):
+        can_view = (
+            event.visibility == 'public' or 
+            (request.user.is_authenticated and (
+                event.authorId == request.user or 
+                request.user in event.participants.all()
+            ))
+        )
+        
+        if can_view:
             serializer = EventSerializer(event, context={'request': request, 'event_id': event.id})
             return Response(serializer.data)
         else:
-            return Response({'error': 'You do not have permission to view this event.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'error': 'You do not have permission to view this event.'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
     except Event.DoesNotExist:
         raise Http404("Event does not exist.")
     
@@ -84,6 +101,7 @@ def join_event(request, uuid):
     else:
         return Response({'message': 'You are already a participant of this event.'}, status=status.HTTP_200_OK)
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def leave_event(request, uuid):
@@ -102,6 +120,50 @@ def list_user_events(request):
     events = Event.objects.filter(
         Q(authorId=request.user) | 
         Q(participants=request.user)
-    )
+    ).order_by('-time')
     serializer = EventSerializer(events, many=True, context={'request': request})
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def join_event_with_code(request):
+    data = JSONParser().parse(request)
+    code = data.get('code')
+
+    if not code:
+        return Response({'error': 'Event code is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        event = Event.objects.get(code=code, visibility='private')
+        
+        if event.authorId == request.user:
+            return Response({'error': 'You cannot join your own event.'}, status=status.HTTP_403_FORBIDDEN)
+
+        # Check if the user is already a participant
+        participant, created = EventParticipant.objects.get_or_create(
+            eventId=event,
+            userId=request.user,
+            defaults={
+                'firstName': request.user.first_name,
+                'lastName': request.user.last_name,
+                'description': '',
+                'goal': '',
+                'avatar': request.user.profile.avatar if hasattr(request.user, 'profile') else ''
+            }
+        )
+
+        if created:
+            event.participants.add(request.user)
+            return Response({
+                'message': 'You have successfully joined the event!',
+                'event_id': event.id
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({
+                'message': 'You are already a participant of this event.',
+                'event_id': event.id
+            }, status=status.HTTP_200_OK)
+
+    except Event.DoesNotExist:
+        return Response({'error': 'Invalid event code.'}, status=status.HTTP_404_NOT_FOUND)

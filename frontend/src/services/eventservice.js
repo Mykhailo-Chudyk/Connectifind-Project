@@ -40,6 +40,16 @@ const joinEvent = async (eventId) => {
   }
 };
 
+const joinEventWithCode = async (code) => {
+  try {
+    const response = await api.post('events/join-with-code/', { code });
+    return response.data;
+  } catch (error) {
+    console.error('Error joining event with code:', error.response);
+    throw error.response.data;
+  }
+};
+
 const leaveEvent = async (eventId) => {
   try {
     const response = await api.post(`events/leave/${eventId}/`);
@@ -136,6 +146,7 @@ export default {
   listEvents,
   getEventById,
   joinEvent,
+  joinEventWithCode,
   leaveEvent,
   listFeedPosts,
   createFeedPost,

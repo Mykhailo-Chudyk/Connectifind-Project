@@ -6,11 +6,15 @@ import EventWrapper from '../EventWrapper/EventWrapper';
 import eventservice from '../../services/eventservice';
 import { useNavigate } from 'react-router-dom';
 import { ReactTyped } from 'react-typed';
+import InputField from '../InputField/InputField';
+import { FaTimes } from 'react-icons/fa';
 
 const AuthenticatedHome = () => {
   const user = useSelector((state) => state.user.user);
   const userEvents = useSelector((state) => state.events.events);
   const [publicEvents, setPublicEvents] = useState([]);
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [eventCode, setEventCode] = useState('');
   const navigate = useNavigate();
 
 
@@ -37,6 +41,26 @@ const AuthenticatedHome = () => {
     'Connect with your community!'
   ];
 
+  const handleCodeButtonClick = async () => {
+    if (!showCodeInput) {
+      setShowCodeInput(true);
+    } else {
+      try {
+        const response = await eventservice.joinEventWithCode(eventCode);
+        // Navigate to the event page after successful join
+        navigate(`/events/${response.event_id}`);
+      } catch (error) {
+        console.error('Error joining event with code:', error);
+        alert(error?.error || 'Failed to join event with code');
+      }
+    }
+  };
+
+  const handleCloseInput = () => {
+    setShowCodeInput(false);
+    setEventCode('');
+  };
+
   return (
     <div className='home-container'>
       <div className='home-header'>
@@ -56,10 +80,28 @@ const AuthenticatedHome = () => {
       </div>
       <div className='home-row'>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>
-        {/* TODO: add functionality */}
-        {/* <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {}} width="345px"/> */}
+        <ButtonComponent 
+          text={showCodeInput ? "Join" : "Enter Private Event Code"} 
+          size="large" 
+          onClick={handleCodeButtonClick} 
+          width="345px"
+        />
         <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="345px"/>
       </div>
+      {showCodeInput && (
+        <div className='home-row code-input-row'>
+          <div className="code-input-wrapper">
+            <InputField
+              // label="Event Code"
+              type="text"
+              value={eventCode}
+              onChange={(e) => setEventCode(e.target.value)}
+              placeholder="Enter 6-digit code"
+            />
+            <FaTimes className="code-input-close" onClick={handleCloseInput} />
+          </div>
+        </div>
+      )}
       <div className='home-row space-top'>
         <h2>Your Events</h2>  
       </div>
@@ -79,7 +121,6 @@ const AuthenticatedHome = () => {
       <div className='home-row'>
         <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="345px"/>
       </div>
-
     </div>
   );
 };
