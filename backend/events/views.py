@@ -110,8 +110,16 @@ def leave_event(request, uuid):
     if event.authorId == request.user:
         return Response({'error': 'You cannot leave your own event.'}, status=status.HTTP_403_FORBIDDEN)
     
+    # Remove from participants
     event.participants.remove(request.user)
-    return Response({'message': 'You have successfully leave the event!'})
+    
+    # Delete the EventParticipant record
+    EventParticipant.objects.filter(
+        eventId=event,
+        userId=request.user
+    ).delete()
+    
+    return Response({'message': 'You have successfully left the event!'})
 
 
 @api_view(['GET'])
