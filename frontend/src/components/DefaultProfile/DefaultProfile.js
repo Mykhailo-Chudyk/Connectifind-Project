@@ -8,12 +8,14 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import AlertModal from '../AlertModal/AlertModal';
 import userService from '../../services/userservice';
 import { fetchUser } from '../../redux/actions/userActions';
+import { useToast } from '../../contexts/ToastContext';
 import './styles.scss';
 
 const DefaultProfile = () => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { showToast } = useToast();
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
     const [userDescription, setUserDescription] = useState('');
@@ -90,7 +92,7 @@ const DefaultProfile = () => {
             navigate(-1);
         } catch (error) {
             console.error('Error updating profile:', error);
-            alert('Failed to update profile');
+            showToast('Failed to update profile', 'error');
         } finally {
             setIsLoading(false);
         }

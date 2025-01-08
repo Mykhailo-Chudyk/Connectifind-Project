@@ -13,6 +13,7 @@ import React, {useContext, useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthContext';
 import Settings from './components/Settings/Settings.js';
+import { ToastProvider } from './contexts/ToastContext';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -30,33 +31,35 @@ function App() {
   }
 
   return (
-    <Router>
-      <Routes> 
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
-        <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
-        <Route element={<Layout />}>
-          <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
-          <Route path="/events/" element={<Events/>} />
-          <Route path="/events/:eventId" element={<Event/>} />
-          {isAuthenticated && (
-            <>
-              <Route path="/add-event" element={<AddEvent />} />
-              <Route path="/me" element={<DefaultProfile />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/event/:eventId/me" element={<MyEvent type="me" />} />
-              <Route path="/event/:eventId/feed" element={<MyEvent type="feed" />} />
-              <Route path="/event/:eventId/people" element={<MyEvent type="people" />} />
-              <Route path="/event/:eventId/people/:userId" element={<MyEvent type="person" />} />
-              <Route path="/event/:eventId/chats" element={<MyEvent type="chats" />} />
-              <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
-              <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
-            </>
-          )}
-        </Route>
-        <Route path="/" element={<UnauthenticatedHome />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+    <ToastProvider>
+      <Router>
+        <Routes> 
+          <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
+          <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
+            <Route path="/events/" element={<Events/>} />
+            <Route path="/events/:eventId" element={<Event/>} />
+            {isAuthenticated && (
+              <>
+                <Route path="/add-event" element={<AddEvent />} />
+                <Route path="/me" element={<DefaultProfile />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/event/:eventId/me" element={<MyEvent type="me" />} />
+                <Route path="/event/:eventId/feed" element={<MyEvent type="feed" />} />
+                <Route path="/event/:eventId/people" element={<MyEvent type="people" />} />
+                <Route path="/event/:eventId/people/:userId" element={<MyEvent type="person" />} />
+                <Route path="/event/:eventId/chats" element={<MyEvent type="chats" />} />
+                <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
+                <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
+              </>
+            )}
+          </Route>
+          <Route path="/" element={<UnauthenticatedHome />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </ToastProvider>
   );
 }
 

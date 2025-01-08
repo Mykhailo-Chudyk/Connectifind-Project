@@ -9,12 +9,14 @@ import { FaGoogle } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import './styles.scss';
+import { useToast } from '../../contexts/ToastContext';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const { showToast } = useToast();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +25,8 @@ const LoginForm = () => {
       login(res.access);
       navigate('/'); 
     } catch (error) {
-      console.error('Login failed:', error);
+      // add .response.data.message if available
+      showToast(error?.response?.data?.error || 'Login failed', 'error');
     }
   };
 

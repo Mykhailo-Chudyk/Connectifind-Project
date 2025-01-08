@@ -5,12 +5,14 @@ import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import AlertModal from "../AlertModal/AlertModal";
 import eventservice from '../../services/eventservice'; 
 import './styles.scss';
+import { useToast } from '../../contexts/ToastContext';
 
 const MyEventMe = ({ eventDetails }) => {
     const userId = useSelector((state) => state.user?.user?.id);
     const [userGoal, setUserGoal] = useState('');
     const [initialGoal, setInitialGoal] = useState('');
     const [showCancelModal, setShowCancelModal] = useState(false);
+    const { showToast } = useToast();
     useEffect(() => {
         if (eventDetails && eventDetails.participant_details) {
             const currentGoal = eventDetails.participant_details.goal || '';
@@ -28,8 +30,7 @@ const MyEventMe = ({ eventDetails }) => {
             await eventservice.updateGoal(eventDetails.id, userGoal);
             window.location.reload();
         } catch (error) {
-            console.error('Error updating goal:', error);
-            alert('Failed to update goal.');
+            showToast('Failed to update goal.', 'error');    
         } 
     };
 

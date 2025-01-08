@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthContext.js';
 import InputComponent from '../InputComponent/InputComponent.js';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import { FaGoogle } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import './styles.scss';
+import { useToast } from '../../contexts/ToastContext';
 
 
 const RegisterForm = () => {
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -27,7 +28,7 @@ const RegisterForm = () => {
       login(data.access); 
       navigate('/'); 
     } catch (error) {
-      console.error('Registration failed:', error);
+      showToast(error?.response?.data?.error || 'Registration failed', 'error');
     }
   };
 

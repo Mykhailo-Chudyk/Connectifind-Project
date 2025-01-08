@@ -5,9 +5,11 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import AlertModal from '../AlertModal/AlertModal';
 import userService from '../../services/userservice';
 import './styles.scss';
+import { useToast } from '../../contexts/ToastContext';
 
 const Settings = () => {
     const navigate = useNavigate();
+    const { showToast } = useToast();
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -16,7 +18,7 @@ const Settings = () => {
 
     const handleChangePassword = async () => {
         if (newPassword !== confirmNewPassword) {
-            alert("New passwords don't match!");
+            showToast("New passwords don't match!", 'error');
             return;
         }
         setShowPasswordModal(true);
@@ -30,9 +32,9 @@ const Settings = () => {
             setCurrentPassword('');
             setNewPassword('');
             setConfirmNewPassword('');
-            alert('Password updated successfully!');
+            showToast('Password updated successfully!', 'success');
         } catch (error) {
-            alert(`Error updating password: ${error}`);
+            showToast(`Error updating password: ${error}`, 'error');
         }
     };
 
@@ -45,7 +47,7 @@ const Settings = () => {
             await userService.deleteAccount();
             window.location.reload();
         } catch (error) {
-            alert(`Error deleting account: ${error}`);
+            showToast(`Error deleting account: ${error}`, 'error');
         }
     };
 

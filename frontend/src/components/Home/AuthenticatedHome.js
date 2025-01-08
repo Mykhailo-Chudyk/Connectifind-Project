@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useToast } from '../../contexts/ToastContext';
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
@@ -16,7 +17,7 @@ const AuthenticatedHome = () => {
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [eventCode, setEventCode] = useState('');
   const navigate = useNavigate();
-
+  const { showToast } = useToast();
 
   useEffect(() => {
     // TODO: fetch only three events to display on the home page
@@ -51,7 +52,7 @@ const AuthenticatedHome = () => {
         navigate(`/events/${response.event_id}`);
       } catch (error) {
         console.error('Error joining event with code:', error);
-        alert(error?.error || 'Failed to join event with code');
+        showToast(error?.error || 'Failed to join event with code', 'error');
       }
     }
   };

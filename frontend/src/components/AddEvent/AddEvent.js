@@ -5,6 +5,7 @@ import './styles.scss';
 import InputField from '../InputField/InputField';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import AlertModal from '../AlertModal/AlertModal';
+import { useToast } from '../../contexts/ToastContext';
 
 const AddEvent = () => {
     const [showCancelModal, setShowCancelModal] = useState(false);
@@ -27,6 +28,7 @@ const AddEvent = () => {
     ];
 
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const handleChange = (e) => {
         const { name, value, type, files, options } = e.target;
@@ -82,9 +84,10 @@ const AddEvent = () => {
         }
         try {
             await eventservice.addEvent(formData);
-            alert('Event created successfully!');
+            showToast('Event created successfully!', 'success');
             navigate('/events');
         } catch (error) {
+            showToast('Failed to create event', 'error');
             console.error('Failed to create event:', error);
         }
     };

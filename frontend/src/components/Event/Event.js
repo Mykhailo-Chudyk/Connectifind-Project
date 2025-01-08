@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import eventservice from '../../services/eventservice.js';
 import './styles.scss';
@@ -6,6 +5,8 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import EventDetails from '../EventDetails/EventDetails.js';
 import AlertModal from '../AlertModal/AlertModal.js';
 import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useToast } from '../../contexts/ToastContext';
 
 const Event = () => {
   const { eventId } = useParams();  
@@ -16,6 +17,7 @@ const Event = () => {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -56,7 +58,7 @@ const Event = () => {
       }
     } catch (error) {
       console.error('Error joining event:', error);
-      alert('Failed to join event');
+      showToast('Failed to join event', 'error');
     } finally {
       setIsProcessing(false);
     }
@@ -77,7 +79,7 @@ const Event = () => {
       }
     } catch (error) {
       console.error('Error leaving event:', error);
-      alert('Failed to leave event');
+      showToast('Failed to leave event', 'error');
     } finally {
       setIsProcessing(false);
     }
