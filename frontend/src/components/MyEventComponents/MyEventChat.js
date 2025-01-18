@@ -47,10 +47,6 @@ const MyEventChat = ({ eventDetails }) => {
         }
     };
 
-    if (loading && !chatMessages.length) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className="feed-container">
             <div className="feed-header">

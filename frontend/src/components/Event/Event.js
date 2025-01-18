@@ -27,10 +27,12 @@ const Event = () => {
         const details = await eventservice.getEventById(eventId);
         setEventDetails(details);
         setIsParticipant(details.is_participant);
-        setIsLoading(false);
       } catch (err) {
         console.error('Error retrieving event:', err);
+      } finally {
+        setIsLoading(false);
       }
+
     };
 
     if (eventId) {
@@ -97,11 +99,14 @@ const Event = () => {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <div></div>;
   }
 
   if (!eventDetails) {
-    return <p>No event details to display. Please check if the event ID is correct.</p>;
+
+    return <div className="event-container">
+      <h1>No event details to display. Please check if the event ID is correct.</h1>
+    </div>;
   }
 
   return (
