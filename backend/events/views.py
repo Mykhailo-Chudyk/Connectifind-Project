@@ -27,7 +27,22 @@ def create_event(request):
 
     serializer = EventSerializer(data=data, context={'request': request})
     if serializer.is_valid():
-        serializer.save()
+        event = serializer.save()
+        
+        # Create EventParticipant record for the author
+        EventParticipant.objects.create(
+            eventId=event,
+            userId=request.user,
+            firstName=request.user.first_name,
+            lastName=request.user.last_name,
+            description='',
+            goal='',
+            avatar=request.user.profile.avatar if hasattr(request.user, 'profile') else ''
+        )
+        
+        # Add author to participants
+        event.participants.add(request.user)
+        
         return JsonResponse(serializer.data, status=201)
     return JsonResponse(serializer.errors, status=400)
 
