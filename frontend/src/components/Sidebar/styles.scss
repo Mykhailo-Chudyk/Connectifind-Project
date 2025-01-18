@@ -16,6 +16,8 @@
     padding: 15px 0;
     padding-top: 100px;
     overflow: hidden;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateX(0);
 
     .sidebar-content {
         position: relative;
