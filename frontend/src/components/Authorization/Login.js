@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import './styles.scss';
 import { useToast } from '../../contexts/ToastContext';
+import GoogleAuth from '../GoogleAuth/GoogleAuth.js';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -35,16 +36,12 @@ const LoginForm = () => {
     <div className="authorization-container">
       <h1>ConnectiFind</h1>
       <h2 className="sign-in-title">Sign in</h2>
-      {/* TODO: add google auth */}
-      {/* <div className="input-wrapper">
-        <div className="google-auth-container">
-          <FaGoogle className="google-icon" />
-          <span>Continue with Google</span>
-        </div>
+      <div className="input-wrapper">
+        <GoogleAuth />
       </div>
       <div className="or-line">
         <span>OR</span>
-      </div> */}
+      </div>
       <div className="input-wrapper">
         <InputComponent icon={<FontAwesomeIcon icon={faEnvelope} />} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
       </div>

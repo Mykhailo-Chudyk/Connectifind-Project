@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8000/'; // will be later replaced with the .env variable
+const GOOGLE_OAUTH2_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH2_CLIENT_ID;
 
 const register = async (userData) => {
   try {
@@ -36,9 +37,24 @@ const authHeader = () => {
   }
 };
 
+const googleLogin = async (token) => {
+  try {
+    const response = await axios.post(`${API_URL}google-auth/`, { token });
+    if (response.data.access) {
+      localStorage.setItem('user', JSON.stringify(response.data));
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error during Google authentication:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   register,
   logout,
   login,
   authHeader,
+  googleLogin,
+  GOOGLE_OAUTH2_CLIENT_ID,
 };

@@ -73,6 +73,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True # For development only. TODO: adjust for production
 ROOT_URLCONF = 'connectifined.urls'
+GOOGLE_OAUTH2_CLIENT_ID = os.getenv('GOOGLE_OAUTH2_CLIENT_ID')
 
 TEMPLATES = [
     {

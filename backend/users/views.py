@@ -18,6 +18,9 @@ import json
 from rest_framework import status
 from django.core.files.base import ContentFile
 import base64
+from google.oauth2 import id_token
+from google.auth.transport import requests
+from django.conf import settings
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -149,3 +152,43 @@ def delete_account(request):
         return Response({"message": "User account and all associated data deleted successfully!"}, status=204)
     except Exception as e:
         return Response({"error": str(e)}, status=400)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def google_auth(request):
+    try:
+        data = json.loads(request.body)
+        token = data.get('token')
+        
+        # Verify the token
+        idinfo = id_token.verify_oauth2_token(
+            token, 
+            requests.Request(), 
+            settings.GOOGLE_OAUTH2_CLIENT_ID
+        )
+
+        email = idinfo['email']
+        first_name = idinfo.get('given_name', '')
+        last_name = idinfo.get('family_name', '')
+        
+        # Check if user exists
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # Create new user
+            user = User(
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password=make_password(None)  # Random password as they'll use Google auth
+            )
+            user.save()
+        
+        refresh = RefreshToken.for_user(user)
+        return JsonResponse({
+            'message': 'Successfully authenticated with Google',
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+        })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
