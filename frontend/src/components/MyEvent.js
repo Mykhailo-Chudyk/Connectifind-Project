@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import eventservice from '../services/eventservice.js';
+import { fetchUserEvents } from '../redux/actions/eventActions';
 import MyEventMe from './MyEventComponents/MyEventMe.js';
 import MyEventFeed from './MyEventComponents/MyEventFeed.js';
 import MyEventPeople from './MyEventComponents/MyEventPeople.js';
@@ -23,6 +25,8 @@ const componentMap = {
 const MyEvent = ({type = "me"}) => {
   const { eventId } = useParams();  
   const [eventDetails, setEventDetails] = useState(null);
+  const dispatch = useDispatch();
+  const events = useSelector(state => state.events.events);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -37,7 +41,7 @@ const MyEvent = ({type = "me"}) => {
     if (eventId) {
       fetchEventDetails();
     }
-  }, [eventId]);
+  }, [eventId, events]); // Add events to dependency array
 
   const EventComponent = componentMap[type] || MyEventMe;
 

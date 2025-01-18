@@ -5,6 +5,7 @@ export const FETCH_USER_EVENTS_SUCCESS = 'FETCH_USER_EVENTS_SUCCESS';
 export const FETCH_USER_EVENTS_FAILURE = 'FETCH_USER_EVENTS_FAILURE';
 export const JOIN_EVENT_SUCCESS = 'JOIN_EVENT_SUCCESS';
 export const LEAVE_EVENT_SUCCESS = 'LEAVE_EVENT_SUCCESS';
+export const UPDATE_EVENT_GOAL = 'UPDATE_EVENT_GOAL';
 
 export const fetchUserEvents = () => async (dispatch) => {
   dispatch({ type: FETCH_USER_EVENTS_REQUEST });
@@ -24,4 +25,9 @@ export const joinEventSuccess = (event) => ({
 export const leaveEventSuccess = (eventId) => ({
   type: LEAVE_EVENT_SUCCESS,
   payload: eventId
+});
+
+export const updateEventGoal = (eventId, goal) => ({
+  type: UPDATE_EVENT_GOAL,
+  payload: { eventId, goal }
 }); 

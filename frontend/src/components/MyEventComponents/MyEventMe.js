@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import InputField from "../InputField/InputField";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import AlertModal from "../AlertModal/AlertModal";
 import eventservice from '../../services/eventservice'; 
 import './styles.scss';
 import { useToast } from '../../contexts/ToastContext';
+import { updateEventGoal, fetchUserEvents } from '../../redux/actions/eventActions';
 
 const MyEventMe = ({ eventDetails }) => {
     const userId = useSelector((state) => state.user?.user?.id);
@@ -13,13 +14,15 @@ const MyEventMe = ({ eventDetails }) => {
     const [initialGoal, setInitialGoal] = useState('');
     const [showCancelModal, setShowCancelModal] = useState(false);
     const { showToast } = useToast();
+    const dispatch = useDispatch();
+
     useEffect(() => {
         if (eventDetails && eventDetails.participant_details) {
             const currentGoal = eventDetails.participant_details.goal || '';
             setUserGoal(currentGoal);
             setInitialGoal(currentGoal);
         }
-    }, [eventDetails, userId]);
+    }, [eventDetails?.participant_details?.goal]);
 
     const hasChanges = () => {
         return userGoal !== initialGoal;
@@ -28,7 +31,10 @@ const MyEventMe = ({ eventDetails }) => {
     const handleSave = async () => {
         try {
             await eventservice.updateGoal(eventDetails.id, userGoal);
-            window.location.reload();
+            dispatch(updateEventGoal(eventDetails.id, userGoal));
+            setInitialGoal(userGoal);
+            dispatch(fetchUserEvents());
+            showToast('Goal updated successfully', 'success');
         } catch (error) {
             showToast('Failed to update goal.', 'error');    
         } 
@@ -62,7 +68,8 @@ const MyEventMe = ({ eventDetails }) => {
                     message="Are you sure you want to cancel? Your goal changes will be lost."
                     onContinue={() => {
                         setShowCancelModal(false);
-                        window.history.back();
+                        setUserGoal(initialGoal);
+                        // window.history.back();
                     }}
                     onCancel={() => setShowCancelModal(false)}
                     continueText="Yes, Cancel"

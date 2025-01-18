@@ -4,6 +4,7 @@ import {
   FETCH_USER_EVENTS_FAILURE,
   JOIN_EVENT_SUCCESS,
   LEAVE_EVENT_SUCCESS,
+  UPDATE_EVENT_GOAL,
 } from '../actions/eventActions';
 
 const initialState = {
@@ -29,6 +30,15 @@ const eventReducer = (state = initialState, action) => {
       return {
         ...state,
         events: state.events.filter(event => event.id !== action.payload)
+      };
+    case UPDATE_EVENT_GOAL:
+      return {
+        ...state,
+        events: state.events.map(event => 
+          event.id === action.payload.eventId 
+            ? { ...event, participant_details: { ...event.participant_details, goal: action.payload.goal } }
+            : event
+        )
       };
     default:
       return state;
