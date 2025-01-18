@@ -1,34 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import eventservice from '../../services/eventservice.js'; 
-import { FaUserCircle } from 'react-icons/fa';
-import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
+import { fetchChats } from '../../redux/actions/chatActions';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import { formatEventDate } from '../../utils/dateTimeUtils';
 import './styles.scss';
 
 const MyEventChats = ({ eventDetails }) => {
-    const [chats, setChats] = useState([]);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const fetchChats = async () => {
-        try {
-            const data = await eventservice.listAllChats(eventDetails?.id);
-            setChats(data);
-        } catch (err) {
-            console.error('Error fetching chat messages:', err);
-        }
-    };
+    const { chats, loading } = useSelector((state) => state.chat);
+    const eventChats = chats[eventDetails?.id] || [];
 
     useEffect(() => {
-        if (eventDetails)
-            fetchChats();
-    }, [eventDetails]);
+        if (eventDetails?.id) {
+            if (!chats[eventDetails.id]) {
+                dispatch(fetchChats(eventDetails.id));
+            }
+            // Refresh chats in background
+            dispatch(fetchChats(eventDetails.id));
+        }
+    }, [eventDetails?.id, dispatch]);
+
+    if (loading && !eventChats.length) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className='chats-container'>
             <h1>Chats</h1>
             <p className='chats-label'>Chat with other participants</p>
-            {chats.map((chat, index) => (
+            {eventChats.map((chat) => (
                 <div key={chat?.id} className='single-chat-container' onClick={() => navigate(`/event/${eventDetails?.id}/chats/${chat?.user?.id}`)}>
                     <div className="chat-avatar">
                         {chat.user.avatar && <img src={chat.user.avatar} alt="avatar" />}
@@ -40,7 +43,7 @@ const MyEventChats = ({ eventDetails }) => {
                         <p className="chat-time">{formatEventDate(chat.last_message_time)}</p>
                     </div>
                     <div className="chat-button">
-                        <ButtonComponent text="Chat" ></ButtonComponent>
+                        <ButtonComponent text="Chat" />
                     </div>
                 </div>
             ))}

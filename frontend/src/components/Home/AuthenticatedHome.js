@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '../../contexts/ToastContext';
 import './styles.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import EventWrapper from '../EventWrapper/EventWrapper';
 import eventservice from '../../services/eventservice';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactTyped } from 'react-typed';
 import InputField from '../InputField/InputField';
 import { FaTimes } from 'react-icons/fa';
+import { joinEventSuccess } from '../../redux/actions/eventActions';
 
 const AuthenticatedHome = () => {
   const user = useSelector((state) => state.user.user);
@@ -18,6 +19,7 @@ const AuthenticatedHome = () => {
   const [eventCode, setEventCode] = useState('');
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // TODO: fetch only three events to display on the home page
@@ -48,7 +50,8 @@ const AuthenticatedHome = () => {
     } else {
       try {
         const response = await eventservice.joinEventWithCode(eventCode);
-        // Navigate to the event page after successful join
+        const eventDetails = await eventservice.getEventById(response.event_id);
+        dispatch(joinEventSuccess(eventDetails));
         navigate(`/events/${response.event_id}`);
       } catch (error) {
         console.error('Error joining event with code:', error);

@@ -4,9 +4,10 @@ import './styles.scss';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import EventDetails from '../EventDetails/EventDetails.js';
 import AlertModal from '../AlertModal/AlertModal.js';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { useToast } from '../../contexts/ToastContext';
+import { joinEventSuccess, leaveEventSuccess } from '../../redux/actions/eventActions';
 
 const Event = () => {
   const { eventId } = useParams();  
@@ -18,6 +19,7 @@ const Event = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const user = useSelector((state) => state.user.user);
   const { showToast } = useToast();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -55,6 +57,10 @@ const Event = () => {
           participant_count: details.participant_count + 1,
           is_participant: true
         }));
+        dispatch(joinEventSuccess({
+          ...eventDetails,
+          is_participant: true
+        }));
       }
     } catch (error) {
       console.error('Error joining event:', error);
@@ -75,6 +81,7 @@ const Event = () => {
           participant_count: details.participant_count - 1,
           is_participant: false
         }));
+        dispatch(leaveEventSuccess(eventId));
         setShowLeaveModal(false);
       }
     } catch (error) {

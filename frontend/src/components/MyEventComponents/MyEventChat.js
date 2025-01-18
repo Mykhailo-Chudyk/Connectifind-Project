@@ -1,39 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import eventservice from '../../services/eventservice.js'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchChatMessages, addChatMessage } from '../../redux/actions/chatActions';
+import eventservice from '../../services/eventservice';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import InputField from '../InputField/InputField';
 import './styles.scss';
-import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
-import InputField from '../InputField/InputField.js';
 
 const MyEventChat = ({ eventDetails }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [messages, setMessages] = useState([]);
+    const dispatch = useDispatch();
     const [newMessage, setNewMessage] = useState('');
     const [chatPartner, setChatPartner] = useState(null);
-
     const chatPartnerId = location.pathname.split('/').pop();
-
-    const fetchMessages = async () => {
-        try {
-            const data = await eventservice.listChatMessages(eventDetails.id, chatPartnerId);
-            setMessages(data);
-        } catch (err) {
-            console.error('Error fetching chat messages:', err);
-        }
-    };
-
-    const sendMessage = async () => {
-        if (!newMessage.trim()) return;
-        try {
-            const messageData = { content: newMessage };
-            const message = await eventservice.sendChatMessage(eventDetails?.id, chatPartnerId, messageData);
-            setMessages([...messages, message]);
-            setNewMessage('');
-        } catch (err) {
-            console.error('Error sending chat message:', err);
-        }
-    };
+    
+    const { messages, loading } = useSelector((state) => state.chat);
+    const chatMessages = messages[eventDetails?.id]?.[chatPartnerId] || [];
 
     useEffect(() => {
         if (eventDetails?.participants?.length > 1) {
@@ -43,10 +26,30 @@ const MyEventChat = ({ eventDetails }) => {
     }, [eventDetails, chatPartnerId]);
 
     useEffect(() => {
-        if (chatPartner) {
-            fetchMessages();
+        if (chatPartner && eventDetails?.id) {
+            if (!messages[eventDetails.id]?.[chatPartnerId]) {
+                dispatch(fetchChatMessages(eventDetails.id, chatPartnerId));
+            }
+            // Refresh messages in background
+            dispatch(fetchChatMessages(eventDetails.id, chatPartnerId));
         }
-    }, [chatPartner]);
+    }, [chatPartner, eventDetails?.id, chatPartnerId, dispatch]);
+
+    const sendMessage = async () => {
+        if (!newMessage.trim()) return;
+        try {
+            const messageData = { content: newMessage };
+            const message = await eventservice.sendChatMessage(eventDetails?.id, chatPartnerId, messageData);
+            dispatch(addChatMessage(eventDetails.id, chatPartnerId, message));
+            setNewMessage('');
+        } catch (err) {
+            console.error('Error sending chat message:', err);
+        }
+    };
+
+    if (loading && !chatMessages.length) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="feed-container">
@@ -54,7 +57,7 @@ const MyEventChat = ({ eventDetails }) => {
                 <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
                 <h1>Chat with {chatPartner?.first_name} {chatPartner?.last_name}</h1>
             </div>
-            {messages.map((msg, index) => (
+            {chatMessages.map((msg, index) => (
                 <div key={index} className="feed-details-container">
                     <div className="feed-details-header">
                         <div className="feed-details-date">

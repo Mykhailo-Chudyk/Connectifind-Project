@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import eventservice from '../../services/eventservice.js'; 
+import { useDispatch, useSelector } from 'react-redux';
+import eventservice from '../../services/eventservice.js';
 import { formatEventDate } from '../../utils/dateTimeUtils';
+import { fetchFeed, addPost } from '../../redux/actions/feedActions';
 import './styles.scss';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import InputField from '../InputField/InputField.js';
+
 const MyEventFeed = ({ eventDetails }) => {
-    const [posts, setPosts] = useState([]);
+    const dispatch = useDispatch();
     const [newPostContent, setNewPostContent] = useState('');
+    const { feeds, loading } = useSelector((state) => state.feed);
+    const posts = feeds[eventDetails?.id] || [];
 
-    const fetchPosts = async () => {
-        try {
-            const data = await eventservice.listFeedPosts(eventDetails.id); 
-            setPosts(data);
-        } catch (err) {
-            console.error('Error fetching feed posts:', err);
-        } 
-    };
+    useEffect(() => {
+        if (eventDetails?.id) {
+            // If we don't have the feed data yet, fetch it
+            if (!feeds[eventDetails.id]) {
+                dispatch(fetchFeed(eventDetails.id));
+            }
+            // Refresh feed data in background
+            dispatch(fetchFeed(eventDetails.id));
+        }
+    }, [eventDetails?.id, dispatch]);
 
-    const addPost = async () => {
+    const addNewPost = async () => {
         if (!newPostContent.trim()) return;
         try {
-            const eventId = eventDetails.id;
-            const newPost = await eventservice.createFeedPost(eventId, {content: newPostContent });
-            setPosts([...posts, newPost]);
-            setNewPostContent(''); 
+            const newPost = await eventservice.createFeedPost(eventDetails.id, {content: newPostContent});
+            dispatch(addPost(eventDetails.id, newPost));
+            setNewPostContent('');
         } catch (err) {
             console.error('Error creating new feed post:', err);
         }
     };
 
-    useEffect(() => {
-        fetchPosts();
-    }, [eventDetails]);
+    if (loading && !posts.length) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="feed-container">
@@ -41,7 +47,7 @@ const MyEventFeed = ({ eventDetails }) => {
                 <div key={post.id} className="feed-details-container">
                     <div className="feed-details-header">
                         <div className="feed-details-date">
-                            <p>{post.author.first_name + " " + post.author.last_name}</p>
+                            <p>{post.author.first_name} {post.author.last_name}</p>
                         </div>
                         <div className="feed-details-date">
                             <p>{formatEventDate(post.time)}</p>
@@ -62,7 +68,7 @@ const MyEventFeed = ({ eventDetails }) => {
                     />  
                 </div>
                 <div className="feed-post-button">  
-                    <ButtonComponent text="Submit" onClick={addPost} width="300px"/>
+                    <ButtonComponent text="Submit" onClick={addNewPost} width="300px"/>
                 </div>
             </div>
         </div>

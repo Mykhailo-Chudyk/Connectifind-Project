@@ -9,6 +9,7 @@ import { useToast } from '../../contexts/ToastContext';
 const MyEventAbout = ({eventDetails}) => {
     const navigate = useNavigate();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showLeaveModal, setShowLeaveModal] = useState(false);
     const { showToast } = useToast();
 
     if (!eventDetails) {
@@ -26,6 +27,17 @@ const MyEventAbout = ({eventDetails}) => {
         }
     };
 
+    const handleLeaveEvent = async () => {
+        try {
+            await eventservice.leaveEvent(eventDetails.id);
+            showToast('Successfully left the event!', 'success');
+            navigate('/');
+        } catch (error) {
+            showToast('Failed to leave event', 'error');
+            console.error('Error leaving event:', error);
+        }
+    };
+
     return (
         <div className="event-container">
             <h1>{eventDetails.title}</h1>
@@ -38,7 +50,7 @@ const MyEventAbout = ({eventDetails}) => {
                 {(eventDetails.is_creator && !isParticipant) && <ButtonComponent text={"Go to Event"} onClick={goToEvent} width='200px'/>}
             </div> */}
             <div className="event-details-footer">
-                {eventDetails.is_creator && (
+                {eventDetails.is_creator ? (
                     <div className="event-delete-section">
                         <h2 className="event-delete-title">Delete Event</h2>
                         <p className="event-delete-warning">This action cannot be undone.</p>
@@ -46,9 +58,22 @@ const MyEventAbout = ({eventDetails}) => {
                             <ButtonComponent 
                                 text="Delete Event" 
                                 onClick={() => setShowDeleteModal(true)} 
-                            width='200px' 
-                            isDangerous={true}
-                        />
+                                width='200px' 
+                                isDangerous={true}
+                            />
+                        </div>
+                    </div>
+                ) : (
+                    <div className="event-delete-section">
+                        <h2 className="event-delete-title">Leave Event</h2>
+                        <p className="event-delete-warning">You will lose all your event data including your goal and messages.</p>
+                        <div className="event-delete-buttons">
+                            <ButtonComponent 
+                                text="Leave Event" 
+                                onClick={() => setShowLeaveModal(true)} 
+                                width='200px' 
+                                isDangerous={true}
+                            />
                         </div>
                     </div>
                 )}
@@ -61,6 +86,17 @@ const MyEventAbout = ({eventDetails}) => {
                     onContinue={handleDeleteEvent}
                     onCancel={() => setShowDeleteModal(false)}
                     continueText="Delete Event"
+                    cancelText="Cancel"
+                />
+            )}
+
+            {showLeaveModal && (
+                <AlertModal
+                    title="Leave Event"
+                    message="Are you sure you want to leave this event? You will lose all your event data including your goal and messages."
+                    onContinue={handleLeaveEvent}
+                    onCancel={() => setShowLeaveModal(false)}
+                    continueText="Yes, Leave Event"
                     cancelText="Cancel"
                 />
             )}
