@@ -141,6 +141,16 @@ const updateGoal = async (eventId, goal) => {
   }
 };
 
+const deleteEvent = async (eventId) => {
+  try {
+    const response = await api.delete(`events/delete/${eventId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting event:', error.response);
+    throw error.response.data;
+  }
+};
+
 export default {
   addEvent,
   listEvents,
@@ -156,4 +166,5 @@ export default {
   listUserEvents,
   getCategories,
   updateGoal,
+  deleteEvent,
 };

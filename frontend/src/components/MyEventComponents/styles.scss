@@ -346,3 +346,25 @@
     flex-direction: column;
     padding: 40px;
 }
+
+.event-delete-section {
+    padding-top: 20px;
+
+    .event-delete-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .event-delete-warning {
+        font-size: 1.2rem;
+        color: $primary-color;
+        font-weight: 500;
+        margin-bottom: 40px;
+    }
+
+    .event-delete-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+}

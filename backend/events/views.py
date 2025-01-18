@@ -175,3 +175,25 @@ def join_event_with_code(request):
 
     except Event.DoesNotExist:
         return Response({'error': 'Invalid event code.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_event(request, uuid):
+    try:
+        event = Event.objects.get(pk=uuid)
+        
+        if event.authorId != request.user:
+            return Response(
+                {'error': 'You do not have permission to delete this event.'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+            
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+    except Event.DoesNotExist:
+        return Response(
+            {'error': 'Event not found.'}, 
+            status=status.HTTP_404_NOT_FOUND
+        )
