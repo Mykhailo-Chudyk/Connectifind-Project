@@ -120,3 +120,29 @@
     }
 }
 
+.home-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+
+  .empty-events {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0px 40px 40px 40px;
+    text-align: center;
+    
+    p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+  }
+}
+
+.vertical-scroll {
+  max-height: none;
+  overflow: visible;
+}
+

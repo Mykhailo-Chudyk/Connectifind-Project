@@ -4,46 +4,49 @@ import './styles.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import EventWrapper from '../EventWrapper/EventWrapper';
-import eventservice from '../../services/eventservice';
 import { useNavigate } from 'react-router-dom';
 import { ReactTyped } from 'react-typed';
 import InputField from '../InputField/InputField';
 import { FaTimes } from 'react-icons/fa';
-import { joinEventSuccess } from '../../redux/actions/eventActions';
+import { fetchUserEvents } from '../../redux/actions/eventActions';
 import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import eventservice from '../../services/eventservice';
 
 const AuthenticatedHome = () => {
   const user = useSelector((state) => state.user.user);
-  const userEvents = useSelector((state) => state.events.events);
-  const { events: publicEvents, loading } = useSelector((state) => state.publicEvents);
+  const { events: userEvents, loading: userEventsLoading } = useSelector((state) => state.events);
+  const { events: publicEvents, loading: publicLoading } = useSelector((state) => state.publicEvents);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [eventCode, setEventCode] = useState('');
   const navigate = useNavigate();
-  const { showToast } = useToast();
   const dispatch = useDispatch();
+  const { showToast } = useToast();
+
+  const createdEvents = userEvents.filter(event => event.is_creator);
+  const joinedEvents = userEvents.filter(event => !event.is_creator);
 
   useEffect(() => {
-    // If we don't have any events, fetch them
-    if (!publicEvents.length) {
-      dispatch(fetchPublicEvents());
-    }
-    // Use requestIdleCallback to fetch events in background
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(() => dispatch(fetchPublicEvents()));
-    } else {
-      setTimeout(() => dispatch(fetchPublicEvents()), 100);
-    }
+    dispatch(fetchUserEvents());
+    dispatch(fetchPublicEvents());
   }, [dispatch]);
 
-  const phrases = [
-    'Time to find your next event!',
-    'Discover amazing events around you!',
-    'Join the fun at local events!',
-    'Explore new experiences!',
-    'Find your next adventure!',
-    'Connect with your community!'
-  ];
+  const EventSkeleton = () => (
+    <div className='event-wrapper'>
+      <div className="event-icon">
+        <Skeleton height={130} />
+      </div>
+      <div className="event-body">
+        <Skeleton width={200} height={24} />
+        <Skeleton width={150} height={20} />
+        <Skeleton width={180} height={20} />
+      </div>
+      <div className="event-actions">
+        <Skeleton width={100} height={36} />
+      </div>
+    </div>
+  );
 
   const handleCodeButtonClick = async () => {
     if (!showCodeInput) {
@@ -51,8 +54,7 @@ const AuthenticatedHome = () => {
     } else {
       try {
         const response = await eventservice.joinEventWithCode(eventCode);
-        const eventDetails = await eventservice.getEventById(response.event_id);
-        dispatch(joinEventSuccess(eventDetails));
+        // Navigate to the event page after successful join
         navigate(`/events/${response.event_id}`);
       } catch (error) {
         console.error('Error joining event with code:', error);
@@ -66,13 +68,43 @@ const AuthenticatedHome = () => {
     setEventCode('');
   };
 
-  const EventSkeleton = () => (
-    <div className="event-wrapper">
-      <Skeleton height={200} />
-      <div className="event-details">
-        <Skeleton width={150} height={20} />
-        <Skeleton width={200} height={16} />
-        <Skeleton count={1} height={16} />
+  const renderEventSection = (title, events, emptyMessage, emptyButtonText, emptyButtonAction, showAll = false, isLoading = false) => (
+    <div className='home-section'>
+      <div className='home-row space-top'>
+        <h2>{title}</h2>
+      </div>
+      <div className='home-row vertical-scroll'>
+        {isLoading ? (
+          <>
+            {Array(3).fill().map((_, index) => (
+              <EventSkeleton key={index} />
+            ))}
+          </>
+        ) : events.length === 0 ? (
+          <div className='empty-events'>
+            <p>{emptyMessage}</p>
+            <ButtonComponent 
+              text={emptyButtonText} 
+              size="large" 
+              onClick={emptyButtonAction} 
+              width="345px"
+            />
+          </div>
+        ) : (
+          <>
+            {events.slice(0, 3).map((event) => (
+              <EventWrapper key={event.id} event={event} />
+            ))}
+            {events.length > 3 && showAll && (
+              <ButtonComponent 
+                text={`See all ${title.toLowerCase()}`} 
+                size="large" 
+                onClick={() => {}} 
+                width="345px"
+              />
+            )}
+          </>
+        )}
       </div>
     </div>
   );
@@ -84,7 +116,7 @@ const AuthenticatedHome = () => {
           <h1>Hello, {user?.first_name}!</h1>
           <h3>
             <ReactTyped
-              strings={phrases}
+              strings={["Time to find your next event!", "Discover amazing events around you!", "Join the fun at local events!", "Explore new experiences!", "Find your next adventure!", "Connect with your community!"]}
               typeSpeed={50}
               backSpeed={25}
               backDelay={3000}
@@ -118,31 +150,35 @@ const AuthenticatedHome = () => {
           </div>
         </div>
       )}
-      <div className='home-row space-top'>
-        <h2>Your Events</h2>  
-      </div>
-      <div className='home-row vertical-scroll'>
-        {userEvents.map((event) => (
-          <EventWrapper key={event.id} event={event} />
-        ))}
-      </div>
-      <div className='home-row space-top'>
-        <h2>Explore public events nearby and join them</h2>
-      </div>
-      <div className='home-row vertical-scroll'>
-        {loading && !publicEvents.length ? (
-          Array(3).fill().map((_, index) => (
-            <EventSkeleton key={index} />
-          ))
-        ) : (
-          publicEvents.slice(0, 3).map((event) => (
-            <EventWrapper key={event.id} event={event} />
-          ))
-        )}
-      </div>
-      <div className='home-row'>
-        <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="345px"/>
-      </div>
+
+      {renderEventSection(
+        "Events you Joined",
+        joinedEvents,
+        "You haven't joined any events yet",
+        "Explore Events",
+        () => navigate('/events'),
+        true,
+        userEventsLoading
+      )}
+      {renderEventSection(
+        "Public events nearby",
+        publicEvents,
+        "No public events available",
+        "Find Events",
+        () => navigate('/events'),
+        true,
+        publicLoading
+      )}
+
+      {renderEventSection(
+        "Events you Created",
+        createdEvents,
+        "You haven't created any events yet",
+        "Create Event",
+        () => navigate('/add-event'),
+        true,
+        userEventsLoading
+      )}
     </div>
   );
 };

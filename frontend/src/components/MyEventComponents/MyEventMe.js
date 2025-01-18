@@ -69,7 +69,6 @@ const MyEventMe = ({ eventDetails }) => {
                     onContinue={() => {
                         setShowCancelModal(false);
                         setUserGoal(initialGoal);
-                        // window.history.back();
                     }}
                     onCancel={() => setShowCancelModal(false)}
                     continueText="Yes, Cancel"
