@@ -35,10 +35,6 @@ const MyEventFeed = ({ eventDetails }) => {
         }
     };
 
-    if (loading && !posts.length) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className="feed-container">
             <h1>Feed</h1>

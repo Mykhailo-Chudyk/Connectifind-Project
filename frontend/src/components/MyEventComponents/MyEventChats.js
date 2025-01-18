@@ -23,10 +23,6 @@ const MyEventChats = ({ eventDetails }) => {
         }
     }, [eventDetails?.id, dispatch]);
 
-    if (loading && !eventChats.length) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className='chats-container'>
             <h1>Chats</h1>

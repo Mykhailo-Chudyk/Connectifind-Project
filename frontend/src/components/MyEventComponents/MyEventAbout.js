@@ -1,16 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import EventDetails from "../EventDetails/EventDetails";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import AlertModal from "../AlertModal/AlertModal";
 import eventservice from "../../services/eventservice";
 import { useToast } from '../../contexts/ToastContext';
+import { fetchFeed } from '../../redux/actions/feedActions';
+import { fetchChats } from '../../redux/actions/chatActions';
+import { leaveEventSuccess } from '../../redux/actions/eventActions';
 
 const MyEventAbout = ({eventDetails}) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showLeaveModal, setShowLeaveModal] = useState(false);
     const { showToast } = useToast();
+
+    useEffect(() => {
+        if (eventDetails?.id) {
+            // Preload feed and chats data asynchronously
+            const preloadData = async () => {
+                try {
+                    // We use Promise.all to load both in parallel
+                    await Promise.all([
+                        dispatch(fetchFeed(eventDetails.id)),
+                        dispatch(fetchChats(eventDetails.id))
+                    ]);
+                } catch (error) {
+                    console.error('Error preloading data:', error);
+                }
+            };
+            
+            // Use requestIdleCallback if available, otherwise setTimeout
+            if (window.requestIdleCallback) {
+                window.requestIdleCallback(() => preloadData());
+            } else {
+                setTimeout(preloadData, 100);
+            }
+        }
+    }, [eventDetails?.id, dispatch]);
 
     if (!eventDetails) {
         return null;
@@ -30,6 +59,7 @@ const MyEventAbout = ({eventDetails}) => {
     const handleLeaveEvent = async () => {
         try {
             await eventservice.leaveEvent(eventDetails.id);
+            dispatch(leaveEventSuccess(eventDetails.id));
             showToast('Successfully left the event!', 'success');
             navigate('/');
         } catch (error) {
@@ -58,9 +88,9 @@ const MyEventAbout = ({eventDetails}) => {
                             <ButtonComponent 
                                 text="Delete Event" 
                                 onClick={() => setShowDeleteModal(true)} 
-                                width='200px' 
-                                isDangerous={true}
-                            />
+                            width='200px' 
+                            isDangerous={true}
+                        />
                         </div>
                     </div>
                 ) : (
