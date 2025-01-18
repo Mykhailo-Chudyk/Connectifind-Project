@@ -115,17 +115,25 @@ def change_password(request):
     try:
         data = json.loads(request.body)
         user = request.user
-
+        
         current_password = data.get('currentPassword')
         new_password = data.get('newPassword')
 
-        if not user.check_password(current_password):
-            return Response({"error": "Current password is incorrect"}, status=400)
+        # Check if user has a password set (not a Google user)
+        if user.has_usable_password():
+            if not user.check_password(current_password):
+                return Response({"error": "Current password is incorrect"}, status=400)
 
         user.set_password(new_password)
         user.save()
 
-        return Response({"message": "Password changed successfully!"}, status=200)
+        # Generate new tokens since password change invalidates existing ones
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "message": "Password changed successfully!",
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+        }, status=200)
     except Exception as e:
         return Response({"error": str(e)}, status=400)
 

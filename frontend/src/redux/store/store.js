@@ -3,6 +3,7 @@ import userReducer from '../reducers/userReducer';
 import eventReducer from '../reducers/eventReducer';
 import feedReducer from '../reducers/feedReducer';
 import chatReducer from '../reducers/chatReducer';
+import publicEventsReducer from '../reducers/publicEventsReducer';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     events: eventReducer,
     feed: feedReducer,
     chat: chatReducer,
+    publicEvents: publicEventsReducer,
   },
 });

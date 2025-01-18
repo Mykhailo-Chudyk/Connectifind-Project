@@ -1,30 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import './styles.scss';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import EventWrapper from '../EventWrapper/EventWrapper';
-import eventservice from '../../services/eventservice';
-import { useNavigate } from 'react-router-dom';
+import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
+import Skeleton from 'react-loading-skeleton';
 import peopleVideo from '../../assets/people-video.mp4';
+import './styles.scss';
 
 const UnauthenticatedHome = () => {
-  const [publicEvents, setPublicEvents] = useState([]);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const { events: publicEvents, loading } = useSelector((state) => state.publicEvents);
 
   useEffect(() => {
-    // TODO: fetch only three events to display on the home page
-    const fetchEvents = async () => {
-      try {
-        const data = await eventservice.listEvents();
-        setPublicEvents(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    if (!publicEvents.length) {
+      dispatch(fetchPublicEvents());
+    }
+    // Use requestIdleCallback to fetch events in background
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(() => dispatch(fetchPublicEvents()));
+    } else {
+      setTimeout(() => dispatch(fetchPublicEvents()), 100);
+    }
+  }, [dispatch]);
 
-    fetchEvents();
-  }, []);
-
+  const EventSkeleton = () => (
+    <div className="event-wrapper">
+      <Skeleton height={200} />
+      <div className="event-details">
+        <Skeleton width={150} height={20} />
+        <Skeleton width={200} height={16} />
+        <Skeleton count={1} height={16} />
+      </div>
+    </div>
+  );
 
   return (
     <div className='home-container'>
@@ -46,9 +56,15 @@ const UnauthenticatedHome = () => {
         <h2>Explore public events nearby and join them</h2>
       </div>
       <div className='home-row vertical-scroll'>
-        {publicEvents.map((event) => (
-          <EventWrapper key={event.id} event={event} />
-        ))}
+        {loading && !publicEvents.length ? (
+          Array(3).fill().map((_, index) => (
+            <EventSkeleton key={index} />
+          ))
+        ) : (
+          publicEvents.slice(0, 3).map((event) => (
+            <EventWrapper key={event.id} event={event} />
+          ))
+        )}
       </div>
       <div className='home-row'>
         <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="345px"/>

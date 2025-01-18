@@ -88,13 +88,13 @@ const DefaultProfile = () => {
                 avatar: userAvatar,
             };
             await userService.updateUserProfile(profileData);
-            dispatch(fetchUser());
-            navigate(-1);
+            showToast('Profile updated successfully', 'success');
         } catch (error) {
             console.error('Error updating profile:', error);
             showToast('Failed to update profile', 'error');
         } finally {
             setIsLoading(false);
+            dispatch(fetchUser());
         }
     };
 
@@ -151,7 +151,7 @@ const DefaultProfile = () => {
             <div className="default-profile-buttons">
                 <ButtonComponent text="Cancel" onClick={handleCancel} level="primary" width="200px"/>
                 <ButtonComponent 
-                    text={isLoading ? "Saving..." : "Save"} 
+                    text={"Save"} 
                     onClick={handleSave} 
                     width="200px"
                     disabled={isLoading || !hasChanges()}
@@ -164,7 +164,7 @@ const DefaultProfile = () => {
                     message="Are you sure you want to cancel? All your changes will be lost."
                     onContinue={() => {
                         setShowCancelModal(false);
-                        navigate(-1);
+                        dispatch(fetchUser());
                     }}
                     onCancel={() => setShowCancelModal(false)}
                     continueText="Yes, Cancel"

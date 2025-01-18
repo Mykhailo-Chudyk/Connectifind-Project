@@ -26,15 +26,21 @@ const Settings = () => {
 
     const handlePasswordConfirm = async () => {
         try {
-            await userService.changePassword(currentPassword, newPassword);
+            const response = await userService.changePassword(currentPassword, newPassword);
             setShowPasswordModal(false);
             // Reset form
             setCurrentPassword('');
             setNewPassword('');
             setConfirmNewPassword('');
+            
+            // Update the auth token if provided
+            if (response.access) {
+                localStorage.setItem('userToken', response.access);
+            }
+            
             showToast('Password updated successfully!', 'success');
         } catch (error) {
-            showToast(`Error updating password: ${error}`, 'error');
+            showToast(`Error updating password: ${error?.response?.data?.error || error?.message || 'Unknown error'}`, 'error');
         }
     };
 

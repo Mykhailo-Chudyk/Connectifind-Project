@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import eventservice from '../../services/eventservice.js';
-import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaCalendarAlt } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton';
+import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './styles.scss';
 
 const Events = () => {
-  const [events, setEvents] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { events, loading, error } = useSelector((state) => state.publicEvents);
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await eventservice.listEvents();
-        setEvents(data);
-      } catch (err) {
-        setError('Failed to fetch events');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvents();
-  }, []);
+    // If we don't have any events, fetch them
+    if (!events.length) {
+      dispatch(fetchPublicEvents());
+    }
+    // Refresh events in background
+    dispatch(fetchPublicEvents());
+  }, [dispatch]);
 
   const EventSkeleton = () => (
     <div className='event-item'>
@@ -53,7 +46,7 @@ const Events = () => {
       </div>
       {error && <p>{error}</p>}
       <div className='events-list'>
-        {loading ? (
+        {loading && !events.length ? (
           Array(9).fill().map((_, index) => (
             <EventSkeleton key={index} />
           ))
