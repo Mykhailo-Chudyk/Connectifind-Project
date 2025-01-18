@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from users.views import register_user, login_user, get_user_info, update_profile, change_password, delete_account
+from users.views import register_user, login_user, get_user_info, update_profile, change_password, delete_account, google_auth
 from events.views import create_event, list_events, get_event, join_event, join_event_with_code, leave_event, list_user_events
 from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
@@ -35,4 +35,5 @@ urlpatterns = [
     path('users/change_password/', change_password, name='change_password'),
     path('users/delete_account/', delete_account, name='delete_account'),
     path('events/<uuid:event_id>/update-goal/', update_goal, name='update-goal'),
+    path('google-auth/', google_auth, name='google_auth'),
 ]

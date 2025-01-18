@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/'; // will be later replaced with the .env variable
-const GOOGLE_OAUTH2_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH2_CLIENT_ID;
+const API_URL = process.env.REACT_APP_API_URL;
+export const GOOGLE_OAUTH2_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH2_CLIENT_ID;
 
 const register = async (userData) => {
   try {
@@ -56,5 +56,5 @@ export default {
   login,
   authHeader,
   googleLogin,
-  GOOGLE_OAUTH2_CLIENT_ID,
+  API_URL,
 };
