@@ -114,7 +114,7 @@ const Event = () => {
       <h1>{eventDetails.title}</h1>
       <EventDetails eventDetails={eventDetails}/>
       <div className="event-details-footer">
-        <p className="event-details-spots">Spots left: {eventDetails.capacity - eventDetails.participant_count}</p>
+        <p className="event-details-spots">Spots left: {eventDetails.capacity - eventDetails.participant_count} / {eventDetails.capacity}</p>
         <div className="event-details-buttons">
           <ButtonComponent text={"Return"} onClick={() => window.history.back()} width='200px' level='primary'/>
           {!user && <ButtonComponent text={"Login to Join"} onClick={() => navigate('/login')} width='200px' />}

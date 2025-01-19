@@ -25,21 +25,14 @@ const Layout = () => {
       <div style={{ display: 'flex' }}>
         <div 
           style={{ 
-            width: '75px',
-            transition: 'opacity 0.3s ease-in-out',
             opacity: isLoading ? 0 : 1
           }}
+          className='sidebar-container'
         >
           {(isAuthenticated && user) && <Sidebar onLogout={logout} />}
         </div>
         <div 
-          style={{ 
-            width: '100%', 
-            height: '100%', 
-            marginLeft: (isAuthenticated && user) ? '0px' : '0px', 
-            marginTop: '86px',
-            transition: 'margin-left 0.3s ease-in-out'
-          }}
+          className='content-container'
         >
           <Outlet />
         </div>
