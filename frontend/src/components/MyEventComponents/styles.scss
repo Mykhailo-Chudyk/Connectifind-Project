@@ -144,6 +144,15 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+
+                    .people-item-author-star {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
                 }
 
                 .people-title {

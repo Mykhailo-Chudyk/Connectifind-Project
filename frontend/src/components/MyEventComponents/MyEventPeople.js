@@ -1,6 +1,6 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaStar } from "react-icons/fa";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { useSelector } from 'react-redux';
 
@@ -22,7 +22,12 @@ const MyEventPeople = ({ eventDetails }) => {
                                 {!participant?.image && <FaUser />}
                             </div>
                             <div className='people-item-body'>
-                                <p className='people-author'>{participant.first_name} {participant.last_name}</p>
+                                <p className='people-author'>
+                                    {participant.first_name} {participant.last_name}
+                                    <div className="people-item-author-star">
+                                        {eventDetails.author.id === participant.id && <FaStar style={{ marginLeft: '5px', color: '#18807D' }} />}
+                                    </div>
+                                </p>
                                 <p className='people-title'>{participant.description}</p>
                                 <p className='people-description'>Goal: {participant.goal}</p> 
                             </div>
