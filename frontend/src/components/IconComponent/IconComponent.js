@@ -9,7 +9,7 @@ const IconComponent = ({ icon = null, isFaComponent = false, nameToShow, selecte
             {icon && !isFaComponent && <img src={icon} alt="icon" /> }
             {!icon && 
                 <div className="icon-name">
-                    {nameToShow || "NA"}
+                    {nameToShow || ""}
                 </div>
             }
         </div>

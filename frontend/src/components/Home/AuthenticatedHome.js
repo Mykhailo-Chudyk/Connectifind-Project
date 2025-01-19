@@ -68,7 +68,7 @@ const AuthenticatedHome = () => {
     setEventCode('');
   };
 
-  const renderEventSection = (title, events, emptyMessage, emptyButtonText, emptyButtonAction, showAll = false, isLoading = false) => (
+  const renderEventSection = (title, events, emptyMessage, emptyButtonText, emptyButtonAction, showAll = false, isLoading = false, seeAllPath = '/') => (
     <div className='home-section'>
       <div className='home-row space-top'>
         <h2>{title}</h2>
@@ -99,7 +99,7 @@ const AuthenticatedHome = () => {
               <ButtonComponent 
                 text={`See all ${title.toLowerCase()}`} 
                 size="large" 
-                onClick={() => {}} 
+                onClick={() => navigate(seeAllPath)} 
                 width="345px"
               />
             )}
@@ -158,7 +158,8 @@ const AuthenticatedHome = () => {
         "Explore Events",
         () => navigate('/events'),
         true,
-        userEventsLoading
+        userEventsLoading,
+        '/joined-events'
       )}
       {renderEventSection(
         "Public events nearby",
@@ -167,7 +168,8 @@ const AuthenticatedHome = () => {
         "Find Events",
         () => navigate('/events'),
         true,
-        publicLoading
+        publicLoading,
+        '/events'
       )}
 
       {renderEventSection(
@@ -177,7 +179,8 @@ const AuthenticatedHome = () => {
         "Create Event",
         () => navigate('/add-event'),
         true,
-        userEventsLoading
+        userEventsLoading,
+        '/my-events'
       )}
     </div>
   );

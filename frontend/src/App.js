@@ -38,7 +38,7 @@ function App() {
           <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp />} />
           <Route element={<Layout />}>
             <Route path="/" element={isAuthenticated ? <AuthenticatedHome /> : <UnauthenticatedHome />} />
-            <Route path="/events/" element={<Events/>} />
+            <Route path="/events/" element={<Events filter="all"/>} />
             <Route path="/events/:eventId" element={<Event/>} />
             {isAuthenticated && (
               <>
@@ -52,6 +52,8 @@ function App() {
                 <Route path="/event/:eventId/chats" element={<MyEvent type="chats" />} />
                 <Route path="/event/:eventId/chats/:userId" element={<MyEvent type="chat" />} />
                 <Route path="/event/:eventId/about" element={<MyEvent type="about" />} />
+                <Route path="/my-events" element={<Events filter="created" />} />
+                <Route path="/joined-events" element={<Events filter="joined" />} />
               </>
             )}
           </Route>
