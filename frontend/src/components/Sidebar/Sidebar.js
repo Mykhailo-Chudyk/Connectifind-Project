@@ -95,7 +95,7 @@ const Sidebar = ({ onLogout }) => {
               onClick={handleLogout}
             />
             <div className="divider" />
-            {userEvents.map((event) => (
+            {[...new Map(userEvents.map(event => [event.id, event])).values()].map((event) => (
               <IconComponent
                 key={event.id}
                 icon={event.image}
