@@ -111,12 +111,14 @@ const Event = () => {
 
   return (
     <div className="event-container">
-      <h1>{eventDetails.title}</h1>
+      <div className='event-header'>
+        <span className='back-arrow' onClick={() => window.history.back()}>←</span>
+        <h1>{eventDetails.title}</h1>
+      </div>
       <EventDetails eventDetails={eventDetails}/>
       <div className="event-details-footer">
         <p className="event-details-spots">Spots left: {eventDetails.capacity - eventDetails.participant_count} / {eventDetails.capacity}</p>
         <div className="event-details-buttons">
-          <ButtonComponent text={"Return"} onClick={() => window.history.back()} width='200px' level='primary'/>
           {!user && <ButtonComponent text={"Login to Join"} onClick={() => navigate('/login')} width='200px' />}
           {user && !eventDetails.is_creator && 
             <ButtonComponent 

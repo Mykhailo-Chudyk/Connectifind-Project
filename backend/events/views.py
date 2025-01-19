@@ -51,9 +51,12 @@ def create_event(request):
 @permission_classes([AllowAny])
 def list_events(request):
     if request.user.is_authenticated:
+        # Exclude events where user is author or participant
         events = Event.objects.filter(
-            Q(visibility='public') |
-            Q(authorId=request.user)
+            visibility='public'
+        ).exclude(
+            Q(authorId=request.user) | 
+            Q(participants=request.user)
         ).prefetch_related('participants')
     else:
         events = Event.objects.filter(visibility='public').prefetch_related('participants')

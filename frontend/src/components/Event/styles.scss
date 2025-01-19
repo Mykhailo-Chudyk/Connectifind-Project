@@ -34,4 +34,23 @@
         font-size: 1rem;
     }
 
+    .event-header {
+        position: relative;
+
+        .back-arrow {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: $primary-color;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        h1 {
+            padding-left: 50px;
+        }
+    }
 }
