@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaCalendarAlt } from "react-icons/fa";
@@ -12,6 +12,7 @@ import './styles.scss';
 const Events = ({ filter = "all" }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
   const { events: publicEvents, loading: publicLoading } = useSelector((state) => state.publicEvents);
   const { events: userEvents, loading: userLoading } = useSelector((state) => state.events);
 
@@ -24,15 +25,27 @@ const Events = ({ filter = "all" }) => {
   }, [dispatch, filter]);
 
   const getFilteredEvents = () => {
+    let events;
     switch (filter) {
       case "created":
-        return userEvents.filter(event => event.is_creator);
+        events = userEvents.filter(event => event.is_creator);
+        break;
       case "joined":
-        return userEvents.filter(event => !event.is_creator);
+        events = userEvents.filter(event => !event.is_creator);
+        break;
       case "all":
       default:
-        return publicEvents;
+        events = publicEvents;
     }
+
+    if (!searchQuery) return events;
+
+    const query = searchQuery.toLowerCase();
+    return events.filter(event => 
+      event.title.toLowerCase().includes(query) ||
+      event.description.toLowerCase().includes(query) ||
+      `${event.author.first_name} ${event.author.last_name}`.toLowerCase().includes(query)
+    );
   };
 
   const getPageTitle = () => {
@@ -72,6 +85,15 @@ const Events = ({ filter = "all" }) => {
         <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
         <h1>{getPageTitle()}</h1>
       </div>
+      <div className='events-search'>
+        <input
+          type="text"
+          placeholder="Search events..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className='events-search-input'
+        />
+      </div>
       {filteredEvents.length === 0 && !isLoading && (
         <p className="no-events-message">No events found.</p>
       )}
@@ -88,8 +110,8 @@ const Events = ({ filter = "all" }) => {
                 {!event?.image && <FaCalendarAlt />}
               </div>
               <div className='event-item-body'>
-                <p className='event-author'>{event.author.first_name} {event.author.last_name}</p>
                 <p className='event-title'>{event.title}</p>
+                <p className='event-author'>{event.author.first_name} {event.author.last_name}</p>
                 <p className='event-description'>{event.description}</p>
               </div>
               <div className='event-item-actions'>
