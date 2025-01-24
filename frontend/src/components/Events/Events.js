@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaCalendarAlt } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton';
 import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
@@ -12,7 +12,22 @@ import './styles.scss';
 const Events = ({ filter = "all" }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
+  const [initialLoadDone, setInitialLoadDone] = useState(false);
+
+  // Get search query from URL only on initial load
+  useEffect(() => {
+    if (!initialLoadDone) {
+      const params = new URLSearchParams(location.search);
+      const searchParam = params.get('search');
+      if (searchParam) {
+        setSearchQuery(searchParam);
+      }
+      setInitialLoadDone(true);
+    }
+  }, [location.search, initialLoadDone]);
+
   const { events: publicEvents, loading: publicLoading } = useSelector((state) => state.publicEvents);
   const { events: userEvents, loading: userLoading } = useSelector((state) => state.events);
 
@@ -79,6 +94,11 @@ const Events = ({ filter = "all" }) => {
   const isLoading = filter === "all" ? publicLoading : userLoading;
   const filteredEvents = getFilteredEvents();
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+  };
+
   return (
     <div className='events-container'>
       <div className='events-header'>
@@ -90,7 +110,7 @@ const Events = ({ filter = "all" }) => {
           type="text"
           placeholder="Search events..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearchChange}
           className='events-search-input'
         />
       </div>
