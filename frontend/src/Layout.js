@@ -11,7 +11,6 @@ const Layout = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Set a minimum loading time to prevent flashing
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 300);
@@ -20,9 +19,9 @@ const Layout = () => {
   }, [user]);
 
   return (
-    <div>
+    <div className="layout">
       <Header isAuthenticated={isAuthenticated} />
-      <div style={{ display: 'flex' }}>
+      <div className="layout-content">
         <div 
           style={{ 
             opacity: isLoading ? 0 : 1
@@ -31,11 +30,9 @@ const Layout = () => {
         >
           {(isAuthenticated && user) && <Sidebar onLogout={logout} />}
         </div>
-        <div 
-          className='content-container'
-        >
+        <main className="main-content">
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );

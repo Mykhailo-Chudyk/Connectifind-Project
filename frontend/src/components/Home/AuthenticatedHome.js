@@ -110,7 +110,7 @@ const AuthenticatedHome = () => {
   );
 
   return (
-    <div className='home-container'>
+    <div className='home-container authenticated'>
       <div className='home-header'>
         <div className='home-header-text'>  
           <h1>Hello, {user?.first_name}!</h1>

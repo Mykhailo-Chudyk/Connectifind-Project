@@ -39,7 +39,7 @@ const UnauthenticatedHome = () => {
   );
 
   return (
-    <div className='home-container'>
+    <div className='home-container unauthenticated'>
       <div className='home-header'>
         <div className='home-header-text'>
           <h2>Building a bridge between event attendees</h2>
