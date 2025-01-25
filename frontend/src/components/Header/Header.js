@@ -6,6 +6,7 @@ import IconComponent from '../IconComponent/IconComponent.js';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaSearch } from 'react-icons/fa';
+import logo from '../../assets/connectifind.png';
 import "./styles.scss";
 
 const Header = ({ isAuthenticated }) => {
@@ -26,6 +27,7 @@ const Header = ({ isAuthenticated }) => {
     <header>
       <div className={`header-container`}>
         <h3 onClick={() => navigate('/')} style={{cursor: "pointer"}}>ConnectiFind</h3>
+        {/* <img className="logo" src={logo} alt="ConnectiFind" onClick={() => navigate('/')} style={{cursor: "pointer"}}/> */}
         <div className="search-container">
           <form onSubmit={handleSearch}>
             <input

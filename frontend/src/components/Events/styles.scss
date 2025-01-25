@@ -103,7 +103,9 @@
                     margin-right: auto;
                     padding-left: 20px;
                     margin-top: -10px;
-                    white-space: nowrap;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
