@@ -40,7 +40,7 @@ const UnauthenticatedHome = () => {
     <div className='home-container'>
       <div className='home-header'>
         <div className='home-header-text'>
-          <h1>Building a bridge between event attendees</h1>
+          <h2>Building a bridge between event attendees</h2>
           <h3>Find the ones with shared interests</h3>
         </div>
         <div className='home-video-container'>

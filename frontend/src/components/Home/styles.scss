@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    padding-bottom: 150px;
+    padding-bottom: 100px;
     flex: 1;
 
 
@@ -25,6 +25,10 @@
             justify-content: center;
             align-items: center;
 
+            h2{
+                text-align: center;
+            }
+
             h3{
                 color: $primary-color;
             }
@@ -35,9 +39,12 @@
             justify-content: flex-end;
 
             video {
+                margin-left: 20px;
+                border-radius: 40px;
                 width: 600px;
                 height: 500px;
                 object-fit: cover;
+                border: 1px solid rgba(123, 215, 212, 0.3);
             }
         }
     }
