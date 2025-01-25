@@ -85,7 +85,7 @@ const AddEvent = () => {
         try {
             await eventservice.addEvent(formData);
             showToast('Event created successfully!', 'success');
-            navigate('/events');
+            navigate('/');
         } catch (error) {
             showToast('Failed to create event', 'error');
             console.error('Failed to create event:', error);

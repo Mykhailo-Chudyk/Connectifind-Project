@@ -152,17 +152,7 @@ const AuthenticatedHome = () => {
       )}
 
       {renderEventSection(
-        "Events you Joined",
-        joinedEvents,
-        "You haven't joined any events yet",
-        "Explore Events",
-        () => navigate('/events'),
-        true,
-        userEventsLoading,
-        '/joined-events'
-      )}
-      {renderEventSection(
-        "Public events nearby",
+        "Public Events Nearby",
         publicEvents,
         "No public events available",
         "Find Events",
@@ -170,6 +160,17 @@ const AuthenticatedHome = () => {
         true,
         publicLoading,
         '/events'
+      )}
+
+      {renderEventSection(
+        "Events You Joined",
+        joinedEvents,
+        "You haven't joined any events yet",
+        "Explore Events",
+        () => navigate('/events'),
+        true,
+        userEventsLoading,
+        '/joined-events'
       )}
 
       {renderEventSection(
