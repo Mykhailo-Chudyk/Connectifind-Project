@@ -30,7 +30,7 @@ const Header = ({ isAuthenticated }) => {
       <div className={`header-container`}>
         <h3 onClick={() => navigate('/')} style={{cursor: "pointer"}}>ConnectiFind</h3>
         {/* <img className="logo" src={logo} alt="ConnectiFind" onClick={() => navigate('/')} style={{cursor: "pointer"}}/> */}
-        <div className="search-container">
+        {!isMobile ? <div className="search-container">
           <form onSubmit={handleSearch}>
             <input
               type="text"
@@ -48,7 +48,7 @@ const Header = ({ isAuthenticated }) => {
               <FaSearch />
             </button>
           </form>
-        </div>
+        </div> : null}
         {isAuthenticated ?
         <div className="header-buttons"> 
           <ButtonComponent text="Browse Events" level="primary" onClick={() => {
