@@ -4,6 +4,7 @@ $text-color: #333;
 $secondary-text-color: #ffffff;
 $primary-color: #18807D;
 $font-family: 'Inter', sans-serif;
+$mobile-breakpoint: 500px;
 
 html {
     font-size: 16px;
@@ -84,5 +85,17 @@ p {
   margin-left: 0px;
   margin-top: 86px;
   transition: margin-left 0.3s ease-in-out;
+}
+
+@mixin mobile {
+  @media (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @media (max-width: $small-mobile-breakpoint) {
+    @content;
+  }
 }
 

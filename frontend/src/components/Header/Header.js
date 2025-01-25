@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../../assets/connectifind.png';
+import useDeviceType from '../../hooks/useDeviceType';
 import "./styles.scss";
 
 const Header = ({ isAuthenticated }) => {
@@ -14,6 +15,7 @@ const Header = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const [searchQuery, setSearchQuery] = useState('');
+  const { isMobile } = useDeviceType();
 
   const handleSearch = (e) => {
     e.preventDefault();

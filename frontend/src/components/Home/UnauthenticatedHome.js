@@ -7,10 +7,12 @@ import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
 import Skeleton from 'react-loading-skeleton';
 import peopleVideo from '../../assets/people-video.mp4';
 import './styles.scss';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const UnauthenticatedHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isMobile } = useDeviceType();
   const { events: publicEvents, loading } = useSelector((state) => state.publicEvents);
 
   useEffect(() => {
