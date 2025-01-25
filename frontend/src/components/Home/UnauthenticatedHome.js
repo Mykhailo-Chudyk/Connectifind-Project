@@ -45,9 +45,9 @@ const UnauthenticatedHome = () => {
           <h2>Building a bridge between event attendees</h2>
           <h3>Find the ones with shared interests</h3>
         </div>
-        <div className='home-video-container'>
+        {!isMobile ? <div className='home-video-container'>
           <video src={peopleVideo} autoPlay loop muted />
-        </div>
+        </div> : null}
       </div>
       <div className='home-row space-top'>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>

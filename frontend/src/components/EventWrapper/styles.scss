@@ -2,15 +2,18 @@
 
 .event-wrapper {
     width: min(90%, 800px);
+    min-width: 0;
+    max-width: 100%;
     height: 130px;
     background-color: white;
     border: 1px solid $primary-color;
     border-radius: 20px;
     display: flex;
     flex-direction: row;
-
+    flex-shrink: 1;
 
     .event-icon{
+        flex-shrink: 0;
         aspect-ratio: 1/1;
         height: 100%;
         display: flex;
@@ -29,7 +32,8 @@
     }
 
     .event-body {
-        width: 100%;
+        min-width: 0;
+        flex: 1;
         display: flex;
         flex-direction: column;
         padding: 20px;
@@ -43,6 +47,9 @@
             font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .event-time, .event-location{
@@ -50,6 +57,19 @@
             margin-bottom: 3px;
             color: $primary-color;
             font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .event-location {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+
+        .event-time {
+            white-space: nowrap;
         }
 
         .event-time-divider{
@@ -67,8 +87,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 50px;
-        // display text in one line
+        margin-right: 20px;
         white-space: nowrap;
 
         .event-actions-text{

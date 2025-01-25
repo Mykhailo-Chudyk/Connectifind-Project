@@ -4,9 +4,11 @@ import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { formatEventDateTime, calculateTimeUntilEvent } from "../../utils/dateTimeUtils";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; 
+import useDeviceType from '../../hooks/useDeviceType';
 
 const EventWrapper = ({ event }) => {
   const navigate = useNavigate();
+  const { isMobile } = useDeviceType();
   const [isCodeVisible, setIsCodeVisible] = useState(false);
 
   const toggleCodeVisibility = (e) => {
@@ -38,7 +40,7 @@ const EventWrapper = ({ event }) => {
             )}
         </div>
         <div className="event-actions">
-            <p className="event-actions-text">{calculateTimeUntilEvent(event.time, 120)}</p>
+            {!isMobile ? <p className="event-actions-text">{calculateTimeUntilEvent(event.time, 120)}</p> : null}
             <ButtonComponent text="Details" level="secondary" onClick={() => {navigate(`/events/${event.id}`)}} />
         </div>
     </div>
