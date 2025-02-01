@@ -6,6 +6,14 @@
     padding: 60px 100px;
     gap: 20px;
 
+    &.mobile {
+        padding: 40px 20px;
+    }
+
+    .feed-title {
+        margin-right: auto;
+    }
+
     .feed-header {
         display: flex;
         flex-direction: row;
@@ -33,22 +41,27 @@
 
     .feed-post-bottom {
         display: flex;
-        justify-content: flex-end;
         gap: 20px;
         margin-top: 60px;
 
         .feed-post-input {
-            width: 100%;
-            margin-right: auto;
-            height: 100px;
+            flex-grow: 1;
         }
 
         .feed-post-button {
             width: 100px;
-            margin-left: auto;
             align-self: flex-end;
-            margin-right: 200px;
+            margin-left: auto;
         }
+    }
+
+    .feed-post-bottom.mobile {
+        margin-top: 60px;
+        margin-right: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .feed-details-container {

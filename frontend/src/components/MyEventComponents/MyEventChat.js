@@ -6,6 +6,7 @@ import eventservice from '../../services/eventservice';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import InputField from '../InputField/InputField';
 import './styles.scss';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const MyEventChat = ({ eventDetails }) => {
     const location = useLocation();
@@ -13,6 +14,7 @@ const MyEventChat = ({ eventDetails }) => {
     const dispatch = useDispatch();
     const [newMessage, setNewMessage] = useState('');
     const [chatPartner, setChatPartner] = useState(null);
+    const { isMobile } = useDeviceType();
     const chatPartnerId = location.pathname.split('/').pop();
     
     const { messages, loading } = useSelector((state) => state.chat);
@@ -48,7 +50,7 @@ const MyEventChat = ({ eventDetails }) => {
     };
 
     return (
-        <div className="feed-container">
+        <div className={`feed-container ${isMobile ? 'mobile' : ''}`}>
             <div className="feed-header">
                 <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
                 <h1>Chat with {chatPartner?.first_name} {chatPartner?.last_name}</h1>

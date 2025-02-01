@@ -6,13 +6,14 @@ import { fetchFeed, addPost } from '../../redux/actions/feedActions';
 import './styles.scss';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import InputField from '../InputField/InputField.js';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const MyEventFeed = ({ eventDetails }) => {
     const dispatch = useDispatch();
     const [newPostContent, setNewPostContent] = useState('');
     const { feeds, loading } = useSelector((state) => state.feed);
     const posts = feeds[eventDetails?.id] || [];
-
+    const { isMobile } = useDeviceType();
     useEffect(() => {
         if (eventDetails?.id) {
             // If we don't have the feed data yet, fetch it
@@ -36,8 +37,8 @@ const MyEventFeed = ({ eventDetails }) => {
     };
 
     return (
-        <div className="feed-container">
-            <h1>Feed</h1>
+        <div className={`feed-container ${isMobile ? 'mobile' : ''}`}>
+            <h1 className="feed-title">Feed</h1>
             <p className="feed-label">Share your thoughts and ideas with the community</p>
             {posts.map(post => (
                 <div key={post.id} className="feed-details-container">
@@ -54,7 +55,7 @@ const MyEventFeed = ({ eventDetails }) => {
                     </div>
                 </div>
             ))}
-            <div className="feed-post-bottom">
+            <div className={`feed-post-bottom ${isMobile ? 'mobile' : ''}`}>
                 <div className="feed-post-input">
                     <InputField 
                         value={newPostContent}
