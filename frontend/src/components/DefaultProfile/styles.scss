@@ -7,8 +7,14 @@
     gap: 20px;
     padding: 60px 100px;
 
+    &.mobile {
+        padding: 40px 20px;
+    }
+
     .default-profile-header {
         position: relative;
+        display: flex;
+        justify-content: start;
 
         .back-arrow {
             position: absolute;
@@ -41,7 +47,7 @@
 
     .default-profile-avatar {
         display: flex;
-        margin-left: 250px;
+        margin-left: 10px;
         align-items: center;
         width: 200px;
         height: 200px;
@@ -105,9 +111,9 @@
     .default-profile-buttons {
         display: flex;
         flex-direction: row;
+        justify-content: center;
+        margin-right: auto;
         gap: 20px;
         margin-top: 40px;
     }
-
-
 }

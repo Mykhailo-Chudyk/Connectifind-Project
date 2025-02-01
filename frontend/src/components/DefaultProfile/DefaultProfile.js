@@ -10,7 +10,7 @@ import userService from '../../services/userservice';
 import { fetchUser } from '../../redux/actions/userActions';
 import { useToast } from '../../contexts/ToastContext';
 import './styles.scss';
-
+import useDeviceType from '../../hooks/useDeviceType';
 const DefaultProfile = () => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -24,6 +24,7 @@ const DefaultProfile = () => {
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [initialState, setInitialState] = useState({});
     const fileInputRef = useRef(null);
+    const { isMobile } = useDeviceType();
 
     useEffect(() => {
         if (user.user) {
@@ -99,7 +100,7 @@ const DefaultProfile = () => {
     };
 
     return (
-        <div className="default-profile-container">
+        <div className={`default-profile-container ${isMobile ? 'mobile' : ''}`}>
             <div className='default-profile-header'>
                 <span className='back-arrow' onClick={handleCancel}>←</span>
                 <h1>Your Profile</h1>
@@ -149,11 +150,11 @@ const DefaultProfile = () => {
                 </div>
             </div>
             <div className="default-profile-buttons">
-                <ButtonComponent text="Cancel" onClick={handleCancel} level="primary" width="200px"/>
+                <ButtonComponent text="Cancel" onClick={handleCancel} level="primary" width={isMobile ? '150px' : '200px'}/>
                 <ButtonComponent 
                     text={"Save"} 
                     onClick={handleSave} 
-                    width="200px"
+                    width={isMobile ? '150px' : '200px'}
                     disabled={isLoading || !hasChanges()}
                 />
             </div>
