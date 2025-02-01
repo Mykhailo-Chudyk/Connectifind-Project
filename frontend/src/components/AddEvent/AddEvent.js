@@ -6,7 +6,7 @@ import InputField from '../InputField/InputField';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import AlertModal from '../AlertModal/AlertModal';
 import { useToast } from '../../contexts/ToastContext';
-
+import useDeviceType from '../../hooks/useDeviceType';
 const AddEvent = () => {
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [eventData, setEventData] = useState({
@@ -29,7 +29,7 @@ const AddEvent = () => {
 
     const navigate = useNavigate();
     const { showToast } = useToast();
-
+    const { isMobile } = useDeviceType();
     const handleChange = (e) => {
         const { name, value, type, files, options } = e.target;
         if (type === 'file') {
@@ -97,11 +97,11 @@ const AddEvent = () => {
     };
 
     return (
-        <div className='add-event-container'>
+        <div className={`add-event-container ${isMobile ? 'mobile' : ''}`}>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className='add-event-header'>
                     <span className='back-arrow' onClick={handleCancel}>←</span>
-                    <h1>Create a new event</h1>
+                    <h1>Create Event</h1>
                 </div>
 
                 <span className="add-event-label">Image</span>
@@ -192,13 +192,13 @@ const AddEvent = () => {
                         text="Cancel"
                         onClick={handleCancel}
                         level='primary'
-                        width='250px'
+                        width={isMobile ? '150px' : '250px'}
                     />
                     <ButtonComponent
                         disabled={!hasChanges()}
                         text="Create Event"
                         onClick={handleSubmit}
-                        width='250px'
+                        width={isMobile ? '150px' : '250px'}
                     />
                 </div>
             </form>
