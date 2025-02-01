@@ -79,6 +79,7 @@ const Events = ({ filter = "all" }) => {
     <div className='event-item'>
       <div className='event-item-image'>
         <Skeleton height={200} />
+        fda
       </div>
       <div className='event-item-body'>
         <Skeleton width={150} height={20} className='event-author' />

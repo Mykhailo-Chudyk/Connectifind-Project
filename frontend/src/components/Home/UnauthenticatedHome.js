@@ -29,12 +29,23 @@ const UnauthenticatedHome = () => {
 
   const EventSkeleton = () => (
     <div className="event-wrapper">
-      <Skeleton height={200} />
-      <div className="event-details">
-        <Skeleton width={150} height={20} />
-        <Skeleton width={200} height={16} />
-        <Skeleton count={1} height={16} />
+      <div className="event-icon">
+        <Skeleton height={200} />
       </div>
+      <div className="event-body">
+        <div className="event-title">
+          <Skeleton width={150} height={20} />
+        </div>
+        <div className="event-time">
+          <Skeleton width={200} height={16} />
+        </div>
+        <div className="event-location">
+          <Skeleton count={1} height={16} />
+        </div>
+      </div>
+      {!isMobile && <div className="event-actions">
+        <Skeleton width={180} height={20} />
+      </div>}
     </div>
   );
 
