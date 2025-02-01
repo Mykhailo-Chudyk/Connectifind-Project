@@ -9,13 +9,14 @@ import { useToast } from '../../contexts/ToastContext';
 import { fetchFeed } from '../../redux/actions/feedActions';
 import { fetchChats } from '../../redux/actions/chatActions';
 import { leaveEventSuccess } from '../../redux/actions/eventActions';
-
+import useDeviceType from '../../hooks/useDeviceType';
 const MyEventAbout = ({eventDetails}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showLeaveModal, setShowLeaveModal] = useState(false);
     const { showToast } = useToast();
+    const { isMobile } = useDeviceType();
 
     useEffect(() => {
         if (eventDetails?.id) {
@@ -69,7 +70,7 @@ const MyEventAbout = ({eventDetails}) => {
     };
 
     return (
-        <div className="event-container">
+        <div className={`event-container ${isMobile ? 'mobile' : ''}`}>
             <h1>{eventDetails.title}</h1>
             <p className="event-details-title">Event Details</p>
             <EventDetails eventDetails={eventDetails}/>
@@ -88,7 +89,6 @@ const MyEventAbout = ({eventDetails}) => {
                             <ButtonComponent 
                                 text="Delete Event" 
                                 onClick={() => setShowDeleteModal(true)} 
-                            width='200px' 
                             isDangerous={true}
                         />
                         </div>
