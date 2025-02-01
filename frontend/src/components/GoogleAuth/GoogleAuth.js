@@ -31,8 +31,10 @@ const GoogleAuth = () => {
       useOneTap
       theme="outline"
       size="large"
-      width="400px"
+      width="max(100%, 400px)"
       text="continue_with"
+      type="standard"
+      shape="rectangular"
     />
   );
 };
