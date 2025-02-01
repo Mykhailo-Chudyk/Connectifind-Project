@@ -72,7 +72,7 @@ const UnauthenticatedHome = () => {
         <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="345px"/>
       </div>
       <div className='home-row space-top'>
-        <h3> 
+        <h3 className='home-phrase'> 
         At ConnectiFind, we transform the typical event experience by seamlessly bridging the gap between attendees. It’s common to feel hesitant about approaching someone new, but what if you could know their interests and goals beforehand? Our platform does just that, empowering you to connect with the right people right away. Whether you’re looking to collaborate, find a mentor, or share insights, ConnectiFind makes every interaction more intentional and productive. Join us to make your next event the most rewarding yet.
         </h3>
       </div>

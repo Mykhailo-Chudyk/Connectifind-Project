@@ -86,17 +86,13 @@ p {
   display: grid;
   grid-template-columns: auto 1fr;
   width: 100%;
-}
 
-.sidebar-container {
-  width: 70px;
-  position: sticky;
-  top: 86px;
-  height: calc(100vh - 86px);
-  transition: opacity 0.3s ease-in-out;
-  
-  &.loading {
-    opacity: 0;
+  .sidebar-container {
+    width: 70px;
+  }
+
+  &:not(:has(.sidebar-container)) {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -104,14 +100,10 @@ p {
   width: 100%;
   margin-top: 86px;
   padding-left: 0;
-  min-width: 0; // This prevents content from expanding beyond container
+  min-width: 0;
   overflow-x: hidden;
-}
-
-@media (max-width: $mobile-breakpoint) {
-  .main-content {
-    padding: 0 20px;
-  }
+  margin-right: 0;
+  padding-right: 0;
 }
 
 @mixin mobile {

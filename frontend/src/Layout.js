@@ -18,18 +18,22 @@ const Layout = () => {
     return () => clearTimeout(timer);
   }, [user]);
 
+  if (isLoading) {
+    return (
+      <div className="layout">
+      </div>
+    );
+  }
+
   return (
     <div className="layout">
       <Header isAuthenticated={isAuthenticated} />
       <div className="layout-content">
-        <div 
-          style={{ 
-            opacity: isLoading ? 0 : 1
-          }}
+        {isAuthenticated && user && <div 
           className='sidebar-container'
         >
           {(isAuthenticated && user) && <Sidebar onLogout={logout} />}
-        </div>
+        </div>}
         <main className="main-content">
           <Outlet />
         </main>
