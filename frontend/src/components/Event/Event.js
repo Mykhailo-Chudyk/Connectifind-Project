@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { useToast } from '../../contexts/ToastContext';
 import { joinEventSuccess, leaveEventSuccess } from '../../redux/actions/eventActions';
+import useDeviceType from '../../hooks/useDeviceType.js';
 
 const Event = () => {
   const { eventId } = useParams();  
@@ -20,6 +21,7 @@ const Event = () => {
   const user = useSelector((state) => state.user.user);
   const { showToast } = useToast();
   const dispatch = useDispatch();
+  const {isMobile} = useDeviceType();
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -104,13 +106,13 @@ const Event = () => {
 
   if (!eventDetails) {
 
-    return <div className="event-container">
+    return <div className={`event-container ${isMobile ? 'mobile' : ''}`}>
       <h1>No event details to display. Please check if the event ID is correct.</h1>
     </div>;
   }
 
   return (
-    <div className="event-container">
+    <div className={`event-container ${isMobile ? 'mobile' : ''}`}>
       <div className='event-header'>
         <span className='back-arrow' onClick={() => window.history.back()}>←</span>
         <h1>{eventDetails.title}</h1>

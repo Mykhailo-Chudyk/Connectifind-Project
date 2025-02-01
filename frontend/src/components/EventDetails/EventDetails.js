@@ -1,10 +1,12 @@
 import React from 'react';
 import './styles.scss';
 import { formatEventDate } from '../../utils/dateTimeUtils';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const EventDetails = ({ eventDetails }) => {
+  const {isMobile} = useDeviceType();
   return (
-    <div className="event-details-container">
+    <div className={`event-details-container ${isMobile ? 'mobile' : ''}`}>
         <div className="event-details-header">
             <div className="event-details-date">
                 <p>{formatEventDate(eventDetails.time)}</p>

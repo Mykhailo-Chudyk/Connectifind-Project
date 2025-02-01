@@ -9,6 +9,10 @@
     border: 1px solid #E0E0E0;
     gap: 24px;
 
+    &.mobile{
+        padding: 20px;
+    }
+
     .event-details-header {
         display: flex;
         justify-content: space-between;
