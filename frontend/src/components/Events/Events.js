@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaCalendarAlt } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton';
+import useDeviceType from '../../hooks/useDeviceType';
 import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
 import { fetchUserEvents } from '../../redux/actions/eventActions';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
@@ -15,7 +16,7 @@ const Events = ({ filter = "all" }) => {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [initialLoadDone, setInitialLoadDone] = useState(false);
-
+  const {isMobile} = useDeviceType();
   // Get search query from URL only on initial load
   useEffect(() => {
     if (!initialLoadDone) {
@@ -79,7 +80,6 @@ const Events = ({ filter = "all" }) => {
     <div className='event-item'>
       <div className='event-item-image'>
         <Skeleton height={200} />
-        fda
       </div>
       <div className='event-item-body'>
         <Skeleton width={150} height={20} className='event-author' />
@@ -87,7 +87,7 @@ const Events = ({ filter = "all" }) => {
         <Skeleton count={1} height={16} className='event-description' />
       </div>
       <div className='event-item-actions'>
-        <Skeleton width={180} height={20} className='event-time-location' />
+        <Skeleton width={60} height={20} className='event-time-location' />
       </div>
     </div>
   );
@@ -101,7 +101,7 @@ const Events = ({ filter = "all" }) => {
   };
 
   return (
-    <div className='events-container'>
+    <div className={`events-container ${isMobile ? 'mobile' : ''}`}>
       <div className='events-header'>
         <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
         <h1>{getPageTitle()}</h1>
@@ -118,7 +118,7 @@ const Events = ({ filter = "all" }) => {
       {filteredEvents.length === 0 && !isLoading && (
         <p className="no-events-message">No events found.</p>
       )}
-      <div className='events-list'>
+      <div className={`events-list ${isMobile ? 'mobile' : ''}`}>
         {isLoading ? (
           Array(9).fill().map((_, index) => (
             <EventSkeleton key={index} />
