@@ -7,6 +7,7 @@ import eventservice from '../../services/eventservice';
 import './styles.scss';
 import { useToast } from '../../contexts/ToastContext';
 import { updateEventGoal, fetchUserEvents } from '../../redux/actions/eventActions';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const MyEventMe = ({ eventDetails }) => {
     const userId = useSelector((state) => state.user?.user?.id);
@@ -15,7 +16,8 @@ const MyEventMe = ({ eventDetails }) => {
     const [showCancelModal, setShowCancelModal] = useState(false);
     const { showToast } = useToast();
     const dispatch = useDispatch();
-
+    const { isMobile } = useDeviceType();
+    
     useEffect(() => {
         if (eventDetails && eventDetails.participant_details) {
             const currentGoal = eventDetails.participant_details.goal || '';
@@ -49,8 +51,8 @@ const MyEventMe = ({ eventDetails }) => {
     };
 
     return (
-        <div className="default-profile-container">
-            <h1>Your Profile</h1>
+        <div className={`default-profile-container ${isMobile ? 'mobile' : ''}`}>
+            <h1 className="default-profile-title">Your Profile</h1>
             <p className="default-profile-label">Goal will be displayed to other participants</p>
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
@@ -58,8 +60,8 @@ const MyEventMe = ({ eventDetails }) => {
                 </div>
             </div>
             <div className="default-profile-buttons">
-                <ButtonComponent text="Cancel" onClick={handleCancel} level="primary" width="200px"/>
-                <ButtonComponent text="Save" onClick={handleSave} width="200px" disabled={!hasChanges()}/>
+                <ButtonComponent text="Cancel" onClick={handleCancel} level="primary" width={isMobile ? '150px' : '200px'}/>
+                <ButtonComponent text="Save" onClick={handleSave} width={isMobile ? '150px' : '200px'} disabled={!hasChanges()}/>
             </div>
 
             {showCancelModal && (
