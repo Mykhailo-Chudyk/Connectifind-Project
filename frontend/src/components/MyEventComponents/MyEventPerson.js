@@ -3,11 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
-
+import useDeviceType from '../../hooks/useDeviceType';
 const MyEventPerson = ({ eventDetails }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState(null);
+    const { isMobile } = useDeviceType();
 
     useEffect(() => {
         const lastId = location.pathname.split('/').pop();
@@ -23,7 +24,7 @@ const MyEventPerson = ({ eventDetails }) => {
     return (
         <>
             {user ? (
-                <div className="person-container">
+                <div className={`person-container ${isMobile ? 'mobile' : ''}`}>
                     <div className="person-header">
                         <div className="person-header-left">
                             <div className="person-header-left-arrow">  
@@ -38,15 +39,15 @@ const MyEventPerson = ({ eventDetails }) => {
                                 <ButtonComponent text="Message" level="secondary" onClick={() => navigate('/event/' + eventDetails?.id + '/chats/' + user.id)} width="150px" />
                             </div>
                         </div>
-                        <div className="person-header-right">
+                        {!isMobile && <div className="person-header-right">
                             <div className="person-header-avatar">
                                 {user?.avatar ? <img src={user?.avatar} alt="Default profile avatar" /> : <FontAwesomeIcon icon={faUserCircle} />}
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             ) : (
-                <p>Participant not found.</p>
+                <p></p>
             )}
         </>
     );

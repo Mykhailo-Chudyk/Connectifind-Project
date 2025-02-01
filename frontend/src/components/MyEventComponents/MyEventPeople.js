@@ -3,14 +3,14 @@ import {useNavigate} from 'react-router-dom';
 import { FaUser, FaStar } from "react-icons/fa";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { useSelector } from 'react-redux';
-
+import useDeviceType from '../../hooks/useDeviceType';
 const MyEventPeople = ({ eventDetails }) => {
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
-
+    const { isMobile } = useDeviceType();
     return (
-        <div className="people-container">
-            <h1>Attendees</h1>
+        <div className={`people-container ${isMobile ? 'mobile' : ''}`}>
+            <h1 className="people-title">Attendees</h1>
             <p className="people-label">People who are attending this event</p>
             <div className="people-list">
                 {eventDetails?.participants
@@ -32,7 +32,7 @@ const MyEventPeople = ({ eventDetails }) => {
                                 <p className='people-description'>Goal: {participant.goal}</p> 
                             </div>
                             <div className='people-item-actions'>
-                                <ButtonComponent text="See profile" level="secondary" onClick={() => {navigate(`${eventDetails.id}/people/${participant.id}`)}} />
+                                <ButtonComponent text="See profile" level="secondary" onClick={() => {navigate(`${eventDetails.id}/people/${participant.id}`)}} width="125px"/>
                             </div>
                         </div>
                     )}
