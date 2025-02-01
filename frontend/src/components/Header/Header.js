@@ -51,7 +51,7 @@ const Header = ({ isAuthenticated }) => {
         </div> : null}
         {isAuthenticated ?
         <div className="header-buttons"> 
-          <ButtonComponent text="Browse Events" level="primary" onClick={() => {
+          <ButtonComponent text="Explore" level="primary" onClick={() => {
             navigate('/events');
           }}/>
           <ButtonComponent text="Create" level="secondary" onClick={() => {

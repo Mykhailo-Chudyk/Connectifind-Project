@@ -127,14 +127,14 @@ const AuthenticatedHome = () => {
         </div>
       </div>
       <div className='home-row'>
-        <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>
+        <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="300px"/>
         <ButtonComponent 
           text={showCodeInput ? "Join" : "Enter Private Event Code"} 
           size="large" 
           onClick={handleCodeButtonClick} 
-          width="345px"
+          width="300px"
         />
-        <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="345px"/>
+        <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="300px"/>
       </div>
       {showCodeInput && (
         <div className='home-row code-input-row'>
