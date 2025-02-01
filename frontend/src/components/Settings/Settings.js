@@ -6,6 +6,7 @@ import AlertModal from '../AlertModal/AlertModal';
 import userService from '../../services/userservice';
 import './styles.scss';
 import { useToast } from '../../contexts/ToastContext';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const Settings = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Settings = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+    const { isMobile } = useDeviceType();
     const handleChangePassword = async () => {
         if (newPassword !== confirmNewPassword) {
             showToast("New passwords don't match!", 'error');
@@ -62,7 +63,7 @@ const Settings = () => {
     };
 
     return (
-        <div className="settings-container">
+        <div className={`settings-container ${isMobile ? 'mobile' : ''}`}>
             <div className='settings-header'>
                 <span className='back-arrow' onClick={() => navigate(-1)}>←</span>
                 <h1>Settings</h1>
@@ -92,11 +93,15 @@ const Settings = () => {
                 onChange={(e) => setConfirmNewPassword(e.target.value)} 
                 required={true}
             />
-            <ButtonComponent text="Update Password" disabled={!hasChanges()} onClick={handleChangePassword} width='200px' />
-            
+            <div className='settings-buttons'>
+                <ButtonComponent text="Update Password" disabled={!hasChanges()} onClick={handleChangePassword} width={isMobile ? '150px' : '200px'} />
+            </div>
+
             <h2 className='settings-delete'>Delete Account</h2>
             <p className="settings-label">This action cannot be undone.</p>
-            <ButtonComponent text="Delete Account" onClick={handleDeleteAccount} width='200px' isDangerous={true} />
+            <div className='settings-buttons'>
+                <ButtonComponent text="Delete Account" onClick={handleDeleteAccount} width={isMobile ? '150px' : '200px'} isDangerous={true} />
+            </div>
 
             {showPasswordModal && (
                 <AlertModal
