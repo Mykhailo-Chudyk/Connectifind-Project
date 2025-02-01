@@ -87,7 +87,7 @@ const Events = ({ filter = "all" }) => {
         <Skeleton count={1} height={16} className='event-description' />
       </div>
       <div className='event-item-actions'>
-        <Skeleton width={60} height={20} className='event-time-location' />
+        <Skeleton width={100} height={30} className='event-time-location' />
       </div>
     </div>
   );
@@ -138,7 +138,7 @@ const Events = ({ filter = "all" }) => {
               <div className='event-item-actions'>
                 <p className='event-time-location'>{event.location}</p>
                 <p className='event-time-location'>{new Date(event.time).toLocaleString()}</p>
-                <ButtonComponent text="Details" level="secondary" onClick={() => {navigate(`/events/${event.id}`)}} />
+                <ButtonComponent text="Details" level="secondary" onClick={() => {navigate(`/events/${event.id}`)}} width="50%"/>
               </div>
             </div>
           ))

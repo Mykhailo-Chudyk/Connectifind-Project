@@ -18,11 +18,11 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        padding: 20px 30px 10px 30px;
+        padding: 20px 20px 10px 20px;
         width: 100%;
         max-width: 1200px;
         box-sizing: border-box;
-        gap: 20px;
+        gap: 22px;
         
         @media (max-width: 1200px) {
             flex-direction: column;
@@ -40,8 +40,6 @@
             }
 
             h3{
-                margin-top: 10px;
-                margin-bottom: 50px;
                 color: $primary-color;
             }
         }
@@ -90,6 +88,10 @@
         margin-top: 60px;
     }
 
+    .redirect-button {
+        margin-top: 20px;
+    }
+
     .vertical-scroll {
         padding-top: 0px;
         display: flex;
@@ -118,9 +120,8 @@
     }
 
     .code-input-row {
-        width: 345px;
+        width: 300px;
         margin: 10px auto 0;
-        margin-top: -40px;
         
         .code-input-wrapper {
             position: relative;

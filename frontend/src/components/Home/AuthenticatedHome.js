@@ -13,6 +13,7 @@ import { fetchPublicEvents } from '../../redux/actions/publicEventsActions';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import eventservice from '../../services/eventservice';
+import useDeviceType from '../../hooks/useDeviceType';
 
 const AuthenticatedHome = () => {
   const user = useSelector((state) => state.user.user);
@@ -23,6 +24,7 @@ const AuthenticatedHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { showToast } = useToast();
+  const { isMobile } = useDeviceType();
 
   const createdEvents = userEvents.filter(event => event.is_creator);
   const joinedEvents = userEvents.filter(event => !event.is_creator);
@@ -33,18 +35,24 @@ const AuthenticatedHome = () => {
   }, [dispatch]);
 
   const EventSkeleton = () => (
-    <div className='event-wrapper'>
+    <div className="event-wrapper">
       <div className="event-icon">
-        <Skeleton height={130} />
+        <Skeleton height={200} />
       </div>
       <div className="event-body">
-        <Skeleton width={200} height={24} />
-        <Skeleton width={150} height={20} />
+        <div className="event-title">
+          <Skeleton width={150} height={20} />
+        </div>
+        <div className="event-time">
+          <Skeleton width={200} height={16} />
+        </div>
+        <div className="event-location">
+          <Skeleton count={1} height={16} />
+        </div>
+      </div>
+      {!isMobile && <div className="event-actions">
         <Skeleton width={180} height={20} />
-      </div>
-      <div className="event-actions">
-        <Skeleton width={100} height={36} />
-      </div>
+      </div>}
     </div>
   );
 
@@ -126,7 +134,8 @@ const AuthenticatedHome = () => {
           </h3>
         </div>
       </div>
-      <div className='home-row'>
+      <div className='home-row space-top'>
+        <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="300px"/>
         <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="300px"/>
         <ButtonComponent 
           text={showCodeInput ? "Join" : "Enter Private Event Code"} 
@@ -134,7 +143,6 @@ const AuthenticatedHome = () => {
           onClick={handleCodeButtonClick} 
           width="300px"
         />
-        <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="300px"/>
       </div>
       {showCodeInput && (
         <div className='home-row code-input-row'>

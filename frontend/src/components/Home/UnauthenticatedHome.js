@@ -53,17 +53,17 @@ const UnauthenticatedHome = () => {
     <div className='home-container unauthenticated'>
       <div className='home-header'>
         <div className='home-header-text'>
-          <h2>Building a bridge between event attendees</h2>
-          <h3>Find the ones with shared interests</h3>
+          <h2>Connecting people with shared interests</h2>
+          <h3>Find -> Share -> Chat -> Meet -> Connect</h3>
         </div>
         {!isMobile ? <div className='home-video-container'>
           <video src={peopleVideo} autoPlay loop muted />
         </div> : null}
       </div>
       <div className='home-row space-top'>
-        <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="345px"/>
-        <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {navigate('/login')}} width="345px"/>
-        <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/login')}} width="345px"/>
+        <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/login')}} width="300px"/>
+        <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="300px"/>
+        <ButtonComponent text="Enter Private Event Code" size="large" onClick={() => {navigate('/login')}} width="300px"/>
       </div>
       <div className='home-row space-top'>
         <h2>Explore public events nearby and join them</h2>
@@ -79,8 +79,8 @@ const UnauthenticatedHome = () => {
           ))
         )}
       </div>
-      <div className='home-row'>
-        <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="345px"/>
+      <div className='home-row redirect-button'>
+        <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="300px"/>
       </div>
       <div className='home-row space-top'>
         <h3 className='home-phrase'> 
