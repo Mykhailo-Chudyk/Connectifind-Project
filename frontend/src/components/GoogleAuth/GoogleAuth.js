@@ -9,20 +9,31 @@ const GoogleAuth = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const clientId = process.env.REACT_APP_GOOGLE_OAUTH2_CLIENT_ID;
 
   const handleSuccess = async (credentialResponse) => {
     try {
+      if (!credentialResponse.credential) {
+        throw new Error('No credential received from Google');
+      }
       const response = await authService.googleLogin(credentialResponse.credential);
       login(response.access);
       navigate('/');
     } catch (error) {
-      showToast(error?.message || 'Google authentication failed', 'error');
+      console.error('Google auth error:', error);
+      showToast(error?.response?.data?.error || 'Google authentication failed', 'error');
     }
   };
 
-  const handleError = () => {
+  const handleError = (error) => {
+    console.error('Google auth error:', error);
     showToast('Google authentication failed', 'error');
   };
+
+  if (!clientId) {
+    console.error('Google OAuth client ID is not configured');
+    return null;
+  }
 
   return (
     <GoogleLogin
