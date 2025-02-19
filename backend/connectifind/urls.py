@@ -10,8 +10,13 @@ from feed_posts.views import list_feed_posts, create_feed_post
 from chats.views import list_chat_messages, send_chat_message, list_users_with_messages
 from categories.views import list_categories
 from event_participants.views import update_goal
+from django.http import JsonResponse
+
+def home_view(request):
+    return JsonResponse({"message": "Welcome to ConnectiFind API"}, status=200)
 
 urlpatterns = [
+    path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
