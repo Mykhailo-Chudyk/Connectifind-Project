@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL || 'https://connectifind-cad362d2d3b8.herokuapp.com/';    
 export const GOOGLE_OAUTH2_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH2_CLIENT_ID;
 
 const register = async (userData) => {
