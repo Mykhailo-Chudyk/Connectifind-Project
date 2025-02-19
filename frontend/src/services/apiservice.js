@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authService from './authservice';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://connectifind-cad362d2d3b8.herokuapp.com';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const api = axios.create({
   baseURL: API_URL,

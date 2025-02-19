@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://connectifind-cad362d2d3b8.herokuapp.com/';    
+const API_URL = process.env.REACT_APP_API_URL;    
 export const GOOGLE_OAUTH2_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH2_CLIENT_ID;
 
 const register = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}register/`, userData);
+    const response = await axios.post(`${API_URL}/register/`, userData);
     if (response.data.access) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }
@@ -17,7 +17,7 @@ const register = async (userData) => {
 };
 
 const login = async (email, password) => {
-  const response = await axios.post(`${API_URL}login/`, { email, password });
+  const response = await axios.post(`${API_URL}/login/`, { email, password });
   if (response.data.access) {
     localStorage.setItem('user', JSON.stringify(response.data));
   }
@@ -39,7 +39,7 @@ const authHeader = () => {
 
 const googleLogin = async (token) => {
   try {
-    const response = await axios.post(`${API_URL}google-auth/`, { token });
+    const response = await axios.post(`${API_URL}/google-auth/`, { token });
     if (response.data.access) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }
