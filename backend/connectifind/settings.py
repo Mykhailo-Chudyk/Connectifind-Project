@@ -35,7 +35,14 @@ SECRET_KEY = 'django-insecure-s1$bf0s$jon_7=k8#hrppfq4lty$$ov62k7e5_*5(&0fo4rqb9
 DEBUG = True
 
 raw_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = [host.strip() for host in raw_hosts.split(",") if host.strip()]
+
+if raw_hosts:
+    ALLOWED_HOSTS = [host.strip() for host in raw_hosts.split(",") if host.strip()]
+else:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+print("DEBUG: ALLOWED_HOSTS =", ALLOWED_HOSTS)  # Debugging output
+
 
 
 
