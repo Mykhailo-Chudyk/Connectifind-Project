@@ -31,7 +31,7 @@ const MyEventPerson = ({ eventDetails }) => {
                                 <span className='back-arrow' onClick={() => navigate('/event/' + eventDetails?.id + '/people')}>←</span>
                                 <h1>{user.first_name} {user.last_name}</h1>
                             </div>
-                            {user.goal && <h3>Goal: {user.goal}</h3>}
+                            {user.goal && <h3 className="person-goal">Goal: {user.goal}</h3>}
                             <div className="person-description">
                                 {user.description && <p>{user.description}</p>} 
                             </div>
