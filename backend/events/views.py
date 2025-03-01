@@ -20,6 +20,19 @@ from django.conf import settings
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_event(request):
+    """
+    Create a new event with the authenticated user as the author.
+    
+    For private events, generates a random 6-digit code.
+    Automatically adds the author as a participant.
+    
+    Args:
+        request: HTTP request object containing event data in JSON format
+        
+    Returns:
+        JsonResponse: Serialized event data with status 201 if successful
+                      Error details with status 400 if validation fails
+    """
     data = JSONParser().parse(request)
     data['authorId'] = request.user.id  
 
@@ -52,6 +65,18 @@ def create_event(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def list_events(request):
+    """
+    List all public events, excluding those where the authenticated user 
+    is the author or a participant.
+    
+    For unauthenticated users, shows all public events.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Response: List of serialized event data
+    """
     if request.user.is_authenticated:
         # Exclude events where user is author or participant
         events = Event.objects.filter(
@@ -72,6 +97,22 @@ def list_events(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_event(request, uuid):
+    """
+    Retrieve details of a specific event by its UUID.
+    
+    Access control is applied based on event visibility and user authentication:
+    - Public events: Accessible to all users
+    - Private events: Accessible only to the author and participants
+    
+    Args:
+        request: HTTP request object
+        uuid: UUID of the event to retrieve
+        
+    Returns:
+        Response: Serialized event data if user has access
+                 403 Forbidden if user doesn't have permission
+                 404 Not Found if event doesn't exist
+    """
     try:
         event = Event.objects.get(pk=uuid)
         can_view = (
@@ -97,6 +138,21 @@ def get_event(request, uuid):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def join_event(request, uuid):
+    """
+    Allow an authenticated user to join an event by its UUID.
+    
+    Creates an EventParticipant record and adds the user to the event's participants.
+    Users cannot join their own events.
+    
+    Args:
+        request: HTTP request object
+        uuid: UUID of the event to join
+        
+    Returns:
+        Response: Success message with status 201 if user joined successfully
+                 Success message with status 200 if user was already a participant
+                 Error message with status 403 if user is the event author
+    """
     event = get_object_or_404(Event, pk=uuid)
 
     if event.authorId == request.user:
@@ -125,6 +181,20 @@ def join_event(request, uuid):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def leave_event(request, uuid):
+    """
+    Allow an authenticated user to leave an event they're participating in.
+    
+    Removes the user from the event's participants and deletes the corresponding 
+    EventParticipant record. Event authors cannot leave their own events.
+    
+    Args:
+        request: HTTP request object
+        uuid: UUID of the event to leave
+        
+    Returns:
+        Response: Success message if user left successfully
+                 Error message with status 403 if user is the event author
+    """
     event = get_object_or_404(Event, pk=uuid)
 
     if event.authorId == request.user:
@@ -145,6 +215,17 @@ def leave_event(request, uuid):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_user_events(request):
+    """
+    List all events where the authenticated user is either the author or a participant.
+    
+    Results are ordered by event time (most recent first).
+    
+    Args:
+        request: HTTP request object from authenticated user
+        
+    Returns:
+        Response: List of serialized event data
+    """
     events = Event.objects.filter(
         Q(authorId=request.user) | 
         Q(participants=request.user)
@@ -156,6 +237,24 @@ def list_user_events(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def join_event_with_code(request):
+    """
+    Allow an authenticated user to join a private event using a 6-digit code.
+    
+    Performs several validations:
+    - Code format validation
+    - Event existence check
+    - Authorization check (can't join own event)
+    - Checks if the event is in the past
+    - Checks if the event has reached its capacity
+    
+    Args:
+        request: HTTP request object containing a 'code' field
+        
+    Returns:
+        Response: Success message with event details and status 201 if joined successfully
+                 Success message with status 200 if already a participant
+                 Various error messages with appropriate status codes for different validation failures
+    """
     data = JSONParser().parse(request)
     code = data.get('code')
 
@@ -238,6 +337,18 @@ def join_event_with_code(request):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_event(request, uuid):
+    """
+    Delete an event if the authenticated user is the author.
+    
+    Args:
+        request: HTTP request object
+        uuid: UUID of the event to delete
+        
+    Returns:
+        Response: Empty response with status 204 if successful
+                 Error message with status 403 if user is not the author
+                 Error message with status 404 if event doesn't exist
+    """
     try:
         event = Event.objects.get(pk=uuid)
         

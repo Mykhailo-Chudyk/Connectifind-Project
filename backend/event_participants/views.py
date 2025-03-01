@@ -9,6 +9,25 @@ from .serializers import EventParticipantSerializer
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def update_goal(request, event_id):
+    """
+    Update the goal of an authenticated user for a specific event.
+    
+    This endpoint allows participants to update their goal for an event they are registered for.
+    Only authenticated users can access this endpoint, and they can only update their own goals.
+    
+    Parameters:
+        request (Request): The HTTP request object containing the goal data in the request body
+        event_id (int): The ID of the event for which to update the goal
+        
+    Request Body:
+        goal (str): The new goal text to set for the event participant
+        
+    Returns:
+        Response: A JSON response with a success message or error details
+            - 200 OK: Goal updated successfully
+            - 400 BAD REQUEST: No goal provided in the request
+            - 404 NOT FOUND: No matching event participant record found
+    """
     try:
         participant = get_object_or_404(EventParticipant, eventId__id=event_id, userId__id=request.user.id)
         

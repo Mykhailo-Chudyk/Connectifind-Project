@@ -25,6 +25,18 @@ from django.conf import settings
 @csrf_exempt
 @require_http_methods(["POST"])
 def register_user(request):
+    """
+    Register a new user in the system.
+    
+    Args:
+        request: HTTP request containing user registration data in JSON format
+                (firstName, lastName, email, password, description, avatar)
+                
+    Returns:
+        JsonResponse: A response containing registration status, user ID, and authentication tokens
+                     - Status 201: User registered successfully
+                     - Status 400: Registration failed with error message
+    """
     try:
         data = json.loads(request.body)
         user = User(
@@ -50,6 +62,18 @@ def register_user(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def login_user(request):
+    """
+    Authenticate and log in a user.
+    
+    Args:
+        request: HTTP request containing login credentials in JSON format
+                (email, password)
+                
+    Returns:
+        JsonResponse: A response containing login status and authentication tokens
+                     - Status 200: User logged in successfully
+                     - Status 401: Invalid credentials
+    """
     data = json.loads(request.body)
     email = data.get('email')
     password = data.get('password')
@@ -68,6 +92,15 @@ def login_user(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_info(request):
+    """
+    Retrieve authenticated user's information.
+    
+    Args:
+        request: HTTP request with authenticated user
+        
+    Returns:
+        Response: Serialized user data
+    """
     user = request.user
     serializer = UserSerializer(user)
     return Response(serializer.data)
@@ -75,6 +108,18 @@ def get_user_info(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def update_profile(request):
+    """
+    Update authenticated user's profile information.
+    
+    Args:
+        request: HTTP request containing profile data to update
+                (firstName, lastName, description, avatar)
+                
+    Returns:
+        Response: Updated user information on success
+                - Status 200: Profile updated successfully
+                - Status 400: Update failed with error message
+    """
     user = request.user
     
     # Update basic info
@@ -112,6 +157,18 @@ def update_profile(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def change_password(request):
+    """
+    Change the authenticated user's password.
+    
+    Args:
+        request: HTTP request containing password data in JSON format
+                (currentPassword, newPassword)
+                
+    Returns:
+        Response: Status message and new authentication tokens
+                - Status 200: Password changed successfully
+                - Status 400: Password change failed with error message
+    """
     try:
         data = json.loads(request.body)
         user = request.user
@@ -140,6 +197,25 @@ def change_password(request):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_account(request):
+    """
+    Delete the authenticated user's account and all associated data.
+    
+    This deletes:
+    - User's events
+    - User's event participations
+    - User's feed posts
+    - User's messages
+    - User's chats
+    - The user account itself
+    
+    Args:
+        request: HTTP request with authenticated user
+        
+    Returns:
+        Response: Status message
+                - Status 204: Account deleted successfully
+                - Status 400: Deletion failed with error message
+    """
     try:
         user = request.user
 
@@ -164,6 +240,20 @@ def delete_account(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def google_auth(request):
+    """
+    Authenticate a user using Google OAuth2.
+    
+    If the user does not exist, a new account is created.
+    
+    Args:
+        request: HTTP request containing Google token data in JSON format
+                (token)
+                
+    Returns:
+        JsonResponse: Authentication status and JWT tokens
+                    - Status 200: Successfully authenticated with Google
+                    - Status 400: Authentication failed with error message
+    """
     try:
         data = json.loads(request.body)
         token = data.get('token')
