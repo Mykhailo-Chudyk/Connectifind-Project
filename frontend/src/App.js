@@ -1,4 +1,3 @@
-import './App.css';
 import SignUp from './components/Authorization/SignUp.js';
 import Login from './components/Authorization/Login.js';
 import AddEvent from './components/AddEvent/AddEvent.js';
@@ -11,7 +10,7 @@ import DefaultProfile from './components/DefaultProfile/DefaultProfile.js';
 import Layout from './Layout.js';
 import React, {useContext, useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import { AuthContext } from './AuthContext';
+import { AuthContext } from './contexts/AuthContext.js';
 import Settings from './components/Settings/Settings.js';
 import { ToastProvider } from './contexts/ToastContext';
 

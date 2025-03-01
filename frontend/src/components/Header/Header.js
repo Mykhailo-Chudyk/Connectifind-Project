@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
-import { AuthContext } from '../../AuthContext';
+import { AuthContext } from '../../contexts/AuthContext.js';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import IconComponent from '../IconComponent/IconComponent.js';
 import { useNavigate } from 'react-router-dom';

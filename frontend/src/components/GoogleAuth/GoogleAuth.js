@@ -1,6 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { useContext } from 'react';
-import { AuthContext } from '../../AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/authservice';
 import { useToast } from '../../contexts/ToastContext';

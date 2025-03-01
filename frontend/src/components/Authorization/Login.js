@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import authService from '../../services/authservice.js';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../AuthContext.js';
+import { AuthContext } from '../../contexts/AuthContext.js';
 import InputComponent from '../InputComponent/InputComponent.js';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
