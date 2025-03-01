@@ -13,6 +13,18 @@ from django.db.models import Q
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_chat_messages(request, eventId, senderId):
+    """
+    Retrieve all messages between the current user and a specific sender for a given event.
+    
+    Parameters:
+    - request: The HTTP request object containing the authenticated user
+    - eventId: The ID of the event context for the chat
+    - senderId: The ID of the user who sent the messages
+    
+    Returns:
+    - Response with serialized chat messages if found
+    - 404 error response if no chat exists between these users for this event
+    """
     event = get_object_or_404(Event, pk=eventId)
     sender = get_object_or_404(User, pk=senderId)
     
@@ -35,6 +47,20 @@ def list_chat_messages(request, eventId, senderId):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def send_chat_message(request, eventId, recipientId):
+    """
+    Send a new chat message to a specific recipient within an event context.
+    
+    This endpoint creates a new chat if one doesn't exist between the users.
+    
+    Parameters:
+    - request: The HTTP request object containing the authenticated user and message data
+    - eventId: The ID of the event context for the chat
+    - recipientId: The ID of the message recipient
+    
+    Returns:
+    - Response with serialized message data and 201 status if successful
+    - Response with validation errors and 400 status if request data is invalid
+    """
     event = get_object_or_404(Event, pk=eventId)
     recipient = get_object_or_404(User, pk=recipientId)
 
@@ -61,6 +87,19 @@ def send_chat_message(request, eventId, recipientId):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_users_with_messages(request, eventId):
+    """
+    Retrieve a list of all users with whom the current user has exchanged messages 
+    within a specific event context.
+    
+    For each user, includes their information and the last message exchanged.
+    
+    Parameters:
+    - request: The HTTP request object containing the authenticated user
+    - eventId: The ID of the event to filter chats by
+    
+    Returns:
+    - Response with a list of users and their last message details
+    """
     event = get_object_or_404(Event, pk=eventId)
     current_user = request.user
 
