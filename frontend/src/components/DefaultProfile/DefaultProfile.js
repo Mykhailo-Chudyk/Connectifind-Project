@@ -11,6 +11,7 @@ import { fetchUser } from '../../redux/actions/userActions';
 import { useToast } from '../../contexts/ToastContext';
 import './styles.scss';
 import useDeviceType from '../../hooks/useDeviceType';
+
 const DefaultProfile = () => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();

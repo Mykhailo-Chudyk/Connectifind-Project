@@ -1,4 +1,0 @@
-export const BREAKPOINTS = {
-  MOBILE: 768,
-  SMALL_MOBILE: 480
-}; 
