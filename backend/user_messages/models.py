@@ -12,4 +12,4 @@ class Message(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return f"Message by {self.authorId} in {self.chatId}"
+        return f"Message by {self.author} in {self.chat}"
