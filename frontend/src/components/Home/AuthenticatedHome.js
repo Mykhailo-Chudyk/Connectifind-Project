@@ -136,13 +136,14 @@ const AuthenticatedHome = () => {
       </div>
       <div className='home-row space-top'>
         <ButtonComponent text="Create Event" size="large" onClick={() => {navigate('/add-event')}} width="300px"/>
-        <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="300px"/>
+        {isMobile && <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="300px"/>}
         <ButtonComponent 
           text={showCodeInput ? "Join" : "Enter Private Event Code"} 
           size="large" 
           onClick={handleCodeButtonClick} 
           width="300px"
         />
+        {!isMobile && <ButtonComponent text="Find Public Event" size="large" onClick={() => {navigate('/events')}} width="300px"/>}
       </div>
       {showCodeInput && (
         <div className='home-row code-input-row'>
