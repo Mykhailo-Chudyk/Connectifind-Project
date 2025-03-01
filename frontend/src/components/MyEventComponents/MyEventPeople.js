@@ -19,7 +19,7 @@ const MyEventPeople = ({ eventDetails }) => {
                         <div key={participant?.id} onClick={() => navigate('/event/' + eventDetails.id + '/people/' + participant.id)} className='people-item'>
                             <div className='people-item-image'>
                                 {participant?.avatar && <img src={participant?.avatar} alt={participant.first_name + " " + participant.last_name} />}
-                                {!participant?.image && <FaUser />}
+                                {!participant?.avatar && <FaUser />}
                             </div>
                             <div className='people-item-body'>
                                 <p className='people-author'>
