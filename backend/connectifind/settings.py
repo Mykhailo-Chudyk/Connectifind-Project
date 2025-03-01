@@ -76,7 +76,11 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://connectifind-project.vercel.app",
+    "http://localhost:3000" 
+]
+
 ROOT_URLCONF = 'connectifind.urls'
 GOOGLE_OAUTH2_CLIENT_ID = os.getenv('GOOGLE_OAUTH2_CLIENT_ID')
 
