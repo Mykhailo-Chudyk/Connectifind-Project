@@ -40,9 +40,7 @@ const MyEventPerson = ({ eventDetails }) => {
                             </div>
                         </div>
                         {!isMobile && <div className="person-header-right">
-                            <div className="person-header-avatar">
-                                {user?.avatar ? <img src={user?.avatar} alt="Default profile avatar" /> : <FontAwesomeIcon icon={faUserCircle} />}
-                            </div>
+                            {user?.avatar ? <div className="person-header-avatar"><img src={user?.avatar} alt="Default profile avatar" /></div> : <FontAwesomeIcon icon={faUserCircle} />}
                         </div>}
                     </div>
                 </div>

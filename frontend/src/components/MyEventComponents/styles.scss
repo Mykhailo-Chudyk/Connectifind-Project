@@ -262,10 +262,11 @@
             margin-left: 200px;
 
             .person-header-avatar {
-                border-radius: 50%;
+                border-radius: 50%;  
                 overflow: hidden;
                 width: 200px;
                 height: 200px;
+                aspect-ratio: 1/1;
 
                 img {
                     width: 100%;
@@ -377,6 +378,20 @@
             margin-right: 40px;
         }
 
+    }
+
+    .chats-empty {
+        margin-right: auto;
+        margin-top: 20px;
+        font-size: 1rem;
+        font-weight: 500;
+
+        .chats-empty-link {
+            color: $primary-color;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline;
+        }
     }
 
 }

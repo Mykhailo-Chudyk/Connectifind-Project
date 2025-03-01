@@ -29,6 +29,7 @@ const MyEventChats = ({ eventDetails }) => {
         <div className={`chats-container ${isMobile ? 'mobile' : ''}`}>
             <h1 className='chats-title'>Chats</h1>
             <p className='chats-label'>Chat with other participants</p>
+            {eventChats.length === 0 && <p className='chats-empty'>No chats yet. Start a conversation in <span className='chats-empty-link' onClick={() => navigate(`/event/${eventDetails?.id}/people`)}>Attendees</span> tab.</p>}
             {eventChats.map((chat) => (
                 <div key={chat?.id} className='single-chat-container' onClick={() => navigate(`/event/${eventDetails?.id}/chats/${chat?.user?.id}`)}>
                     <div className="chat-avatar">
