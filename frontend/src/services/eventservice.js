@@ -132,7 +132,6 @@ const getCategories = async () => {
 
 const updateGoal = async (eventId, goal) => {
   try {
-    console.log(goal);
     const response = await api.patch(`events/${eventId}/update-goal/`, { goal });
     return response.data;
   } catch (error) {

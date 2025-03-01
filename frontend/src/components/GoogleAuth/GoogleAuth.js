@@ -6,6 +6,22 @@ import authService from '../../services/authservice';
 import { useToast } from '../../contexts/ToastContext';
 
 const GoogleAuth = () => {
+/* 
+GoogleAuth Component
+  
+This component provides Google OAuth authentication functionality for the application.
+It renders a Google login button that allows users to authenticate using their Google accounts.
+  
+Integration:
+- Uses @react-oauth/google library for Google authentication
+- Integrates with the application's AuthContext to manage authentication state
+- Uses react-router for navigation after successful login
+- Connects to authService to perform the backend authentication API call
+- Uses ToastContext to display success/error messages to users
+  
+The component doesn't accept any props as it gets all necessary data from context providers
+and environment variables.
+*/
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const { showToast } = useToast();

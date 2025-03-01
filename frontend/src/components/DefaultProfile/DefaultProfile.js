@@ -13,6 +13,20 @@ import './styles.scss';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const DefaultProfile = () => {
+    /* 
+    DefaultProfile component provides a user interface for viewing and editing profile information.
+    It allows users to modify their first name, last name, description, and avatar image.
+    
+    This component is integrated into the main application as a profile management page, 
+    accessible through the user settings or account area. It leverages Redux for state management,
+    fetching the current user data from the store and dispatching updates when changes are saved.
+    
+    The component handles image upload, form field validation, and provides feedback through
+    toast notifications when actions are completed. It also confirms with users before
+    discarding unsaved changes.
+    
+    No props are required as it gets all necessary data from the Redux store.
+    */
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();

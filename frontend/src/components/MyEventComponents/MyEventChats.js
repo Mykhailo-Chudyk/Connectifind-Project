@@ -9,6 +9,22 @@ import './styles.scss';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const MyEventChats = ({ eventDetails }) => {
+    /* 
+    MyEventChats Component
+    
+    This component displays a list of chat conversations related to a specific event. 
+    It shows all chats the current user has with other event participants.
+    Each chat entry displays the other participant's avatar, name, last message, 
+    and timestamp. Users can click on a chat to navigate to the full conversation.
+    
+    The component is integrated within the event details page, typically as a tab 
+    or section that shows all conversations related to the event.
+    
+    Props:
+      eventDetails (Object): Contains information about the event, including:
+        - id (String/Number): Unique identifier for the event, used to fetch related chats
+        - Other event properties may be used elsewhere in the parent component
+    */
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { chats, loading } = useSelector((state) => state.chat);

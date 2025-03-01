@@ -11,6 +11,26 @@ import { joinEventSuccess, leaveEventSuccess } from '../../redux/actions/eventAc
 import useDeviceType from '../../hooks/useDeviceType.js';
 
 const Event = () => {
+  /* 
+   Event component displays detailed information about a specific event and provides functionality for user interaction.
+   
+   This component is integrated into the main routing system and is displayed when a user navigates to /event/:eventId.
+   It fetches event details using the eventId from URL parameters and displays them using the EventDetails component.
+   
+   The component handles different user states:
+   - Unauthenticated users see a "Login to Join" button
+   - Event creators see a "Go to Event" button
+   - Event participants see a "Leave Event" button
+   - Non-participants see a "Join Event" button
+   
+   Inputs:
+   - eventId: Retrieved from URL parameters using useParams
+   - user: Retrieved from Redux store to determine authentication status
+   - Toast context: Used for displaying success/error notifications
+   - Redux dispatch: Used to update global state when joining/leaving events
+   
+   The component is responsive and adapts to mobile view using the useDeviceType hook.
+  */
   const { eventId } = useParams();  
   const navigate = useNavigate();
   const [eventDetails, setEventDetails] = useState(null);

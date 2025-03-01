@@ -23,6 +23,19 @@ const componentMap = {
 };
 
 const MyEvent = ({type = "me"}) => {
+  /* 
+   MyEvent component serves as a container and router for different event views.
+   It fetches event details based on the URL parameter eventId and renders
+   the appropriate sub-component based on the 'type' prop.
+   
+   The component is integrated into the application's routing system and
+   serves as the main hub for all event-related views.
+   
+   Props:
+   - type (string): Determines which sub-component to render.
+     Possible values: "me", "feed", "people", "chats", "about", "person", "chat".
+     Default: "me"
+  */
   const { eventId } = useParams();  
   const [eventDetails, setEventDetails] = useState(null);
   const dispatch = useDispatch();

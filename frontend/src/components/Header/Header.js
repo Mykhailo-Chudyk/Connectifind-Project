@@ -11,6 +11,20 @@ import useDeviceType from '../../hooks/useDeviceType';
 import "./styles.scss";
 
 const Header = ({ isAuthenticated }) => {
+  /* 
+  Header component serves as the main navigation bar for the ConnectiFind application.
+  It appears at the top of every page and provides navigation, search functionality, and authentication options.
+  
+  The header displays different options based on authentication status:
+  - For authenticated users: Explore and Create buttons
+  - For unauthenticated users: Login and Sign Up buttons
+  
+  The component also includes a search bar that allows users to search for events
+  (search bar is hidden on mobile devices).
+  
+  Props:
+    isAuthenticated (boolean): Determines which set of navigation buttons to display
+  */
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
@@ -28,7 +42,6 @@ const Header = ({ isAuthenticated }) => {
   return (
     <header>
       <div className={`header-container`}>
-        {/* <h3 onClick={() => navigate('/')} style={{cursor: "pointer"}}>ConnectiFind</h3> */}
         <img className="logo" src={logo} alt="ConnectiFind" onClick={() => navigate('/')} style={{cursor: "pointer",}}/>
         {!isMobile ? <div className="search-container">
           <form onSubmit={handleSearch}>

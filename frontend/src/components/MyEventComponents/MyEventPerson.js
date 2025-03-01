@@ -4,7 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import useDeviceType from '../../hooks/useDeviceType';
+
 const MyEventPerson = ({ eventDetails }) => {
+    /* 
+    MyEventPerson Component
+    
+    This component displays detailed information about a specific participant in an event.
+    It shows their name, goal, description, and provides navigation options.
+    The component adapts its layout based on whether it's viewed on mobile or desktop.
+    
+    Props:
+      eventDetails - Object containing event information including:
+        - id: string - The ID of the event
+        - participants: array - List of participants with their details
+    
+    Navigation:
+    - Back arrow returns to the event's people list
+    - Message button navigates to chat with the specific person
+    */
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState(null);

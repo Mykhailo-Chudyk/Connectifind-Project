@@ -16,6 +16,19 @@ import eventservice from '../../services/eventservice';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const AuthenticatedHome = () => {
+  /* 
+  AuthenticatedHome Component
+  
+  This component serves as the main dashboard for authenticated users in the application.
+  It displays various sections of events including public events nearby, events the user has joined,
+  and events the user has created. It also provides functionality to create new events, join existing
+  events via a code, and navigate to other parts of the application.
+  
+  Integration:
+  - Integrated into the main application routing as the home page for logged-in users
+  - Uses Redux for state management of user data and events
+  - Uses ToastContext for displaying notifications
+  */
   const user = useSelector((state) => state.user.user);
   const { events: userEvents, loading: userEventsLoading } = useSelector((state) => state.events);
   const { events: publicEvents, loading: publicLoading } = useSelector((state) => state.publicEvents);

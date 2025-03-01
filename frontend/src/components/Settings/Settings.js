@@ -9,6 +9,13 @@ import { useToast } from '../../contexts/ToastContext';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const Settings = () => {
+/* 
+Settings component provides user account management functionality.
+This component allows users to update their password and delete their account.
+It is integrated into the main application routing and accessible from the user profile.
+
+No props are required for this component as it uses context and services for data management.
+*/
     const navigate = useNavigate();
     const { showToast } = useToast();
     const [currentPassword, setCurrentPassword] = useState('');

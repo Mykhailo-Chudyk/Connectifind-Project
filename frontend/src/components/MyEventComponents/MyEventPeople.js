@@ -8,6 +8,24 @@ import { useLocation } from 'react-router-dom';
 import './styles.scss';
 
 const MyEventPeople = ({ eventDetails }) => {
+    /* 
+    MyEventPeople component displays a list of event attendees and handles profile completion requirements.
+    
+    This component is integrated within the event details page and specifically manages the "People" tab
+    that shows all participants of an event. It enforces profile completion by checking if the current
+    user has specified their goal and description before allowing them to view other attendees' details.
+    
+    Props:
+    - eventDetails: Object containing all event information including:
+      - id: Unique identifier for the event
+      - participants: Array of users attending the event with their profile information
+      - author: Object containing information about the event creator
+    
+    The component handles different states:
+    1. If the user has an incomplete profile, it displays a warning with buttons to update profile
+    2. Otherwise, it displays the full list of attendees with options to view individual profiles
+    3. Event creators are marked with a star icon
+    */
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
     const location = useLocation();

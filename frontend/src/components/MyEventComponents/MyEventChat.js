@@ -9,6 +9,22 @@ import './styles.scss';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const MyEventChat = ({ eventDetails }) => {
+    /* 
+    Chat interface component for event participants to exchange messages.
+    
+    This component provides a messaging interface within the event platform that allows
+    participants to chat with each other directly. It displays message history and 
+    provides a form to send new messages.
+    
+    The component is integrated into the event details section of the application,
+    accessible when viewing details of a specific event and selecting a participant
+    to chat with. It uses Redux for state management and event services for API calls.
+    
+    Props:
+      eventDetails: Object containing event information with the following properties:
+        - id: String/Number - The unique identifier of the event
+        - participants: Array - List of participants with their details (id, first_name, last_name)
+    */
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();

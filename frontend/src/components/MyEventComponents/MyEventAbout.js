@@ -10,7 +10,25 @@ import { fetchFeed } from '../../redux/actions/feedActions';
 import { fetchChats } from '../../redux/actions/chatActions';
 import { leaveEventSuccess } from '../../redux/actions/eventActions';
 import useDeviceType from '../../hooks/useDeviceType';
+
 const MyEventAbout = ({eventDetails}) => {
+    /* 
+    This component displays the detailed view of a user's event in the My Events section.
+    It shows event information, and provides actions for event management based on the user's role.
+    
+    The component is integrated into the event details page and serves as the primary interface
+    for viewing event information, leaving an event (for participants), or deleting an event (for creators).
+    
+    It also preloads feed and chat data for better performance when navigating to those sections.
+    
+    Props:
+      eventDetails - Object containing all event information including:
+        - id: unique identifier for the event
+        - title: name of the event
+        - capacity: maximum number of participants
+        - participant_count: current number of participants
+        - is_creator: boolean indicating if current user created the event
+    */
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showDeleteModal, setShowDeleteModal] = useState(false);

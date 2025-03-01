@@ -13,6 +13,21 @@ import { useToast } from '../../contexts/ToastContext';
 import GoogleAuth from '../GoogleAuth/GoogleAuth.js';
 
 const LoginForm = () => {
+  /* 
+  Login component that provides user authentication functionality.
+  
+  This component renders a login form that allows users to sign in using either:
+  - Email and password authentication
+  - Google authentication via the GoogleAuth component
+  
+  The component is integrated within the application's authentication flow and 
+  is accessible via the /login route. Upon successful login, the user is redirected 
+  to the home page, and the authentication token is stored in the AuthContext.
+  
+  State:
+  - email: String value that stores the user's input email
+  - password: String value that stores the user's input password
+  */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();

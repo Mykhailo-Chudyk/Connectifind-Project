@@ -10,6 +10,19 @@ import './styles.scss';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const UnauthenticatedHome = () => {
+  /* 
+  The UnauthenticatedHome component serves as the landing page for non-logged-in users.
+  It displays a welcoming header with a tagline, a promotional video (on non-mobile devices),
+  and a curated list of public events to entice user engagement.
+  
+  The component includes call-to-action buttons that direct users to login or events pages, 
+  implementing a responsive design that adapts to different device types.
+  
+  It fetches public events data from Redux store and displays loading skeletons while content is loading.
+  
+  This component is integrated into the main routing system and shown when users visit the home page
+  without authentication.
+  */
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isMobile } = useDeviceType();
@@ -84,7 +97,7 @@ const UnauthenticatedHome = () => {
       </div>
       <div className='home-row space-top'>
         <h3 className='home-phrase'> 
-        At ConnectiFind, we transform the typical event experience by seamlessly bridging the gap between attendees. It’s common to feel hesitant about approaching someone new, but what if you could know their interests and goals beforehand? Our platform does just that, empowering you to connect with the right people right away. Whether you’re looking to collaborate, find a mentor, or share insights, ConnectiFind makes every interaction more intentional and productive. Join us to make your next event the most rewarding yet.
+        At ConnectiFind, we transform the typical event experience by seamlessly bridging the gap between attendees. It's common to feel hesitant about approaching someone new, but what if you could know their interests and goals beforehand? Our platform does just that, empowering you to connect with the right people right away. Whether you're looking to collaborate, find a mentor, or share insights, ConnectiFind makes every interaction more intentional and productive. Join us to make your next event the most rewarding yet.
         </h3>
       </div>
       {/* TODO: it's not that important right now. Finish it later */}

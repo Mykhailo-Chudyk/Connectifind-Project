@@ -11,6 +11,20 @@ import { useToast } from '../../contexts/ToastContext';
 import GoogleAuth from '../GoogleAuth/GoogleAuth.js';
 
 const RegisterForm = () => {
+/* 
+ Registration form component for new user sign-up in ConnectiFind.
+ This component renders a form that allows users to create a new account in the system.
+ It's integrated in the authentication flow and redirects to the home page after successful registration.
+ 
+ Inputs:
+ - firstName: String - User's first name
+ - lastName: String - User's last name
+ - email: String - User's email address for account creation and login
+ - password: String - User's chosen password for account security
+ 
+ The component also provides Google authentication as an alternative sign-up method.
+ Uses AuthContext for login state management and displays toast notifications for error handling.
+*/
   const { showToast } = useToast();
   const [formData, setFormData] = useState({
     firstName: '',

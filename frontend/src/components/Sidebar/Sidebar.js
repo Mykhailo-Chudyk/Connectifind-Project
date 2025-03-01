@@ -10,6 +10,20 @@ import { fetchUserEvents } from '../../redux/actions/eventActions';
 import eventservice from '../../services/eventservice';
 
 const Sidebar = ({ onLogout }) => {
+  /* 
+  Sidebar navigation component that provides application-wide navigation functionality.
+  This component renders in two different modes:
+  1. Default mode: Shows home, profile, settings, logout options, and user events
+  2. Event mode: Shows event-specific navigation when inside an event view
+  
+  The component integrates with:
+  - React Router for navigation
+  - Redux for state management (fetching user events)
+  - Event service for retrieving event details
+  
+  Props:
+  - onLogout: Function callback that executes when user confirms logout
+  */
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -22,7 +36,6 @@ const Sidebar = ({ onLogout }) => {
   }, [dispatch]);
 
   // Determine which icon should be selected based on the current path
-  console.log(location.pathname);
   const getSelectedIcon = () => {
     if (location.pathname.startsWith('/me')) return 'profile';
     if (location.pathname.startsWith('/settings')) return 'settings';

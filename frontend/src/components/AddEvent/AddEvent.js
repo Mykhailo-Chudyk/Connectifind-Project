@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import eventservice from '../../services/eventservice.js';
 import { useNavigate } from 'react-router-dom';
-import './styles.scss';
 import InputField from '../InputField/InputField';
 import ButtonComponent from '../ButtonComponent/ButtonComponent.js';
 import AlertModal from '../AlertModal/AlertModal';
-import { useToast } from '../../contexts/ToastContext';
+import { useToast } from '../../contexts/ToastContext'
 import useDeviceType from '../../hooks/useDeviceType';
+import './styles.scss';
+
 const AddEvent = () => {
+    /* 
+     AddEvent Component is used on the event creation page. 
+     It allows users to create new events by collecting event details
+     through a form. No props are passed to this component.
+     */
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [eventData, setEventData] = useState({
         title: '',
@@ -20,12 +26,6 @@ const AddEvent = () => {
         categories: [],
         duration: 120,
     });
-
-    const categories = [
-        'Business', 'Education', 'Health', 'Music', 'Sports', 'Arts', 'Food',
-        'Technology', 'Charity', 'Travel', 'Community', 'Career', 'Personal',
-        'Film', 'Environment', 'Gaming', 'Fashion', 'History', 'Science', 'Language'
-    ];
 
     const navigate = useNavigate();
     const { showToast } = useToast();

@@ -7,6 +7,21 @@ import { useNavigate } from "react-router-dom";
 import useDeviceType from '../../hooks/useDeviceType';
 
 const EventWrapper = ({ event }) => {
+  /* 
+   EventWrapper is a component that displays an event card in the application.
+   It renders event information including title, date/time, location, and an optional join code.
+   The component is integrated into event listing pages and provides navigation to detailed event views.
+
+   Props:
+   - event: Object containing event details with the following properties:
+     - id: Unique identifier for the event
+     - title: The name/title of the event
+     - time: The start time of the event (Date or timestamp)
+     - duration: The duration of the event in minutes
+     - location: Where the event takes place
+     - image: Optional URL to an image representing the event
+     - code: Optional join code for the event that can be toggled visible/hidden
+  */
   const navigate = useNavigate();
   const { isMobile } = useDeviceType();
   const [isCodeVisible, setIsCodeVisible] = useState(false);

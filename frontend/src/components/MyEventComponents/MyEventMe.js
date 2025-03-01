@@ -10,6 +10,22 @@ import { updateEventGoal, fetchUserEvents } from '../../redux/actions/eventActio
 import useDeviceType from '../../hooks/useDeviceType';
 
 const MyEventMe = ({ eventDetails }) => {
+    /* 
+    This component displays and allows editing of a user's goal for a specific event.
+    It is integrated into the user's personal event view, showing their profile information 
+    for events they're participating in.
+
+    The component includes:
+    - A text input field for editing the user's goal
+    - Save and Cancel buttons for managing changes
+    - Confirmation modal when canceling with unsaved changes
+
+    Props:
+    eventDetails - Object containing information about the event, including:
+    - id: The event ID
+    - participant_details: Object containing user-specific data for this event
+        - goal: The current goal set by the user for this event
+    */
     const userId = useSelector((state) => state.user?.user?.id);
     const [userGoal, setUserGoal] = useState('');
     const [initialGoal, setInitialGoal] = useState('');

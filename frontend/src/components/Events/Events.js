@@ -11,6 +11,25 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import './styles.scss';
 
 const Events = ({ filter = "all" }) => {
+  /* 
+   Events component displays a list of events based on the provided filter.
+   
+   This component is integrated into the main application routing system and serves as both
+   a public events discovery interface and a personal events management tool. It fetches 
+   event data from Redux store and provides search functionality to filter events.
+   
+   Props:
+   - filter (string): Determines which events to display.
+     - "all": Shows all public events (default)
+     - "created": Shows only events created by the current user
+     - "joined": Shows only events the current user has joined
+   
+   Features:
+   - Responsive layout that adapts to mobile devices
+   - Search functionality for filtering events by title, description, or author
+   - Loading state with skeleton UI
+   - Navigation to individual event details
+   */
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
