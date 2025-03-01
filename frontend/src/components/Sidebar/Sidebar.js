@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUser, faCog, faSignOutAlt, faPlus, faArrowLeft, faList, faComments, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser, faCog, faSignOutAlt, faPlus, faArrowLeft, faList, faComments, faUsers, faBullseye } from '@fortawesome/free-solid-svg-icons';
 import IconComponent from '../IconComponent/IconComponent';
 import AlertModal from '../AlertModal/AlertModal';
 import './styles.scss';
@@ -124,7 +124,7 @@ const Sidebar = ({ onLogout }) => {
                   onClick={() => navigate(`/event/${eventDetails.id}/about`)}
                 />
                 <IconComponent
-                  icon={<FontAwesomeIcon icon={faUser} />}
+                  icon={<FontAwesomeIcon icon={faBullseye} />}
                   selected={location.pathname.endsWith(`/me`)}
                   onClick={() => navigate(`/event/${eventDetails.id}/me`)}
                   isFaComponent={true}
