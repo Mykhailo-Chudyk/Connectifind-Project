@@ -16,33 +16,30 @@ from dotenv import load_dotenv
 from datetime import timedelta
 import dj_database_url
 
-
-
+# Load environment variables
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+# Environment settings
+IS_PRODUCTION = os.getenv('IS_PRODUCTION', 'False') == 'True'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-s1$bf0s$jon_7=k8#hrppfq4lty$$ov62k7e5_*5(&0fo4rqb9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not IS_PRODUCTION
 
+# Host configuration
 raw_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", "")
-
 if raw_hosts:
     ALLOWED_HOSTS = [host.strip() for host in raw_hosts.split(",") if host.strip()]
 else:
     ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-print("DEBUG: ALLOWED_HOSTS =", ALLOWED_HOSTS)  # Debugging output
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,7 +76,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True # For development only. TODO: adjust for production
+CORS_ALLOW_ALL_ORIGINS = True
 ROOT_URLCONF = 'connectifind.urls'
 GOOGLE_OAUTH2_CLIENT_ID = os.getenv('GOOGLE_OAUTH2_CLIENT_ID')
 
@@ -101,8 +98,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'connectifind.wsgi.application'
 
-IS_PRODUCTION = os.getenv('IS_PRODUCTION', 'False') == 'True'
-
+# Database configuration
 if IS_PRODUCTION:
     DATABASES = {
         'default': dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600, ssl_require=True)
@@ -119,14 +115,13 @@ else:
         }
     }
 
-
+# Authentication settings
 AUTH_USER_MODEL = 'users.User'
 
 AUTHENTICATION_BACKENDS = [
     'users.backends.UUIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -143,19 +138,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Internationalization
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
+# Static files
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# JWT Token settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  
