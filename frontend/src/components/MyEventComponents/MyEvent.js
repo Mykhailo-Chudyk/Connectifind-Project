@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import eventservice from '../services/eventservice.js';
-import { fetchUserEvents } from '../redux/actions/eventActions';
-import MyEventMe from './MyEventComponents/MyEventMe.js';
-import MyEventFeed from './MyEventComponents/MyEventFeed.js';
-import MyEventPeople from './MyEventComponents/MyEventPeople.js';
-import MyEventChats from './MyEventComponents/MyEventChats.js';
-import MyEventAbout from './MyEventComponents/MyEventAbout.js';
-import MyEventPerson from './MyEventComponents/MyEventPerson.js';
-import MyEventChat from './MyEventComponents/MyEventChat.js';
+import eventservice from '../../services/eventservice.js';
+import { fetchUserEvents } from '../../redux/actions/eventActions.js';
+import MyEventMe from './MyEventMe.js';
+import MyEventFeed from './MyEventFeed.js';
+import MyEventPeople from './MyEventPeople.js';
+import MyEventChats from './MyEventChats.js';
+import MyEventAbout from './MyEventAbout.js';
+import MyEventPerson from './MyEventPerson.js';
+import MyEventChat from './MyEventChat.js';
 
 
 const componentMap = {
