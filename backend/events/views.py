@@ -14,6 +14,8 @@ from django.core.files.base import ContentFile
 from event_participants.models import EventParticipant
 import random
 import string
+from django.db import transaction
+from django.conf import settings
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -157,42 +159,80 @@ def join_event_with_code(request):
     data = JSONParser().parse(request)
     code = data.get('code')
 
+    # Step 1: Input validation
     if not code:
-        return Response({'error': 'Event code is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Event code is required.', 'code': 'missing_code'}, 
+                        status=status.HTTP_400_BAD_REQUEST)
+    
+    if not isinstance(code, str) or len(code) != 6 or not code.isdigit():
+        return Response({'error': 'Invalid code format. Code must be a 6-digit number.', 'code': 'invalid_format'}, 
+                       status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        event = Event.objects.get(code=code, visibility='private')
+        # Step 2: Retrieve the event with efficient database access (single query)
+        try:
+            event = Event.objects.select_related('authorId').get(code=code, visibility='private')
+        except Event.DoesNotExist:
+            return Response({'error': 'Invalid event code or the event is not private.', 'code': 'invalid_code'}, 
+                           status=status.HTTP_404_NOT_FOUND)
         
+        # Step 3: Check authorization constraints
         if event.authorId == request.user:
-            return Response({'error': 'You cannot join your own event.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'You cannot join your own event.', 'code': 'author_join_attempt'}, 
+                           status=status.HTTP_403_FORBIDDEN)
+        
+        # Step 4: Check if event is in the past
+        if event.time < timezone.now():
+            return Response({'error': 'This event has already occurred.', 'code': 'past_event'}, 
+                           status=status.HTTP_400_BAD_REQUEST)
+        
+        # Step 5: Check capacity constraints
+        if event.capacity and event.participants.count() >= event.capacity:
+            return Response({'error': 'This event has reached its maximum capacity.', 'code': 'capacity_reached'}, 
+                           status=status.HTTP_400_BAD_REQUEST)
 
-        # Check if the user is already a participant
-        participant, created = EventParticipant.objects.get_or_create(
-            eventId=event,
-            userId=request.user,
-            defaults={
-                'firstName': request.user.first_name,
-                'lastName': request.user.last_name,
-                'description': '',
-                'goal': '',
-                'avatar': request.user.profile.avatar if hasattr(request.user, 'profile') else ''
-            }
-        )
+        # Step 6: Efficient participant check and creation (get_or_create is atomic)
+        # Using transaction to ensure data consistency
+        with transaction.atomic():
+            # Check if the user is already a participant
+            participant, created = EventParticipant.objects.get_or_create(
+                eventId=event,
+                userId=request.user,
+                defaults={
+                    'firstName': request.user.first_name,
+                    'lastName': request.user.last_name,
+                    'description': '',
+                    'goal': '',
+                    'avatar': request.user.profile.avatar if hasattr(request.user, 'profile') else ''
+                }
+            )
 
-        if created:
-            event.participants.add(request.user)
-            return Response({
-                'message': 'You have successfully joined the event!',
-                'event_id': event.id
-            }, status=status.HTTP_201_CREATED)
-        else:
-            return Response({
-                'message': 'You are already a participant of this event.',
-                'event_id': event.id
-            }, status=status.HTTP_200_OK)
+            # Step 7: Handle the result based on whether the participant was created
+            if created:
+                event.participants.add(request.user)
+                return Response({
+                    'message': 'You have successfully joined the event!',
+                    'event_id': event.id,
+                    'event_title': event.title,
+                    'event_time': event.time,
+                    'status': 'joined'
+                }, status=status.HTTP_201_CREATED)
+            else:
+                return Response({
+                    'message': 'You are already a participant of this event.',
+                    'event_id': event.id,
+                    'event_title': event.title,
+                    'event_time': event.time,
+                    'status': 'already_joined'
+                }, status=status.HTTP_200_OK)
 
-    except Event.DoesNotExist:
-        return Response({'error': 'Invalid event code.'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        # Step 8: Catch-all error handling for unexpected errors
+        return Response({
+            'error': 'An unexpected error occurred while processing your request.',
+            'code': 'server_error',
+            'details': str(e) if settings.DEBUG else None
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['DELETE'])
