@@ -278,17 +278,99 @@
     }
 
     .person-goal {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 500;
         margin-top: 20px;
         align-self: flex-start;
+        text-align: left;
+        line-height: 1.5;
+        color: $text-color;
+        font-family: $font-family;
+
+        h1, h2, h3, h4, h5, h6, p, li, blockquote, pre {
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: $text-color;
+            font-family: $font-family;
+            margin: 0;
+            padding: 0;
+        }
+
+        strong, b {
+            font-weight: 600;
+        }
+
+        em, i {
+            font-style: italic;
+        }
+
+        a {
+            color: $primary-color;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .person-description {
         padding: 20px 0px;
+        text-align: left;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: $text-color;
+        font-family: $font-family;
         
-        p{
+        h1, h2, h3, h4, h5, h6, p, li, blockquote, pre {
             font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: $text-color;
+            font-family: $font-family;
+            margin: 0;
+            padding: 0;
+        }
+
+        strong, b {
+            font-weight: 600;
+        }
+
+        em, i {
+            font-style: italic;
+        }
+
+        a {
+            color: $primary-color;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        blockquote {
+            border-left: 4px solid $primary-color;
+            padding-left: 16px;
+            margin: 8px 0;
+            font-style: italic;
+        }
+
+        pre {
+            background-color: $second-background-color;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
         }
     }
 
