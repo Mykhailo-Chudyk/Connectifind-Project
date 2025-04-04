@@ -52,6 +52,26 @@ const MyEventPerson = ({ eventDetails }) => {
                             <div className="person-description">
                                 {user.description && <p>{user.description}</p>} 
                             </div>
+                            <div className="person-profile-details">
+                                {user.university && (
+                                    <div className="profile-detail-item">
+                                        <span className="profile-detail-label">University:</span>
+                                        <span className="profile-detail-value">{user.university}</span>
+                                    </div>
+                                )}
+                                {user.hometown && (
+                                    <div className="profile-detail-item">
+                                        <span className="profile-detail-label">Hometown:</span>
+                                        <span className="profile-detail-value">{user.hometown}</span>
+                                    </div>
+                                )}
+                                {user.workplace && (
+                                    <div className="profile-detail-item">
+                                        <span className="profile-detail-label">Workplace:</span>
+                                        <span className="profile-detail-value">{user.workplace}</span>
+                                    </div>
+                                )}
+                            </div>
                             <div className="person-actions">    
                                 <ButtonComponent text="Message" level="secondary" onClick={() => navigate('/event/' + eventDetails?.id + '/chats/' + user.id)} width="150px" />
                             </div>
