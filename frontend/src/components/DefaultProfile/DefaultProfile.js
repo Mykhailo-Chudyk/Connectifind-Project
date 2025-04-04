@@ -35,6 +35,9 @@ const DefaultProfile = () => {
     const [userLastName, setUserLastName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [userAvatar, setUserAvatar] = useState('');
+    const [userUniversity, setUserUniversity] = useState('');
+    const [userHometown, setUserHometown] = useState('');
+    const [userWorkplace, setUserWorkplace] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [initialState, setInitialState] = useState({});
@@ -47,13 +50,19 @@ const DefaultProfile = () => {
                 firstName: user.user.first_name || '',
                 lastName: user.user.last_name || '',
                 description: user.user.description || '',
-                avatar: user.user.avatar || ''
+                avatar: user.user.avatar || '',
+                university: user.user.university || '',
+                hometown: user.user.hometown || '',
+                workplace: user.user.workplace || ''
             };
             setInitialState(initial);
             setUserFirstName(initial.firstName);
             setUserLastName(initial.lastName);
             setUserDescription(initial.description);
             setUserAvatar(initial.avatar);
+            setUserUniversity(initial.university);
+            setUserHometown(initial.hometown);
+            setUserWorkplace(initial.workplace);
         }
     }, [user]);
 
@@ -61,7 +70,10 @@ const DefaultProfile = () => {
         return userFirstName !== initialState.firstName ||
             userLastName !== initialState.lastName ||
             userDescription !== initialState.description ||
-            userAvatar !== initialState.avatar;
+            userAvatar !== initialState.avatar ||
+            userUniversity !== initialState.university ||
+            userHometown !== initialState.hometown ||
+            userWorkplace !== initialState.workplace;
     };
 
     const handleCancel = () => {
@@ -102,6 +114,9 @@ const DefaultProfile = () => {
                 lastName: userLastName,
                 description: userDescription,
                 avatar: userAvatar,
+                university: userUniversity,
+                hometown: userHometown,
+                workplace: userWorkplace
             };
             await userService.updateUserProfile(profileData);
             showToast('Profile updated successfully', 'success');
@@ -162,6 +177,21 @@ const DefaultProfile = () => {
             <div className="default-profile-name">
                 <div className="default-profile-name-input">
                     <InputField label="Description" value={userDescription} placeholder="Enter your description" onChange={(e) => setUserDescription(e.target.value)} multiline={true} />
+                </div>
+            </div>
+            <div className="default-profile-name">
+                <div className="default-profile-name-input">
+                    <InputField label="University" value={userUniversity} placeholder="Minerva University" onChange={(e) => setUserUniversity(e.target.value)} />
+                </div>
+            </div>
+            <div className="default-profile-name">
+                <div className="default-profile-name-input">
+                    <InputField label="Hometown" value={userHometown} placeholder="New York, NY" onChange={(e) => setUserHometown(e.target.value)} />
+                </div>
+            </div>
+            <div className="default-profile-name">
+                <div className="default-profile-name-input">
+                    <InputField label="Workplace" value={userWorkplace} placeholder="Meta, Inc." onChange={(e) => setUserWorkplace(e.target.value)} />
                 </div>
             </div>
             <div className="default-profile-buttons">

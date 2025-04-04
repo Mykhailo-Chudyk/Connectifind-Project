@@ -18,7 +18,7 @@ const EventDetails = ({ eventDetails }) => {
   eventDetails - Object containing the following properties:
     - time: Date object or timestamp for the event
     - location: String representing the event location
-    - description: String containing the detailed event description
+    - description: String containing the detailed event description (rich text)
     - categories: Array of category objects with a 'name' property
   */
   const {isMobile} = useDeviceType();
@@ -32,9 +32,10 @@ const EventDetails = ({ eventDetails }) => {
                 <p>{eventDetails.location}</p>
             </div>
         </div>
-        <div className="event-details-body">
-            <p>{eventDetails.description}</p>
-        </div>
+        <div 
+            className="event-details-body"
+            dangerouslySetInnerHTML={{ __html: eventDetails.description }}
+        />
         <div className="event-details-footer">
             {/* TODO: will be actually added later */}
             {eventDetails.categories.map((category) => <p>{category.name}</p>)}

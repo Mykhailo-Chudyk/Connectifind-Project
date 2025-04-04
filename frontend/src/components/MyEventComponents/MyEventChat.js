@@ -92,7 +92,7 @@ const MyEventChat = ({ eventDetails }) => {
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                         placeholder="Type your message..."
-                        multiline={true}
+                        isTextarea={true}
                     />  
                 </div>
                 <div className="feed-post-button">  

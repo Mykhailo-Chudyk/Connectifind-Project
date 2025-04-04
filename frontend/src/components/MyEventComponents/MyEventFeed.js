@@ -73,7 +73,7 @@ const MyEventFeed = ({ eventDetails }) => {
                         value={newPostContent}
                         onChange={(e) => setNewPostContent(e.target.value)}
                         placeholder="Write something..."
-                        multiline={true}
+                        isTextarea={true}
                     />  
                 </div>
                 <div className="feed-post-button">  

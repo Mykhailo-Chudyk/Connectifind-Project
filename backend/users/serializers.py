@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         Specifies the model to serialize and the fields to include in the serialized output.
         """
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'description', 'avatar', 'goal']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'description', 'avatar', 'goal', 'university', 'hometown', 'workplace']
 
     def get_goal(self, obj):
         """

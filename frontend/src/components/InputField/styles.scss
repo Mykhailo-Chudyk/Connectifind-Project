@@ -11,12 +11,12 @@
         color: red;
     }
     
-      .input-label {
-          font-weight: 600;
-          color: $text-color;
-      }
+    .input-label {
+        font-weight: 600;
+        color: $text-color;
+    }
       
-      .input-field, .textarea-field {
+    .input-field, .textarea-field {
         padding: 18px 24px;
         color: #18807D;
         width: 100%;
@@ -40,16 +40,64 @@
             border-width: 1px;
             outline: none; 
         }
-      }
+    }
 
-      .textarea-field {
+    .textarea-field {
         font-family: $font-family;
         font-size: 1rem;
         height: 120px;
         resize: none;
-      }
+    }
 
-      .select-field {
+    .rich-text-editor {
+        .ql-container {
+            min-height: 120px;
+            border: 0.5px solid #1A8A86;
+            border-radius: 0 0 10px 10px;
+            font-size: 1rem;
+            font-family: $font-family;
+            background-color: white;
+            
+            &:focus-within {
+                border-width: 1px;
+                outline: none;
+            }
+        }
+
+        .ql-toolbar {
+            border: 0.5px solid #1A8A86;
+            border-radius: 10px 10px 0 0;
+            background-color: white;
+        }
+
+        .ql-editor {
+            min-height: 120px;
+            padding: 18px 24px;
+            color: $text-color;
+            font-family: $font-family;
+            font-size: 1rem;
+            border-radius: 0 0 10px 10px;
+            
+            &.ql-blank::before {
+                color: #18807D;
+                font-style: normal;
+                font-family: $font-family;
+                font-size: 1rem;
+                padding-left: 9px;
+                margin-left: 0;
+                padding-top: -2px;
+            }
+        }
+
+        &.disabled {
+            .ql-container, .ql-toolbar {
+                background-color: #d0ddf1;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .select-field {
         appearance: none;
         padding: 0px 24px;
         margin-right: 24px;
@@ -73,7 +121,85 @@
             border-width: 1px;
             outline: none; 
         }
-      }
+    }
+}
 
-  }
+.inter-font-editor {
+    .ql-editor {
+        font-family: $font-family !important;
+        background-color: white !important;
+        
+        p, h1, h2, h3, h4, h5, h6, li, blockquote, pre {
+            font-family: $font-family !important;
+        }
+
+        p{
+            font-size: 1rem;
+        }
+    }
+    
+    .ql-toolbar {
+        font-family: $font-family !important;
+        
+        button, .ql-picker {
+            font-family: $font-family !important;
+        }
+    }
+
+    .ql-tooltip {
+        left: -10px !important;
+        transform: none !important;
+        border: 0.5px solid #1A8A86 !important;
+        border-radius: 10px !important;
+        background-color: white !important;
+        box-shadow: none !important;
+        padding: 8px 12px !important;
+        z-index: 1 !important;
+
+        input[type=text] {
+            border: 0.5px solid #1A8A86 !important;
+            border-radius: 10px !important;
+            padding: 8px 12px !important;
+            font-family: $font-family !important;
+            font-size: 1rem !important;
+            color: $text-color !important;
+            margin-right: 8px !important;
+
+            &:focus {
+                border-width: 1px !important;
+                outline: none !important;
+            }
+        }
+
+        a {
+            color: $primary-color !important;
+            font-family: $font-family !important;
+            font-size: 1rem !important;
+            padding: 4px 8px !important;
+            border-radius: 6px !important;
+
+            &:hover {
+                background-color: #c4f0ee !important;
+            }
+        }
+    }
+
+    .ql-tooltip[data-mode="link"]::before {
+        content: "Visit URL:";
+        line-height: 26px;
+        margin-right: 8px;
+        color: $text-color;
+        font-family: $font-family;
+    }
+
+    .ql-tooltip.ql-editing a.ql-action::after {
+        border-right: 0;
+        content: 'Save';
+        padding-right: 0;
+    }
+
+    .ql-tooltip.ql-editing a.ql-remove::before {
+        content: 'Cancel';
+    }
+}
   

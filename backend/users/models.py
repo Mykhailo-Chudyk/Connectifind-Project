@@ -37,6 +37,9 @@ class User(AbstractUser):
     description = models.TextField(blank=True, null=True)
     goal = models.TextField(blank=True, null=True)
     avatar = models.TextField(blank=True, null=True)
+    university = models.CharField(max_length=255, blank=True, null=True)
+    hometown = models.CharField(max_length=255, blank=True, null=True)
+    workplace = models.CharField(max_length=255, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']  

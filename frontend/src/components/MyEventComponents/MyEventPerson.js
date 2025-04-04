@@ -36,7 +36,14 @@ const MyEventPerson = ({ eventDetails }) => {
         }
     }, [location.pathname, eventDetails]);
 
-
+    // Basic HTML sanitization function
+    const sanitizeHtml = (html) => {
+        if (!html) return '';
+        // Remove script tags and their content
+        return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                  .replace(/on\w+="[^"]*"/g, '') // Remove event handlers
+                  .replace(/on\w+='[^']*'/g, ''); // Remove event handlers
+    };
 
     return (
         <>
@@ -48,9 +55,33 @@ const MyEventPerson = ({ eventDetails }) => {
                                 <span className='back-arrow' onClick={() => navigate('/event/' + eventDetails?.id + '/people')}>←</span>
                                 <h1>{user.first_name} {user.last_name}</h1>
                             </div>
-                            {user.goal && <h3 className="person-goal">Goal: {user.goal}</h3>}
+                            {user.goal && (
+                                <h3 className="person-goal" dangerouslySetInnerHTML={{ __html: sanitizeHtml(user.goal) }} />
+                            )}
                             <div className="person-description">
-                                {user.description && <p>{user.description}</p>} 
+                                {user.description && (
+                                    <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(user.description) }} />
+                                )}
+                            </div>
+                            <div className="person-profile-details">
+                                {user.university && (
+                                    <div className="profile-detail-item">
+                                        <span className="profile-detail-label">University:</span>
+                                        <span className="profile-detail-value">{user.university}</span>
+                                    </div>
+                                )}
+                                {user.hometown && (
+                                    <div className="profile-detail-item">
+                                        <span className="profile-detail-label">Hometown:</span>
+                                        <span className="profile-detail-value">{user.hometown}</span>
+                                    </div>
+                                )}
+                                {user.workplace && (
+                                    <div className="profile-detail-item">
+                                        <span className="profile-detail-label">Workplace:</span>
+                                        <span className="profile-detail-value">{user.workplace}</span>
+                                    </div>
+                                )}
                             </div>
                             <div className="person-actions">    
                                 <ButtonComponent text="Message" level="secondary" onClick={() => navigate('/event/' + eventDetails?.id + '/chats/' + user.id)} width="150px" />

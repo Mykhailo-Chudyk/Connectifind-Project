@@ -95,22 +95,20 @@ const UnauthenticatedHome = () => {
       <div className='home-row redirect-button'>
         <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="300px"/>
       </div>
-      <div className='home-row space-top'>
-        <h3 className='home-phrase'> 
-        At ConnectiFind, we transform the typical event experience by seamlessly bridging the gap between attendees. It's common to feel hesitant about approaching someone new, but what if you could know their interests and goals beforehand? Our platform does just that, empowering you to connect with the right people right away. Whether you're looking to collaborate, find a mentor, or share insights, ConnectiFind makes every interaction more intentional and productive. Join us to make your next event the most rewarding yet.
-        </h3>
-      </div>
-      {/* TODO: it's not that important right now. Finish it later */}
-      {/* <div className='home-row home-phrase-container'>
-        <p className="home-phrase">⭐ Discover shared interests</p>
-        <p className="home-phrase">💬 Connect with like-minded individuals</p>
-        <p className="home-phrase">🚀 Make every interaction count</p>
-        <p className="home-phrase">💡 Discover new ideas</p>
-        <p className="home-phrase">💪 Build your network</p>
-        <p className="home-phrase">🤝 Create opportunities</p>
-        <p className="home-phrase">💰 Save time and money</p>
-        <p className="home-phrase">🌟 Make lasting connections</p>
-      </div> */}
+      {false && <div className='home-row space-top video-container'>
+        <h2>See How ConnectiFind Works</h2>
+        <div className='video-container' style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
+          <iframe
+            width="100%"
+            height="450"
+            src="https://www.youtube.com/embed/73wF2yYAB3A"
+            title="ConnectiFind Platform Demo"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>}
     </div>
   );
 };

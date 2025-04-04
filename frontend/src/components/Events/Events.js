@@ -152,7 +152,10 @@ const Events = ({ filter = "all" }) => {
               <div className='event-item-body'>
                 <p className='event-title'>{event.title}</p>
                 <p className='event-author'>{event.author.first_name} {event.author.last_name}</p>
-                <p className='event-description'>{event.description}</p>
+                <div 
+                    className='event-description'
+                    dangerouslySetInnerHTML={{ __html: event.description }}
+                />
               </div>
               <div className='event-item-actions'>
                 <p className='event-time-location'>{event.location}</p>

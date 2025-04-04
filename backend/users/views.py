@@ -113,7 +113,7 @@ def update_profile(request):
     
     Args:
         request: HTTP request containing profile data to update
-                (firstName, lastName, description, avatar)
+                (firstName, lastName, description, avatar, university, hometown, workplace)
                 
     Returns:
         Response: Updated user information on success
@@ -136,6 +136,11 @@ def update_profile(request):
         else:
             user.avatar = avatar
     
+    # Handle new optional fields
+    user.university = request.data.get('university', user.university)
+    user.hometown = request.data.get('hometown', user.hometown)
+    user.workplace = request.data.get('workplace', user.workplace)
+    
     try:
         user.save()
         return Response({
@@ -146,7 +151,10 @@ def update_profile(request):
                 'last_name': user.last_name,
                 'email': user.email,
                 'description': user.description,
-                'avatar': user.avatar or ''  # Ensure we don't send None
+                'avatar': user.avatar or '',  # Ensure we don't send None
+                'university': user.university or '',
+                'hometown': user.hometown or '',
+                'workplace': user.workplace or ''
             }
         })
     except Exception as e:

@@ -157,6 +157,7 @@
                 padding: 10px 20px 20px 20px;
                 display: flex;
                 flex-direction: column;
+                height: 100%;
 
                 .people-author {
                     font-size: 1.2rem;
@@ -187,15 +188,77 @@
                     text-overflow: ellipsis;
                 }
 
-                .people-description {
+                .people-description, .people-goal {
                     font-size: 1rem;
-                    margin-bottom: 24px;
+                    margin-bottom: 15px;
+                    overflow: hidden;
+                    flex-shrink: 0;
+                    min-height: 0;
                     display: -webkit-box;
                     -webkit-line-clamp: 3;
                     -webkit-box-orient: vertical;
-                    overflow: hidden;
                     text-overflow: ellipsis;
+                    
+                    h1, h2, h3, h4, h5, h6, p, li, blockquote, pre {
+                        font-size: 1rem;
+                        font-weight: 400;
+                        line-height: 1.5;
+                        color: $text-color;
+                        font-family: $font-family;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    strong, b {
+                        font-weight: 600;
+                    }
+
+                    em, i {
+                        font-style: italic;
+                    }
+
+                    a {
+                        color: $primary-color;
+                        text-decoration: none;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    ul, ol {
+                        padding-left: 20px;
+                        margin: 8px 0;
+                    }
+
+                    li {
+                        margin: 4px 0;
+                    }
+
+                    blockquote {
+                        border-left: 4px solid $primary-color;
+                        padding-left: 16px;
+                        margin: 8px 0;
+                        font-style: italic;
+                    }
+
+                    pre {
+                        background-color: $second-background-color;
+                        padding: 12px;
+                        border-radius: 6px;
+                        overflow-x: auto;
+                    }
                 }
+
+                .people-goal-label {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: $primary-color;
+                    margin: 0;
+                    margin-bottom: 5px;
+                    margin-top: 10px;
+                }
+
             }
 
             .people-item-actions {
@@ -278,18 +341,125 @@
     }
 
     .person-goal {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 500;
         margin-top: 20px;
         align-self: flex-start;
+        text-align: left;
+        line-height: 1.5;
+        color: $text-color;
+        font-family: $font-family;
+
+        h1, h2, h3, h4, h5, h6, p, li, blockquote, pre {
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: $text-color;
+            font-family: $font-family;
+            margin: 0;
+            padding: 0;
+        }
+
+        strong, b {
+            font-weight: 600;
+        }
+
+        em, i {
+            font-style: italic;
+        }
+
+        a {
+            color: $primary-color;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .person-description {
         padding: 20px 0px;
+        text-align: left;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: $text-color;
+        font-family: $font-family;
         
-        p{
+        h1, h2, h3, h4, h5, h6, p, li, blockquote, pre {
             font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: $text-color;
+            font-family: $font-family;
+            margin: 0;
+            padding: 0;
         }
+
+        strong, b {
+            font-weight: 600;
+        }
+
+        em, i {
+            font-style: italic;
+        }
+
+        a {
+            color: $primary-color;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        blockquote {
+            border-left: 4px solid $primary-color;
+            padding-left: 16px;
+            margin: 8px 0;
+            font-style: italic;
+        }
+
+        pre {
+            background-color: $second-background-color;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    }
+
+    .person-profile-details {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profile-detail-item {
+        display: flex;
+        align-items: baseline;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .profile-detail-label {
+        font-weight: 600;
+        margin-right: 8px;
+        color: #555;
+        min-width: 100px;
+    }
+
+    .profile-detail-value {
+        color: #333;
     }
 
     .person-actions {
