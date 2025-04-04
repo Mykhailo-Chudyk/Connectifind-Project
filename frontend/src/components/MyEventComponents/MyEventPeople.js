@@ -97,8 +97,15 @@ const MyEventPeople = ({ eventDetails }) => {
                                         {eventDetails.author.id === participant.id && <FaStar style={{ marginLeft: '5px', color: '#18807D' }} />}
                                     </div>
                                 </p>
-                                <p className='people-title'>{participant.description}</p>
-                                <p className='people-description'>Goal: {participant.goal}</p> 
+                                <div 
+                                    className='people-description'
+                                    dangerouslySetInnerHTML={{ __html: participant.description }}
+                                />
+                                <div className="people-goal-label">Goal: </div>
+                                <div 
+                                    className='people-goal'
+                                    dangerouslySetInnerHTML={{ __html: `${participant.goal}` }}
+                                />
                             </div>
                             <div className='people-item-actions'>
                                 <ButtonComponent 

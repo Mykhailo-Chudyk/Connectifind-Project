@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './styles.scss';
 
-const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline, disabled, required = false }) => {
+const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline, isTextarea, disabled, required = false }) => {
     /* 
     A versatile input field component that can render different types of form inputs.
     This component is designed to be used throughout the application's forms for consistent styling and behavior.
@@ -16,7 +16,8 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options, 
     - onChange: Function - Handler called when input value changes
     - placeholder: String - Placeholder text displayed when input is empty
     - options: Array - For select inputs, array of {value, label} objects
-    - multiline: Boolean - When true, renders a rich text editor instead of a textarea
+    - multiline: Boolean - When true, renders a rich text editor
+    - isTextarea: Boolean - When true, renders a regular textarea
     - disabled: Boolean - When true, disables the input field
     - required: Boolean - When true, adds required indicator to the label (defaults to false)
     */
@@ -77,6 +78,15 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options, 
                         className="inter-font-editor"
                     />
                 </div>
+            ) : isTextarea ? (
+                <textarea
+                    name={name}
+                    className="input-field textarea-field"
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    disabled={disabled}
+                />
             ) : (
                 <input 
                     type={inputType} 
