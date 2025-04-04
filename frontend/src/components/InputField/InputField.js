@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './styles.scss';
 
 const InputField = ({ label, type, name, value, onChange, placeholder, options, multiline, disabled, required = false }) => {
@@ -14,13 +16,38 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options, 
     - onChange: Function - Handler called when input value changes
     - placeholder: String - Placeholder text displayed when input is empty
     - options: Array - For select inputs, array of {value, label} objects
-    - multiline: Boolean - When true, renders a textarea instead of an input
+    - multiline: Boolean - When true, renders a rich text editor instead of a textarea
     - disabled: Boolean - When true, disables the input field
     - required: Boolean - When true, adds required indicator to the label (defaults to false)
     */
     const allowedTypes = ['text', 'number', 'email', 'password', 'date', 'time', 'url', 'datetime-local'];
 
     const inputType = allowedTypes.includes(type) ? type : 'text';
+
+    const quillModules = {
+        toolbar: [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['link'],
+            ['clean']
+        ],
+        clipboard: {
+            matchVisual: false
+        }
+    };
+
+    // Handle React-Quill onChange event
+    const handleQuillChange = (content) => {
+        // Create a synthetic event object to match the expected format
+        const syntheticEvent = {
+            target: {
+                name: name,
+                value: content
+            }
+        };
+        onChange(syntheticEvent);
+    };
 
     return (
         <div className="input-field-container">
@@ -39,13 +66,17 @@ const InputField = ({ label, type, name, value, onChange, placeholder, options, 
                     ))}
                 </select>
             ) : multiline ? (
-                <textarea
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    className="textarea-field"
-                />
+                <div className="rich-text-editor">
+                    <ReactQuill
+                        value={value || ''}
+                        onChange={handleQuillChange}
+                        modules={quillModules}
+                        placeholder={placeholder}
+                        readOnly={disabled}
+                        theme="snow"
+                        className="inter-font-editor"
+                    />
+                </div>
             ) : (
                 <input 
                     type={inputType} 
