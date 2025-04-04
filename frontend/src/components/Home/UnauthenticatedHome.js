@@ -95,7 +95,7 @@ const UnauthenticatedHome = () => {
       <div className='home-row redirect-button'>
         <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="300px"/>
       </div>
-      <div className='home-row space-top video-container'>
+      {false && <div className='home-row space-top video-container'>
         <h2>See How ConnectiFind Works</h2>
         <div className='video-container' style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
           <iframe
@@ -108,7 +108,7 @@ const UnauthenticatedHome = () => {
             allowFullScreen
           ></iframe>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
