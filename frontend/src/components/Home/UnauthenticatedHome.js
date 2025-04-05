@@ -95,20 +95,20 @@ const UnauthenticatedHome = () => {
       <div className='home-row redirect-button'>
         <ButtonComponent text="View all events" size="large" onClick={() => {navigate('/events')}} width="300px"/>
       </div>
-      {false && <div className='home-row space-top video-container'>
+      <div className='home-row space-top video-container'>
         <h2>See How ConnectiFind Works</h2>
         <div className='video-container' style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
           <iframe
             width="100%"
             height="450"
-            src="https://www.youtube.com/embed/73wF2yYAB3A"
+            src="https://www.youtube.com/embed/tohkffRe2NY"
             title="ConnectiFind Platform Demo"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
         </div>
-      </div>}
+      </div>
     </div>
   );
 };
